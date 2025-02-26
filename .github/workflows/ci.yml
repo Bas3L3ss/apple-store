@@ -1,1 +1,42 @@
+name: Monorepo CI
 
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        app: [client, server] # Runs CI for both client & server
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "18"
+          cache: "npm"
+          cache-dependency-path: ${{ matrix.app }}/package-lock.json
+
+      - name: Install dependencies
+        run: cd ${{ matrix.app }} && npm ci
+
+      - name: Run TypeScript type check
+        run: cd ${{ matrix.app }} && npm run tsc --noEmit
+
+      - name: Run ESLint
+        run: cd ${{ matrix.app }} && npm run lint
+
+      # - name: Run tests
+      #   run: cd ${{ matrix.app }} && npm test
+
+      - name: Build
+        run: cd ${{ matrix.app }} && npm run build
