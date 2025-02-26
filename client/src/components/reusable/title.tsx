@@ -8,7 +8,6 @@ const Title = ({
   children: ReactNode;
   className: string;
 }) => {
-  d;
   return <h1 className={cn("title-margin", className)}>{children}</h1>;
 };
 
