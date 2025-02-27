@@ -1,4 +1,4 @@
-import { Product, ProductCategory } from "./types";
+import { Product, ProductCategory } from "@/src/@types";
 
 export const products = [
   {

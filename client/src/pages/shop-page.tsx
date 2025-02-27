@@ -3,7 +3,7 @@ import FeaturedProduct from "../components/product/featured-product";
 import ProductGrid from "../components/product/product-grid";
 import RecommendationCarousel from "../components/product/recommendation";
 import Title from "../components/reusable/title";
-import { ProductCategory } from "../lib/types";
+import { ProductCategory } from "@/src/@types";
 
 const ShopPage = () => {
   return (
