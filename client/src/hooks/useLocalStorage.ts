@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect } from "react";
 
 /*
 
@@ -13,30 +13,36 @@ function App() {
 
 */
 
-const getLsVal = (key: string, defaultValue: any) => {
-  const storedStr = localStorage.getItem(key) || ''
+const getLsVal = (
+  key: string,
+  defaultValue: string | number | boolean | null
+) => {
+  const storedStr = localStorage.getItem(key) || "";
 
-  if (!!storedStr) {
-    return JSON.parse(storedStr)
+  if (storedStr) {
+    return JSON.parse(storedStr);
   } else {
-    return defaultValue
+    return defaultValue;
   }
-}
+};
 
-const setLsVal = (key: string, value: any) => {
+const setLsVal = (key: string, value: string | number | boolean | null) => {
   if (value !== undefined && value !== null) {
-    const str = JSON.stringify(value)
+    const str = JSON.stringify(value);
 
-    localStorage.setItem(key, str)
+    localStorage.setItem(key, str);
   }
-}
+};
 
-const useLocalStorage = (key: string, defaultValue: any = null) => {
-  const [value, setValue] = useState(getLsVal(key, defaultValue))
+const useLocalStorage = (
+  key: string,
+  defaultValue: string | number | boolean | null = null
+) => {
+  const [value, setValue] = useState(getLsVal(key, defaultValue));
 
-  useEffect(() => setLsVal(key, value), [key, value])
+  useEffect(() => setLsVal(key, value), [key, value]);
 
-  return [value, setValue]
-}
+  return [value, setValue];
+};
 
-export default useLocalStorage
+export default useLocalStorage;

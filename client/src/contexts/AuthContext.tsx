@@ -9,12 +9,13 @@ import {
 import { axios } from "@/src/lib/utils";
 import { User } from "@/src/@types";
 
+import { isAxiosError } from "axios";
 interface Context {
   token: string | null;
   account: User | null;
   isLoggedIn: boolean;
-  register: (payload: FormData) => Promise<any>;
-  login: (payload: FormData) => Promise<any>;
+  register: (payload: FormData) => Promise<unknown>;
+  login: (payload: FormData) => Promise<unknown>;
   logout: () => void;
 }
 
@@ -89,13 +90,15 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
           authorization: `Bearer ${token}`,
         },
       });
-
       setAccount(accountData);
       setToken(accessToken);
       setIsLoggedIn(true);
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error(error);
-      if (error?.response?.statusCode === 401) setToken(null);
+
+      if (isAxiosError(error) && error.response?.status === 401) {
+        setToken(null);
+      }
     }
   };
 
