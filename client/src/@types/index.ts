@@ -7,7 +7,7 @@ export interface User {
   createdAt: Date;
   updatedAt: Date;
 }
-
+// each productOption can only have one data like only one color or material not both, meaning material -> color
 export interface ProductOption {
   id: string;
   // reference for a specific product
