@@ -1,0 +1,38 @@
+name: Build Frontend (Client)
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build-frontend:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: "./client"
+    strategy:
+      matrix:
+        node-version: [20.x]
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          clean: true
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "npm"
+          cache-dependency-path: "./client/package-lock.json"
+      - run: npm ci
+      - run: npm run build
+      - name: Run TypeScript Type Check
+        run: npm run tsc
+      - name: Run ESLint
+        run: npm run lint
