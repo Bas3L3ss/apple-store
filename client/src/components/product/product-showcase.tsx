@@ -1,5 +1,5 @@
 import { Button } from "@/src/components/ui/button";
-import { Product } from "@/src/lib/types";
+import { Product } from "@/src/@types";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 

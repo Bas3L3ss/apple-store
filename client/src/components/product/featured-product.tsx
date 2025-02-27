@@ -1,7 +1,7 @@
 import { Button } from "@/src/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
-import { Product } from "@/src/lib/types";
+import { Product } from "@/src/@types";
 import { formatPrice } from "@/src/lib/utils";
 
 interface FeaturedProductProps {

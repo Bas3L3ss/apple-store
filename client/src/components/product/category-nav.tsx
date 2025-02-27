@@ -1,5 +1,5 @@
 import { Button } from "@/src/components/ui/button";
-import { ProductCategory } from "@/src/lib/types";
+import { ProductCategory } from "@/src/@types";
 import { useSearchParams } from "react-router-dom";
 
 export default function CategoryNav() {

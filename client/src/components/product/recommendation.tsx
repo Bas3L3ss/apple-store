@@ -3,19 +3,16 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { searchProducts } from "@/src/lib/mockData";
-import { Product, ProductCategory } from "@/src/lib/types";
+import { Product, ProductCategory } from "@/src/@types";
 import { formatPrice } from "@/src/lib/utils";
 
 export default function RecommendationCarousel() {
   const carouselRef = useRef<HTMLDivElement>(null);
   const [scrollPosition, setScrollPosition] = useState(0);
   const productsByCategory = searchProducts.reduce((acc, product) => {
-    // @ts-expect-error
     if (!acc[product.category]) {
-      // @ts-expect-error
       acc[product.category] = [];
     }
-    // @ts-expect-error
     acc[product.category].push(product);
     return acc;
   }, {} as Record<number, typeof searchProducts>);
@@ -80,7 +77,6 @@ export default function RecommendationCarousel() {
         style={{ scrollBehavior: "smooth" }}
       >
         {[...categories, ...categories, ...categories].map((category) =>
-          // @ts-expect-error
           productsByCategory[category.id]
             ?.slice(0, 1)
             .map((product: Product, index: number) => (
@@ -104,7 +100,7 @@ export default function RecommendationCarousel() {
 }
 const SliderCard = ({ product }: { product: Product }) => {
   const isNewProduct =
-    //@ts-expect-error
+    //@ts-expect-error : i don't know how to deal with this problem tho it's working so i'll let it slide
     new Date() - new Date(product.createdAt) < 30 * 24 * 60 * 60 * 1000;
   return (
     <motion.a
