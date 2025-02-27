@@ -1,12 +1,12 @@
 import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-//@ts-expect-error
+//@ts-expect-error : it just work
 import "swiper/css";
-//@ts-expect-error
+//@ts-expect-error : it just work
 import "swiper/css/effect-coverflow";
-//@ts-expect-error
+//@ts-expect-error : it just work
 import "swiper/css/pagination";
-//@ts-expect-error
+//@ts-expect-error : it just work
 import "swiper/css/navigation";
 import { SparklesIcon } from "lucide-react";
 import {
