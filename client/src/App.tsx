@@ -18,62 +18,64 @@ import GuestOnlyWrapper from "./provider/GuestOnlyWrapper";
 
 function App() {
   return (
-    <Router>
-      <Navbar />
-      <main className="min-h-[100vh] pt-16 ">
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/shop" element={<ShopPage />} />
-          <Route path="/shop/:slug" element={<ItemsOrder />} />
-          <Route path="/more/:slug" element={<ItemDetails />} />
-          <Route
-            path="/auth"
-            element={
-              <GuestOnlyWrapper>
-                <AppleAuthPage />
-              </GuestOnlyWrapper>
-            }
-          />
-          <Route
-            path="/auth/forgot"
-            element={
-              <GuestOnlyWrapper>
-                <ForgotPasswordPage />
-              </GuestOnlyWrapper>
-            }
-          />
-          <Route path="/support" element={<Support />} />
-          <Route path="/cart" element={<Cart />} />
-          <Route
-            path="/order"
-            element={
-              <AppleAuthWrapper>
-                <OrdersPage />
-              </AppleAuthWrapper>
-            }
-          />
-          <Route
-            path="/order/:id"
-            element={
-              <AppleAuthWrapper>
-                <OrderDetailsPage />
-              </AppleAuthWrapper>
-            }
-          />
-          <Route
-            path="/profile"
-            element={
-              <AppleAuthWrapper>
-                <ProfilePage />
-              </AppleAuthWrapper>
-            }
-          />
+    <>
+      <Router>
+        <Navbar />
+        <main className="min-h-[100vh] pt-16 ">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/shop" element={<ShopPage />} />
+            <Route path="/shop/:slug" element={<ItemsOrder />} />
+            <Route path="/more/:slug" element={<ItemDetails />} />
+            <Route
+              path="/auth"
+              element={
+                <GuestOnlyWrapper>
+                  <AppleAuthPage />
+                </GuestOnlyWrapper>
+              }
+            />
+            <Route
+              path="/auth/forgot"
+              element={
+                <GuestOnlyWrapper>
+                  <ForgotPasswordPage />
+                </GuestOnlyWrapper>
+              }
+            />
+            <Route path="/support" element={<Support />} />
+            <Route path="/cart" element={<Cart />} />
+            <Route
+              path="/order"
+              element={
+                <AppleAuthWrapper>
+                  <OrdersPage />
+                </AppleAuthWrapper>
+              }
+            />
+            <Route
+              path="/order/:id"
+              element={
+                <AppleAuthWrapper>
+                  <OrderDetailsPage />
+                </AppleAuthWrapper>
+              }
+            />
+            <Route
+              path="/profile"
+              element={
+                <AppleAuthWrapper>
+                  <ProfilePage />
+                </AppleAuthWrapper>
+              }
+            />
 
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </main>
-      <Footer />
-    </Router>
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </main>
+        <Footer />
+      </Router>
+    </>
   );
 }
 
