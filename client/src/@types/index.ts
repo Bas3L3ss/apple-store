@@ -75,7 +75,10 @@ export interface Order {
   calculatedTotal: number; // this is the price calculated using all totalPrice of each CartItem
   items: OrderItem[];
   shippingAddress?: string;
+  orderNotes: string;
   status: OrderStatus;
+  paymentMethod: PaymentMethod;
+  estimatedDelivery: Date;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -92,4 +95,10 @@ export enum OrderStatus {
   PREPARING = "preparing",
   DELIVERING = "delivering",
   FINISHED = "finished",
+}
+export enum PaymentMethod {
+  COD = "cod:cash-on-delivery",
+  PP = "pp:paypal",
+  CC = "CC:credit-card",
+  AC = "ac:apple-card",
 }

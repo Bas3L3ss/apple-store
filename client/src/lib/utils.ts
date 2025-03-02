@@ -2,6 +2,7 @@
 import clsx, { ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 import Axios from "axios";
+import { OrderStatus } from "../@types";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -26,4 +27,36 @@ export const axios = Axios.create({
 export const checkIsNew = (createdAt: string | Date) => {
   //@ts-expect-error : i don't know how to deal with this problem tho it's working so i'll let it slide
   return new Date() - new Date(createdAt) < 30 * 24 * 60 * 60 * 1000;
+};
+export function formatDate(date: Date) {
+  return new Intl.DateTimeFormat("en-US", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  }).format(date);
+}
+
+export function getStatusColor(status: OrderStatus) {
+  switch (status) {
+    case OrderStatus.PREPARING:
+      return "bg-yellow-100 text-yellow-800";
+    case OrderStatus.DELIVERING:
+      return "bg-blue-100 text-blue-800";
+    case OrderStatus.FINISHED:
+      return "bg-green-100 text-green-800";
+    default:
+      return "bg-gray-100 text-gray-800";
+  }
+}
+export const getStatusProgress = (status: OrderStatus) => {
+  switch (status) {
+    case OrderStatus.PREPARING:
+      return 33;
+    case OrderStatus.DELIVERING:
+      return 66;
+    case OrderStatus.FINISHED:
+      return 100;
+    default:
+      return 0;
+  }
 };

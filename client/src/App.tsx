@@ -9,6 +9,9 @@ import NotFound from "./pages/not-found";
 import AppleAuthPage from "./pages/auth";
 import ForgotPasswordPage from "./pages/forgot-password-page";
 import { Support } from "./pages/support";
+import Cart from "./pages/cart";
+import OrdersPage from "./pages/order";
+import OrderDetailsPage from "./pages/one-order";
 
 function App() {
   return (
@@ -23,6 +26,9 @@ function App() {
           <Route path="/auth" element={<AppleAuthPage />} />
           <Route path="/auth/forgot" element={<ForgotPasswordPage />} />
           <Route path="/support" element={<Support />} />
+          <Route path="/cart" element={<Cart />} />
+          <Route path="/order" element={<OrdersPage />} />
+          <Route path="/order/:id" element={<OrderDetailsPage />} />
 
           <Route path="*" element={<NotFound />} />
         </Routes>
