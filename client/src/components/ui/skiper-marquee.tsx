@@ -1,6 +1,6 @@
 import { JSX, useEffect, useId, useRef, useState } from "react";
 import { motion, useAnimation, useInView } from "framer-motion";
-import { Snowflake } from "lucide-react";
+import { Headphones, Laptop, Smartphone, Tablet, Watch } from "lucide-react";
 
 import { cn } from "@/src/lib/utils";
 
@@ -56,33 +56,33 @@ function Marquee({
 
 const tiles = [
   {
-    icon: <Snowflake className="size-full" />,
+    icon: <Smartphone className="size-3/5 text-white" />,
     bg: (
-      <div className="pointer-events-none absolute left-1/2 top-1/2 size-1/2 -translate-x-1/2 -translate-y-1/2 overflow-visible rounded-full bg-gradient-to-r from-orange-600 via-rose-600 to-violet-600 opacity-70 "></div>
+      <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-orange-600 via-rose-600 to-violet-600 shadow-xl"></div>
     ),
   },
   {
-    icon: <Snowflake className="size-full" />,
+    icon: <Laptop className="size-3/5 text-white" />,
     bg: (
-      <div className="pointer-events-none absolute left-1/2 top-1/2 size-1/2 -translate-x-1/2 -translate-y-1/2 overflow-visible rounded-full bg-gradient-to-r from-cyan-500 via-blue-500 to-indigo-500 opacity-70 "></div>
+      <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-cyan-500 via-blue-500 to-indigo-500 shadow-xl"></div>
     ),
   },
   {
-    icon: <Snowflake className="size-full" />,
+    icon: <Tablet className="size-3/5 text-white" />,
     bg: (
-      <div className="pointer-events-none absolute left-1/2 top-1/2 size-1/2 -translate-x-1/2 -translate-y-1/2 overflow-visible rounded-full bg-gradient-to-r from-green-500 via-teal-500 to-emerald-600 opacity-70 "></div>
+      <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-green-500 via-teal-500 to-emerald-600 shadow-xl"></div>
     ),
   },
   {
-    icon: <Snowflake className="size-full" />,
+    icon: <Watch className="size-3/5 text-white" />,
     bg: (
-      <div className="pointer-events-none absolute left-1/2 top-1/2 size-1/2 -translate-x-1/2 -translate-y-1/2 overflow-visible rounded-full bg-gradient-to-r from-yellow-400 via-orange-500 to-yellow-600 opacity-70 "></div>
+      <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-yellow-400 via-orange-500 to-yellow-600 shadow-xl"></div>
     ),
   },
   {
-    icon: <Snowflake className="size-full" />,
+    icon: <Headphones className="size-3/5 text-white" />,
     bg: (
-      <div className="pointer-events-none absolute left-1/2 top-1/2 size-1/2 -translate-x-1/2 -translate-y-1/2 overflow-visible rounded-full bg-gradient-to-r from-orange-600 via-rose-600 to-violet-600 opacity-70 "></div>
+      <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-orange-600 via-rose-600 to-violet-600 shadow-xl"></div>
     ),
   },
 ];
@@ -131,13 +131,13 @@ function Card(card: { icon: JSX.Element; bg: JSX.Element }) {
         "transform-gpu dark:bg-transparent dark:[border:1px_solid_rgba(255,255,255,.1)] dark:[box-shadow:0_-20px_80px_-20px_#ffffff1f_inset]"
       )}
     >
-      {card.icon}
       {card.bg}
+      {card.icon}
     </motion.div>
   );
 }
 
-export function SkiperMarquee() {
+export function AppleProductMarquee() {
   const [randomTiles1, setRandomTiles1] = useState<typeof tiles>([]);
   const [randomTiles2, setRandomTiles2] = useState<typeof tiles>([]);
   const [randomTiles3, setRandomTiles3] = useState<typeof tiles>([]);

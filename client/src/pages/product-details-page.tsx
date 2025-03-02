@@ -1,15 +1,9 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { Navigate, useParams } from "react-router-dom";
 import { searchProducts } from "../lib/mockData";
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/src/components/ui/card";
+import { Card, CardContent } from "@/src/components/ui/card";
 import { Button } from "@/src/components/ui/button";
 import {
   ArrowRight,
@@ -95,29 +89,8 @@ const ItemDetails = () => {
   };
 
   if (!product) {
-    return (
-      <section className="flex items-center justify-center h-screen bg-neutral-50">
-        <Card className="w-full max-w-md">
-          <CardHeader>
-            <CardTitle className="text-3xl font-semibold text-center">
-              Product not found
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-center text-gray-600">
-              The product you're looking for doesn't exist.
-            </p>
-          </CardContent>
-          <CardFooter className="justify-center">
-            <Button variant="default" onClick={() => window.history.back()}>
-              Go Back
-            </Button>
-          </CardFooter>
-        </Card>
-      </section>
-    );
+    return <Navigate to={"/not-found"} />;
   }
-
   return (
     <div className="bg-white">
       {/* Sticky Buy Button */}

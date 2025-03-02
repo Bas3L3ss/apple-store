@@ -4,7 +4,7 @@ import ProductGrid from "../components/product/product-home-grid";
 import { CardCarousel } from "../components/ui/card-carousel";
 import { SkiperCard } from "../components/ui/skiper-card";
 import { cn } from "../lib/utils";
-import { SkiperMarquee } from "../components/ui/skiper-marquee";
+import { AppleProductMarquee } from "../components/ui/skiper-marquee";
 
 const Home = () => {
   return (
@@ -24,7 +24,7 @@ const Home = () => {
       </article>
       <article className="relative w-full">
         <div className="select-none absolute w-full">
-          <SkiperMarquee />
+          <AppleProductMarquee />
         </div>
         <div className=" p-2">
           <div className="mb-8 mx-auto pt-4 md:container">

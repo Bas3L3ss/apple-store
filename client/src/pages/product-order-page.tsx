@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef } from "react";
-import { useParams } from "react-router-dom";
+import { Navigate, useParams } from "react-router-dom";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { ShoppingBag, ChevronDown } from "lucide-react";
 import {
@@ -211,7 +211,6 @@ const BuyProduct = () => {
   console.log(slug);
 
   const product = searchProducts[0];
-
   const [activeImage, setActiveImage] = useState(0);
   const { handleSelect, selectedOptions, totalPrice } =
     useProductConfiguration(product);
@@ -236,6 +235,9 @@ const BuyProduct = () => {
   const scrollToConfig = () => {
     configSectionRef.current?.scrollIntoView({ behavior: "smooth" });
   };
+  if (!product) {
+    return <Navigate to={"/not-found"} />;
+  }
 
   return (
     <div className="min-h-screen bg-white">
