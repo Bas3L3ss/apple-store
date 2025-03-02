@@ -10,11 +10,18 @@ export interface User {
 // each productOption can only have one data like only one color or material not both, meaning material -> color
 export interface ProductOption {
   id: string;
-  // reference for a specific product
-  productId: string;
+  productId: string; // Reference for a specific product
+
+  // Selection attributes (optional based on product type)
   color?: string;
   material?: string;
-  //i can add more specification in the future
+  storage?: string;
+  size?: string;
+  processor?: string;
+  accessories?: string;
+  carrier?: string;
+
+  // Pricing & Availability
   price: number;
   stock: number;
 }
@@ -26,13 +33,22 @@ export interface Product {
   productImages: string[];
   slug?: string;
   basePrice: number;
-  material: string[];
-  color: string[];
   category: ProductCategory;
-  createdAt: Date;
   stock: number;
-  updatedAt: Date;
+  productSelectionStep: ProductSelectionTypes[];
   productOptions: ProductOption[];
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export enum ProductSelectionTypes {
+  Color = "color",
+  Material = "material",
+  Storage = "storage",
+  Size = "size",
+  Processor = "processor", // M1, M2, M3
+  Accessories = "accessories", // phone case, apple pencils, magic keyboard - optional
+  Carrier = "carrier", // AT&T, Verizon, etc. (for iPhones)
 }
 
 export enum ProductCategory {

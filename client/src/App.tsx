@@ -13,9 +13,9 @@ function App() {
       <main className="min-h-[100vw] pt-16 ">
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/shop" element={<ShopPage />} />
+          {/* <Route path="/shop" element={<ShopPage />} /> */}
           <Route path="/shop/:slug" element={<ItemsOrder />} />
-          <Route path="/more/:slug" element={<ItemDetails />} />
+          {/* <Route path="/more/:slug" element={<ItemDetails />} /> */}
         </Routes>
       </main>
       <Footer />
