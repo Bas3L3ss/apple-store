@@ -88,6 +88,8 @@ const ItemDetails = () => {
   const scrollGallery = (direction: string) => {
     if (galleryRef.current) {
       const scrollAmount = direction === "left" ? -400 : 400;
+      //@ts-expect-error: fix later
+      // TODOS: FIX THIS CAROUSEL
       galleryRef.current.scrollBy({ left: scrollAmount, behavior: "smooth" });
     }
   };
@@ -338,6 +340,8 @@ const ItemDetails = () => {
                     setActiveImageIndex(index);
                     if (galleryRef.current) {
                       const scrollPosition = index * (350 + 24); // width + gap
+                      // TODOS: FIX THIS CAROUSEL
+                      //@ts-expect-error: Fix later
                       galleryRef.current.scrollTo({
                         left: scrollPosition,
                         behavior: "smooth",
