@@ -17,4 +17,6 @@ router.post("/login", [], login, errorHandler);
 // GET at path: http://localhost:8080/auth/login
 router.get("/login", [checkBearerToken], loginWithToken, errorHandler);
 
+router.put("/account", [checkBearerToken, editAccount], errorHandler);
+
 export default router;

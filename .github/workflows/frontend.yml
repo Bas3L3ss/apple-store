@@ -24,7 +24,7 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: "npm"
           cache-dependency-path: "./client/package-lock.json"
-      - run: npm ci
+      - run: npm ci --legacy-peer-deps
       - run: npm run build
       - name: Run TypeScript Type Check
         run: npm run tsc
