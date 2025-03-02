@@ -4,6 +4,7 @@ import errorHandler from "../middlewares/error-handler";
 import register from "../controllers/auth/register";
 import login from "../controllers/auth/login";
 import loginWithToken from "../controllers/auth/login-with-token";
+import editAccount from "../controllers/auth/edit-account";
 
 // initialize router
 const router = express.Router();
