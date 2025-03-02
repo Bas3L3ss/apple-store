@@ -9,7 +9,8 @@ const register: RequestHandler = async (req, res, next) => {
     const validationError = await joi.validate(
       {
         username: joi.instance.string().required(),
-        password: joi.instance.string().required(),
+        email: joi.instance.string().email().required(),
+        password: joi.instance.string().min(6).required(),
       },
       req.body
     );
@@ -18,36 +19,41 @@ const register: RequestHandler = async (req, res, next) => {
       return next(validationError);
     }
 
-    const { username, password } = req.body;
+    const { username, email, password } = req.body;
 
-    // Verify account username as unique
-    const found = await Account.findOne({ username });
+    const existingUser = await Account.findOne({
+      $or: [{ username }, { email }],
+    });
 
-    if (found) {
+    if (existingUser) {
       return next({
         statusCode: 400,
-        message: 'An account already exists with that "username"',
+        message: "An account with this username or email already exists",
       });
     }
 
-    // Encrypt password
-    const hash = crypt.hash(password);
+    const hashedPassword = await crypt.hash(password);
 
-    // Create account
-    const account = new Account({ username, password: hash });
-    await account.save();
+    const newAccount = new Account({
+      username,
+      email,
+      password: hashedPassword,
+      verified: false,
+    });
 
-    // Generate access token
-    const token = jwt.signToken({ uid: account._id, role: account.role });
+    await newAccount.save();
 
-    // Exclude password from response
-    const { password: _, ...data } = account.toObject();
+    const token = jwt.signToken({ uid: newAccount._id, role: newAccount.role });
+
+    const { password: _, ...data } = newAccount.toObject();
 
     res.status(201).json({
-      message: "Succesfully registered",
+      message: "Successfully registered",
       data,
       token,
     });
+
+    // TODO: Send a verification email here (optional)
   } catch (error) {
     next(error);
   }

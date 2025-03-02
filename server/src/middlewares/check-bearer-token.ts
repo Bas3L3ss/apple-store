@@ -6,7 +6,7 @@ interface AuthenticatedRequest extends Request {
   auth?: any; // Adjust this type based on the token payload
 }
 
-const checkBearerToken: RequestHandler = (
+const checkBearerToken: RequestHandler = async (
   req: AuthenticatedRequest, // Use the extended type
   res: Response,
   next: NextFunction
@@ -21,7 +21,7 @@ const checkBearerToken: RequestHandler = (
       });
     }
 
-    const auth = jwt.verifyToken(token);
+    const auth = await jwt.verifyToken(token);
 
     if (!auth) {
       return next({
@@ -29,11 +29,10 @@ const checkBearerToken: RequestHandler = (
         message: "Invalid token",
       });
     }
-
-    req.auth = typeof auth === "string" ? JSON.parse(auth) : auth; // Now `auth` is a recognized property
+    req.auth = typeof auth === "string" ? JSON.parse(auth) : auth;
 
     next();
-  } catch (error) {
+  } catch {
     next({
       statusCode: 401,
       message: "Invalid token",

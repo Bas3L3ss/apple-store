@@ -1,5 +1,7 @@
 import jsonwebtoken from "jsonwebtoken";
 import { JWT_SECRET } from "../constants/index";
+import { Account as AccountType } from "../@types";
+import Account from "../models/Account";
 
 class JWT {
   instance: typeof jsonwebtoken = jsonwebtoken;
@@ -18,10 +20,18 @@ class JWT {
     return token;
   }
 
-  verifyToken(token: string) {
-    const auth = this.instance.verify(token, JWT_SECRET);
+  async verifyToken(token: string): Promise<AccountType | null> {
+    try {
+      const decoded = this.instance.verify(token, this.secret) as {
+        uid: string;
+      };
 
-    return auth;
+      const user = await Account.findById(decoded?.uid).select("-password"); // Exclude sensitive fields
+      return user;
+    } catch (error) {
+      console.error("Invalid Token:", error);
+      return null;
+    }
   }
 }
 

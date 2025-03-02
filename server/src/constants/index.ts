@@ -3,7 +3,6 @@ dotenv.config();
 const ORIGIN = "*";
 const PORT = process.env.PORT || 8080;
 
-console.log(process.env.MONGO_URI);
 const MONGO_URI =
   process.env.MONGO_URI ||
   "mongodb+srv://<username>:<password>@<cluster-name>.mongodb.net/<database-name>?retryWrites=true&w=majority";
