@@ -37,26 +37,26 @@ export default function ProductCard({ product }: ProductCardProps) {
           {formatPrice(product.basePrice)}
         </p>
 
-        {product.color && product.color.length > 0 && (
+        {product.productOptions && product.productOptions.length > 0 && (
           <div className="flex items-center gap-1 mt-3">
-            {product.color.map((color) => (
+            {product.productOptions.map((color) => (
               <div
-                key={color}
+                key={color.id}
                 className="w-4 h-4 rounded-full border border-gray-300"
                 style={{
-                  backgroundColor: color.toLowerCase().includes("silver")
+                  backgroundColor: color.color!.toLowerCase().includes("silver")
                     ? "#C0C0C0"
-                    : color.toLowerCase().includes("space gray")
+                    : color.color!.toLowerCase().includes("space gray")
                     ? "#36454F"
-                    : color.toLowerCase().includes("rose gold")
+                    : color.color!.toLowerCase().includes("rose gold")
                     ? "#B76E79"
-                    : color.toLowerCase().includes("black")
+                    : color.color!.toLowerCase().includes("black")
                     ? "#000000"
-                    : color.toLowerCase().includes("white")
+                    : color.color!.toLowerCase().includes("white")
                     ? "#FFFFFF"
-                    : color.toLowerCase().includes("blue")
+                    : color.color!.toLowerCase().includes("blue")
                     ? "#0000FF"
-                    : color.toLowerCase().includes("titanium")
+                    : color.color!.toLowerCase().includes("titanium")
                     ? "#878681"
                     : "#CCCCCC",
                 }}

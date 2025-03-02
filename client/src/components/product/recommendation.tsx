@@ -4,7 +4,7 @@ import { useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { searchProducts } from "@/src/lib/mockData";
 import { Product, ProductCategory } from "@/src/@types";
-import { formatPrice } from "@/src/lib/utils";
+import { checkIsNew, formatPrice } from "@/src/lib/utils";
 
 export default function RecommendationCarousel() {
   const carouselRef = useRef<HTMLDivElement>(null);
@@ -103,9 +103,7 @@ export default function RecommendationCarousel() {
   );
 }
 const SliderCard = ({ product }: { product: Product }) => {
-  const isNewProduct =
-    //@ts-expect-error : i don't know how to deal with this problem tho it's working so i'll let it slide
-    new Date() - new Date(product.createdAt) < 30 * 24 * 60 * 60 * 1000;
+  const isNewProduct = checkIsNew(product.createdAt);
   return (
     <motion.a
       href={`/shop/${product.slug ?? product.name}`}
@@ -130,26 +128,26 @@ const SliderCard = ({ product }: { product: Product }) => {
 
       {/* Color Options */}
       <div>
-        {product.color && product.color.length > 0 && (
+        {product.productOptions && product.productOptions.length > 0 && (
           <div className="flex items-center gap-1   justify-center mt-[7px]">
-            {product.color.map((color: string) => (
+            {product.productOptions.map((color) => (
               <div
-                key={color}
+                key={color.id}
                 className="size-[12px] rounded-full border border-gray-300"
                 style={{
-                  backgroundColor: color.toLowerCase().includes("silver")
+                  backgroundColor: color.color!.toLowerCase().includes("silver")
                     ? "#C0C0C0"
-                    : color.toLowerCase().includes("space gray")
+                    : color.color!.toLowerCase().includes("space gray")
                     ? "#36454F"
-                    : color.toLowerCase().includes("rose gold")
+                    : color.color!.toLowerCase().includes("rose gold")
                     ? "#B76E79"
-                    : color.toLowerCase().includes("black")
+                    : color.color!.toLowerCase().includes("black")
                     ? "#000000"
-                    : color.toLowerCase().includes("white")
+                    : color.color!.toLowerCase().includes("white")
                     ? "#FFFFFF"
-                    : color.toLowerCase().includes("blue")
+                    : color.color!.toLowerCase().includes("blue")
                     ? "#0000FF"
-                    : color.toLowerCase().includes("titanium")
+                    : color.color!.toLowerCase().includes("titanium")
                     ? "#878681"
                     : "#CCCCCC",
                 }}

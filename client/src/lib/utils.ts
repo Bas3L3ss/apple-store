@@ -22,3 +22,8 @@ export const formatPrice = (
 export const axios = Axios.create({
   baseURL: "http://localhost:3000",
 });
+
+export const checkIsNew = (createdAt: string | Date) => {
+  //@ts-expect-error : i don't know how to deal with this problem tho it's working so i'll let it slide
+  return new Date() - new Date(createdAt) < 30 * 24 * 60 * 60 * 1000;
+};
