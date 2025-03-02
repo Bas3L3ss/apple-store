@@ -1,7 +1,6 @@
 import { Request, Response, NextFunction } from "express";
-import { Order, OrderStatus } from "../../@types";
+import { Order } from "../../@types";
 import { OrderModel } from "../../models/Order";
-import Account from "../../models/Account";
 
 export const CreateOrder = async (
   req: Request,
@@ -9,38 +8,14 @@ export const CreateOrder = async (
   next: NextFunction
 ): Promise<void> => {
   try {
-    const user = req.auth; // Assuming `req.auth` is populated via authentication middleware
-
-    if (!user) {
-      return next({ statusCode: 401, message: "Unauthorized" });
-    }
-
-    // ✅ Ensure only Stripe or verified users can create an order
-    if (user.role !== "admin" && user.role !== "stripe") {
-      const existingUser = await Account.findById(user.id);
-      if (!existingUser || !existingUser.verified) {
-        return next({ statusCode: 403, message: "Account not verified" });
-      }
-    }
-
-    // ✅ Ensure order data is valid and bind `orderItems`
-    const { orderItems, totalAmount, paymentIntentId } = req.body;
-    if (!orderItems || !Array.isArray(orderItems) || orderItems.length === 0) {
-      return next({ statusCode: 400, message: "Invalid order items" });
-    }
-
-    // ✅ Bind `userId` to order
-    const orderData: Order = {
-      userId: user.id,
-      orderItems,
-      totalAmount,
-      paymentIntentId,
-      status: OrderStatus.PREPARING, // Default status
-    };
-
+    // TODO 1: Only stripe can call this or atleast allow to create Order, to avoid normal people creating order without paying
+    // TODO 2: Bind OrderItems (meaning req.body has more than just Order)
+    // TODO 3: Bind userId
+    // TODO 4: Current user account must be verified to create one
+    const user = req.auth;
+    const orderData: Order = req.body;
     const order = new OrderModel(orderData);
     await order.save();
-
     res.status(201).json({ success: true, data: order });
   } catch (error) {
     next(error);
