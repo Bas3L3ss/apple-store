@@ -77,17 +77,11 @@ const Cart: React.FC = () => {
           ) : (
             <div className="mt-6 space-y-4">
               <Link
-                to="/login"
+                to="/auth"
                 className="block w-full bg-blue-600 text-white py-3 px-4 rounded-md font-medium text-center hover:bg-blue-700 transition-colors"
               >
                 Sign in to Checkout
               </Link>
-              <button
-                onClick={handleCheckout}
-                className="w-full bg-gray-100 text-gray-800 py-3 px-4 rounded-md font-medium hover:bg-gray-200 transition-colors"
-              >
-                Continue as Guest
-              </button>
             </div>
           )}
 

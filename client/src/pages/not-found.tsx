@@ -13,12 +13,12 @@ const NotFound = () => {
       <Card className="w-full max-w-md">
         <CardHeader>
           <CardTitle className="text-3xl font-semibold text-center">
-            Product not found
+            Page/Product not found
           </CardTitle>
         </CardHeader>
         <CardContent>
           <p className="text-center text-gray-600">
-            The product you're looking for doesn't exist.
+            The page/product you're looking for doesn't exist.
           </p>
         </CardContent>
         <CardFooter className="justify-center">

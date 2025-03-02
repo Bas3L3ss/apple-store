@@ -12,6 +12,9 @@ import { Support } from "./pages/support";
 import Cart from "./pages/cart";
 import OrdersPage from "./pages/order";
 import OrderDetailsPage from "./pages/one-order";
+import ProfilePage from "./pages/profile";
+import AppleAuthWrapper from "./provider/AuthWrapper";
+import GuestOnlyWrapper from "./provider/GuestOnlyWrapper";
 
 function App() {
   return (
@@ -23,12 +26,48 @@ function App() {
           <Route path="/shop" element={<ShopPage />} />
           <Route path="/shop/:slug" element={<ItemsOrder />} />
           <Route path="/more/:slug" element={<ItemDetails />} />
-          <Route path="/auth" element={<AppleAuthPage />} />
-          <Route path="/auth/forgot" element={<ForgotPasswordPage />} />
+          <Route
+            path="/auth"
+            element={
+              <GuestOnlyWrapper>
+                <AppleAuthPage />
+              </GuestOnlyWrapper>
+            }
+          />
+          <Route
+            path="/auth/forgot"
+            element={
+              <GuestOnlyWrapper>
+                <ForgotPasswordPage />
+              </GuestOnlyWrapper>
+            }
+          />
           <Route path="/support" element={<Support />} />
           <Route path="/cart" element={<Cart />} />
-          <Route path="/order" element={<OrdersPage />} />
-          <Route path="/order/:id" element={<OrderDetailsPage />} />
+          <Route
+            path="/order"
+            element={
+              <AppleAuthWrapper>
+                <OrdersPage />
+              </AppleAuthWrapper>
+            }
+          />
+          <Route
+            path="/order/:id"
+            element={
+              <AppleAuthWrapper>
+                <OrderDetailsPage />
+              </AppleAuthWrapper>
+            }
+          />
+          <Route
+            path="/profile"
+            element={
+              <AppleAuthWrapper>
+                <ProfilePage />
+              </AppleAuthWrapper>
+            }
+          />
 
           <Route path="*" element={<NotFound />} />
         </Routes>
