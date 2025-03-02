@@ -8,6 +8,7 @@ import Footer from "./components/footer";
 import NotFound from "./pages/not-found";
 import AppleAuthPage from "./pages/auth";
 import ForgotPasswordPage from "./pages/forgot-password-page";
+import { Support } from "./pages/support";
 
 function App() {
   return (
@@ -21,7 +22,9 @@ function App() {
           <Route path="/more/:slug" element={<ItemDetails />} />
           <Route path="/auth" element={<AppleAuthPage />} />
           <Route path="/auth/forgot" element={<ForgotPasswordPage />} />
-          <Route path="/not-found" element={<NotFound />} />
+          <Route path="/support" element={<Support />} />
+
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
       <Footer />

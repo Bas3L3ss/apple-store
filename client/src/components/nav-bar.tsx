@@ -19,6 +19,7 @@ import {
 } from "lucide-react";
 
 import { cn } from "@/src/lib/utils";
+import { useNavigate } from "react-router";
 
 const navigationItems = [
   { name: "Store", href: "" },
@@ -28,13 +29,14 @@ const navigationItems = [
   { name: "AirPods", href: "airpods" },
   { name: "AppleWatch", href: "apple_watch" },
   { name: "Accessories", href: "phonecase" },
-  { name: "Support", href: "support" },
 ];
 
 export default function Navbar() {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isShoppingBagOpen, setIsShoppingBagOpen] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  const navigate = useNavigate();
   useEffect(() => {
     if (isSearchOpen) {
       setIsShoppingBagOpen(false);
@@ -46,6 +48,19 @@ export default function Navbar() {
       setIsSearchOpen(false);
     }
   }, [isShoppingBagOpen]);
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setIsSearchOpen(false);
+        setIsShoppingBagOpen(false);
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, []);
   return (
     <header className="fixed top-0 left-0 right-0 z-50">
       <div className="relative">
@@ -68,6 +83,14 @@ export default function Navbar() {
                   </a>
                 </NavigationMenuItem>
               ))}
+              <NavigationMenuItem>
+                <a
+                  href={`/support`}
+                  className="text-[12px] font-normal text-black-200 transition-colors hover:text-black/80"
+                >
+                  Support
+                </a>
+              </NavigationMenuItem>
 
               <NavigationMenuItem className="flex items-center">
                 <Button
@@ -107,7 +130,7 @@ export default function Navbar() {
 
         <div
           className={cn(
-            "absolute top-full left-0 right-0 bg-black/95 backdrop-blur-xl transition-all duration-300 ease-in-out overflow-hidden",
+            "absolute top-full left-0 right-0   backdrop-blur-xl transition-all duration-300 ease-in-out overflow-hidden",
             isSearchOpen ? "max-h-[300px] opacity-100" : "max-h-0 opacity-0"
           )}
         >
@@ -116,14 +139,12 @@ export default function Navbar() {
               <Search className="absolute left-0 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" />
               <Input
                 placeholder="Search apple.com"
-                className="border-none bg-transparent pl-8 text-[22px] font-normal text-white placeholder:text-gray-400 focus-visible:ring-0"
+                className="border-none bg-transparent pl-8 text-[22px] font-normal   placeholder:text-gray-400 focus-visible:ring-0"
                 autoFocus={isSearchOpen}
               />
             </div>
             <div className="mt-8">
-              <h3 className="text-sm font-semibold text-gray-400">
-                Quick Links
-              </h3>
+              <h3 className="text-sm font-semibold  ">Quick Links</h3>
               <div className="mt-2 grid grid-cols-2 gap-4">
                 {[
                   "Visiting an Apple Store",
@@ -136,7 +157,7 @@ export default function Navbar() {
                   <a
                     key={link}
                     href={`/more/${link}`}
-                    className="text-sm text-gray-200 hover:text-white transition-colors duration-200"
+                    className="text-sm    transition-colors duration-200"
                   >
                     {link}
                   </a>
@@ -147,7 +168,7 @@ export default function Navbar() {
         </div>
         <div
           className={cn(
-            "absolute top-full left-0 right-0 bg-black/95 backdrop-blur-xl transition-all duration-300 ease-in-out overflow-hidden",
+            "absolute top-full left-0 right-0   backdrop-blur-xl transition-all duration-300 ease-in-out overflow-hidden",
             isShoppingBagOpen
               ? "max-h-[300px] opacity-100"
               : "max-h-0 opacity-0"
@@ -161,7 +182,7 @@ export default function Navbar() {
                     <User className="h-6 w-6 text-gray-300" />
                   </div>
                   <div>
-                    <p className="text-lg font-medium text-white">Apple User</p>
+                    <p className="text-lg font-medium  ">Apple User</p>
                     <p className="text-sm text-gray-400">
                       apple.user@example.com
                     </p>
@@ -170,28 +191,28 @@ export default function Navbar() {
                 <div className="grid grid-cols-2 gap-6">
                   <a
                     href="#"
-                    className="flex items-center space-x-2 text-gray-200 hover:text-white transition-colors duration-200"
+                    className="flex items-center space-x-2 text-gray-200    transition-colors duration-200"
                   >
                     <Package className="h-5 w-5" />
                     <span>Your Orders</span>
                   </a>
                   <a
                     href="#"
-                    className="flex items-center space-x-2 text-gray-200 hover:text-white transition-colors duration-200"
+                    className="flex items-center space-x-2 text-gray-200    transition-colors duration-200"
                   >
                     <Heart className="h-5 w-5" />
                     <span>Saved Items</span>
                   </a>
                   <a
                     href="#"
-                    className="flex items-center space-x-2 text-gray-200 hover:text-white transition-colors duration-200"
+                    className="flex items-center space-x-2 text-gray-200    transition-colors duration-200"
                   >
                     <Settings className="h-5 w-5" />
                     <span>Account Settings</span>
                   </a>
                   <a
                     href="#"
-                    className="flex items-center space-x-2 text-gray-200 hover:text-white transition-colors duration-200"
+                    className="flex items-center space-x-2 text-gray-200    transition-colors duration-200"
                     onClick={() => setIsAuthenticated(false)}
                   >
                     <LogOut className="h-5 w-5" />
@@ -201,7 +222,7 @@ export default function Navbar() {
               </>
             ) : (
               <>
-                <h2 className="text-xl font-medium text-white mb-4">
+                <h2 className="text-xl font-medium   mb-4">
                   Your bag is empty
                 </h2>
                 <p className="text-gray-400 mb-6">
@@ -210,14 +231,14 @@ export default function Navbar() {
                 <div className="flex flex-col space-y-4">
                   <Button
                     className="w-full bg-white text-black hover:bg-gray-200 transition-colors duration-200"
-                    onClick={() => setIsAuthenticated(true)}
+                    onClick={() => navigate("/auth")}
                   >
                     Sign In
                   </Button>
                   <div className="text-center">
                     <span className="text-sm text-gray-400">
                       Need an Apple ID?{" "}
-                      <a href="#" className="text-blue-400 hover:underline">
+                      <a href="/auth" className="text-blue-400 hover:underline">
                         Create one now
                       </a>
                     </span>
