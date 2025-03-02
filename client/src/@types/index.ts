@@ -9,6 +9,18 @@ export interface User {
   createdAt: Date;
   updatedAt: Date;
 }
+
+export interface Account {
+  username: string;
+  password: string;
+  role: "user" | "admin";
+  email: string;
+  avatar?: string;
+  verified: boolean;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
 // each productOption can only have one data like only one color or material not both, meaning material -> color
 export interface ProductOption {
   id: string;

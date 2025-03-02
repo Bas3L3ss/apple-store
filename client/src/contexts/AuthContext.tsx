@@ -5,6 +5,7 @@ import {
   useEffect,
   type PropsWithChildren,
   useMemo,
+  useCallback,
 } from "react";
 import { axios } from "@/src/lib/utils";
 import { User } from "@/src/@types";
@@ -17,6 +18,7 @@ interface Context {
   register: (payload: FormData) => Promise<unknown>;
   login: (payload: FormData) => Promise<unknown>;
   logout: () => void;
+  isLoading: boolean;
 }
 
 const initContext: Context = {
@@ -26,6 +28,7 @@ const initContext: Context = {
   register: async () => {},
   login: async () => {},
   logout: () => {},
+  isLoading: false,
 };
 
 // init context
@@ -38,50 +41,69 @@ export const useAuth = () => useContext(AuthContext);
 // export the provider
 export const AuthProvider = ({ children }: PropsWithChildren) => {
   const [token, setToken] = useState(
-    localStorage.getItem("token") || initContext.token
+    sessionStorage.getItem("token") || initContext.token
   );
+
+  useEffect(() => {
+    const storedToken = sessionStorage.getItem("token");
+    if (token !== storedToken) {
+      if (token) {
+        sessionStorage.setItem("token", token);
+      } else {
+        sessionStorage.removeItem("token");
+      }
+    }
+  }, [token]);
+
   const [account, setAccount] = useState(initContext.account);
   const [isLoggedIn, setIsLoggedIn] = useState(initContext.isLoggedIn);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const register = (formData: FormData) => {
-    return new Promise((resolve, reject) => {
-      axios
-        .post("/auth/register", formData)
-        .then(({ data: { data: accountData, token: accessToken } }) => {
-          setAccount(accountData);
-          setToken(accessToken);
-          setIsLoggedIn(true);
-          resolve(true);
-        })
-        .catch((error) => {
-          reject(error?.response?.data?.message || error.message);
-        });
-    });
-  };
+  const register = useCallback(async (formData: FormData) => {
+    setIsLoading(true);
+    try {
+      const {
+        data: { data: accountData, token: accessToken },
+      } = await axios.post("/auth/register", formData);
+      setAccount(accountData);
+      setToken(accessToken);
+      setIsLoggedIn(true);
+      return true;
+    } catch (error) {
+      throw error?.response?.data?.message || error.message;
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
 
-  const login = (formData: FormData) => {
-    return new Promise((resolve, reject) => {
-      axios
-        .post("/auth/login", formData)
-        .then(({ data: { data: accountData, token: accessToken } }) => {
-          setAccount(accountData);
-          setToken(accessToken);
-          setIsLoggedIn(true);
-          resolve(true);
-        })
-        .catch((error) => {
-          reject(error?.response?.data?.message || error.message);
-        });
-    });
-  };
+  const login = useCallback(async (formData: FormData) => {
+    setIsLoading(true);
+    try {
+      const {
+        data: { data: accountData, token: accessToken },
+      } = await axios.post("/auth/login", formData);
+      setAccount(accountData);
+      setToken(accessToken);
+      setIsLoggedIn(true);
+      return true;
+    } catch (error) {
+      throw error?.response?.data?.message || error.message;
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
 
-  const logout = () => {
+  const logout = useCallback(() => {
+    sessionStorage.removeItem("token");
     setIsLoggedIn(false);
     setAccount(null);
     setToken(null);
-  };
+  }, []);
 
-  const loginWithToken = async () => {
+  const loginWithToken = useCallback(async () => {
+    if (!token) return; // Fix: Use token from state instead of passing it as an argument
+
+    setIsLoading(true);
     try {
       const {
         data: { data: accountData, token: accessToken },
@@ -90,38 +112,27 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
           authorization: `Bearer ${token}`,
         },
       });
+
       setAccount(accountData);
-      setToken(accessToken);
+      if (accessToken !== token) setToken(accessToken);
       setIsLoggedIn(true);
     } catch (error: unknown) {
       console.error(error);
-
       if (isAxiosError(error) && error.response?.status === 401) {
         setToken(null);
       }
+    } finally {
+      setIsLoading(false);
     }
-  };
+  }, [token]); // Fix: Memoized with correct dependency
 
-  // This side effect keeps local storage updated with recent token value,
-  // making sure it can be re-used upon refresh or re-open browser
-  useEffect(() => {
-    if (token) {
-      localStorage.setItem("token", token);
-    } else {
-      localStorage.removeItem("token");
-    }
-  }, [token]);
-
-  // This side effect runs only if we have a token, but no account or logged-in boolean.
-  // This "if" statement is "true" only when refreshed, or re-opened the browser,
-  // if true, it will then ask the backend for the account information (and will get them if the token hasn't expired)
   useEffect(() => {
     if (!isLoggedIn && !account && token) loginWithToken();
-  }, [isLoggedIn, account, token]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [isLoggedIn, account, token, loginWithToken]); // No redundant dependencies
 
   const value = useMemo(
-    () => ({ token, account, isLoggedIn, register, login, logout }),
-    [token, account, isLoggedIn]
+    () => ({ token, account, isLoggedIn, register, login, logout, isLoading }),
+    [token, account, isLoggedIn, isLoading, register, login, logout]
   );
 
   return <Provider value={value}>{children}</Provider>;
