@@ -11,9 +11,7 @@ import {
   Search,
   ShoppingBag,
   X,
-  User,
   Package,
-  Heart,
   Settings,
   LogOut,
 } from "lucide-react";
@@ -64,7 +62,7 @@ export default function Navbar() {
     };
   }, []);
   return (
-    <header className="fixed top-0 left-0 right-0 z-50">
+    <header className="fixed  top-0 left-0 right-0 z-50">
       <div className="relative">
         <nav className="bg-white/80 backdrop-blur-xl">
           <NavigationMenu className="mx-auto max-w-[1024px] flex items-center justify-center px-4 py-3">
@@ -132,7 +130,7 @@ export default function Navbar() {
 
         <div
           className={cn(
-            "absolute top-full left-0 right-0   backdrop-blur-xl transition-all duration-300 ease-in-out overflow-hidden",
+            "absolute top-full left-0 right-0 z-50   backdrop-blur-xl transition-all duration-300 ease-in-out overflow-hidden",
             isSearchOpen ? "max-h-[300px] opacity-100" : "max-h-0 opacity-0"
           )}
         >
@@ -170,7 +168,7 @@ export default function Navbar() {
         </div>
         <div
           className={cn(
-            "absolute top-full left-0 right-0   backdrop-blur-xl transition-all duration-300 ease-in-out overflow-hidden",
+            "absolute top-full left-0 right-0  z-50  backdrop-blur-xl transition-all duration-300 ease-in-out overflow-hidden",
             isShoppingBagOpen
               ? "max-h-[300px] opacity-100"
               : "max-h-0 opacity-0"

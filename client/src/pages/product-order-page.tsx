@@ -29,6 +29,8 @@ import MaterialSelection from "../components/product/selection-step/material-sel
 import ProcessorSelection from "../components/product/selection-step/processor-selection";
 import { checkIsNew, formatPrice } from "../lib/utils";
 import { useProductConfiguration } from "../hooks/use-product-configuration";
+import { CartInput, useCartStore } from "../store/useCartStore";
+import { useAuth } from "../contexts/AuthContext";
 
 const mockProduct: Product = {
   id: "iphone-15-pro",
@@ -210,6 +212,10 @@ const BuyProduct = () => {
   const { slug } = useParams();
   console.log(slug);
 
+  const { account } = useAuth();
+
+  const { addItem } = useCartStore();
+
   const product = searchProducts[0];
   const [activeImage, setActiveImage] = useState(0);
   const { handleSelect, selectedOptions, totalPrice } =
@@ -235,13 +241,36 @@ const BuyProduct = () => {
   const scrollToConfig = () => {
     configSectionRef.current?.scrollIntoView({ behavior: "smooth" });
   };
+
+  const handleAddCart = () => {
+    const cartOption: string[] = [];
+    let price = product.basePrice;
+
+    for (const prodOption of product.productOptions) {
+      for (const [key, selectedOption] of Object.entries(selectedOptions)) {
+        if (prodOption[key as keyof typeof prodOption] === selectedOption) {
+          cartOption.push(prodOption.id);
+          price += prodOption.price;
+        }
+      }
+    }
+
+    const cartItem: CartInput = {
+      selectedOptions: cartOption,
+      totalPrice: price,
+      productId: product.id,
+      userId: account?._id,
+    };
+    addItem(cartItem);
+  };
+
   if (!product) {
     return <Navigate to={"/not-found"} />;
   }
 
   return (
     <div className="min-h-screen bg-white">
-      <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100 py-4">
+      <header className="sticky top-0 z-30  bg-white/80 backdrop-blur-md border-b border-gray-100 py-4 pt-14">
         <div className="container mx-auto px-4 md:px-8 flex justify-between items-center">
           <h1 className="text-xl font-semibold text-gray-900">
             {product.name}
@@ -253,7 +282,7 @@ const BuyProduct = () => {
             <Button
               className="bg-blue-600 hover:bg-blue-700 rounded-full"
               disabled={!isLastStepSelected}
-              onClick={() => console.log("Added to bag", selectedOptions)}
+              onClick={handleAddCart}
             >
               <ShoppingBag className="mr-2 h-4 w-4" />
               <span className="hidden md:inline-block">Add to Bag</span>
@@ -623,7 +652,7 @@ const BuyProduct = () => {
               <Button
                 className="bg-blue-600 hover:bg-blue-700 rounded-full px-8"
                 disabled={!isLastStepSelected}
-                onClick={() => console.log("Added to bag", selectedOptions)}
+                onClick={handleAddCart}
               >
                 <ShoppingBag className="mr-2 h-4 w-4" /> Add to Bag
               </Button>

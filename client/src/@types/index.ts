@@ -78,7 +78,7 @@ export interface CartItem {
   id: string;
   productId: string;
   selectedOptions: string[];
-  userId: string;
+  userId?: string;
   quantity: number;
   totalPrice: number;
 }

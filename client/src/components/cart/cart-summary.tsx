@@ -5,11 +5,7 @@ import { useCartStore } from "@/src/store/useCartStore";
 export const CartSummary: React.FC = () => {
   const { items } = useCartStore();
 
-  const subtotal = items.reduce(
-    //@ts-expect-error: will fix later
-    (total, item) => total + item.price * item.quantity,
-    0
-  );
+  const subtotal = items.reduce((total, item) => total + item.totalPrice, 0);
   const tax = subtotal * 0.0825; // 8.25% tax rate
   const shipping = subtotal > 0 ? 9.99 : 0;
   const total = subtotal + tax + shipping;

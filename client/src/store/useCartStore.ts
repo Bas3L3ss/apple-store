@@ -1,12 +1,20 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import { CartItem, Product } from "../@types";
+import { CartItem } from "../@types";
+import { v4 as uuidV4 } from "uuid";
+
+export interface CartInput {
+  selectedOptions: string[];
+  totalPrice: number;
+  productId: string;
+  userId?: string;
+}
 
 interface CartState {
   items: CartItem[];
-  addItem: (product: Product) => void;
+  addItem: (product: CartInput) => void;
   removeItem: (productId: string) => void;
-  updateQuantity: (productId: string, quantity: number) => void;
+  updateQuantity: (productId: string, quantity: -1 | 1) => void;
   clearCart: () => void;
   syncGuestCart: () => void;
   rejectGuestCart: () => void;
@@ -19,38 +27,68 @@ export const useCartStore = create<CartState>()(
       items: [],
       hasGuestCart: false,
 
-      addItem: (product: Product) => {
+      addItem: (cart: CartInput) => {
         const { items } = get();
-        const existingItem = items.find((item) => item.id === product.id);
-
+        console.log(items);
+        const existingItem = items.find(
+          (item) =>
+            item.productId === cart.productId &&
+            JSON.stringify(item.selectedOptions.sort()) ===
+              JSON.stringify(cart.selectedOptions.sort())
+        );
         if (existingItem) {
           set({
             items: items.map((item) =>
-              item.id === product.id
-                ? { ...item, quantity: item.quantity + 1 }
+              item.productId === cart.productId &&
+              JSON.stringify(item.selectedOptions.sort()) ===
+                JSON.stringify(cart.selectedOptions.sort())
+                ? {
+                    ...item,
+                    quantity: item.quantity + 1,
+                    totalPrice:
+                      item.totalPrice + item.totalPrice / item.quantity,
+                  }
                 : item
             ),
           });
         } else {
-          // @ts-expect-error: Placeholder
-          set({ items: [...items, { ...product, quantity: 1 }] });
+          set({
+            items: [
+              ...items,
+              { ...cart, quantity: 1, id: uuidV4(), userId: cart.userId },
+            ],
+          });
         }
       },
 
-      removeItem: (productId: string) => {
-        set({ items: get().items.filter((item) => item.id !== productId) });
+      removeItem: (cartId: string) => {
+        set({ items: get().items.filter((item) => item.id !== cartId) });
       },
 
-      updateQuantity: (productId: string, quantity: number) => {
-        if (quantity <= 0) {
-          get().removeItem(productId);
-          return;
-        }
+      updateQuantity: (cartId: string, change: -1 | 1) => {
+        //@ts-expect-error: that's fine
+        set((state) => {
+          const updatedItems = state.items
+            .map((item) => {
+              if (item.id === cartId) {
+                const newQuantity = item.quantity + change;
 
-        set({
-          items: get().items.map((item) =>
-            item.id === productId ? { ...item, quantity } : item
-          ),
+                // If quantity goes to 0 or below, remove the item
+                if (newQuantity <= 0) {
+                  return null; // Will be filtered out below
+                }
+
+                return {
+                  ...item,
+                  quantity: newQuantity,
+                  totalPrice: newQuantity * (item.totalPrice / item.quantity), // Ensure per-item price stays correct
+                };
+              }
+              return item;
+            })
+            .filter(Boolean); // Remove null values (items with quantity <= 0)
+
+          return { items: updatedItems };
         });
       },
 
