@@ -19,17 +19,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Edit, Loader2, Plus, Trash2 } from "lucide-react";
+import { Loader2 } from "lucide-react";
 
-import { Button } from "@/src/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/src/components/ui/card";
 import { Separator } from "@/src/components/ui/separator";
 import {
   AlertDialog,
@@ -45,6 +36,7 @@ import { axios } from "../lib/utils";
 import { Product, ProductOption } from "../@types";
 import ProductsSection from "../components/dashboard/product-section";
 import ProductOptionsSection from "../components/dashboard/product-options-section";
+import { Outlet } from "react-router";
 
 export default function CMS() {
   const [products, setProducts] = useState<Product[]>([]);
@@ -124,6 +116,7 @@ export default function CMS() {
           />
         </div>
       )}
+      <Outlet />
 
       <AlertDialog
         open={!!deleteItem}

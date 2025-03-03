@@ -14,7 +14,7 @@ export interface Product extends Document {
   name: string;
   description: string;
   productImages: string[];
-  slug?: string;
+  slug: string;
   basePrice: number;
   category: string;
   stock: number;

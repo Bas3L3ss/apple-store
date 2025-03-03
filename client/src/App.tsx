@@ -17,6 +17,8 @@ import AppleAuthWrapper from "./provider/AuthWrapper";
 import GuestOnlyWrapper from "./provider/GuestOnlyWrapper";
 import AdminWrapper from "./provider/AdminWrapper";
 import CMS from "./pages/cms";
+import CreateProductPage from "./components/dashboard/product-form";
+import CreateProductOptionPage from "./components/dashboard/product-option-form";
 
 function App() {
   return (
@@ -81,7 +83,18 @@ function App() {
                   </AdminWrapper>
                 </AppleAuthWrapper>
               }
-            />
+            >
+              <Route path="products/create" element={<CreateProductPage />} />
+              <Route path="products/edit/:id" element={<CreateProductPage />} />
+              <Route
+                path="product-options/create"
+                element={<CreateProductOptionPage />}
+              />
+              <Route
+                path="product-options/edit/:id"
+                element={<CreateProductOptionPage />}
+              />
+            </Route>
             <Route path="*" element={<NotFound />} />
           </Routes>
         </main>

@@ -66,7 +66,7 @@ export default function ProductOptionsSection({
                 </div>
                 <div className="flex gap-2">
                   <Button variant="ghost" size="icon" asChild>
-                    <Link to={`/dashboard/product-options/edit/${option.id}`}>
+                    <Link to={`/dashboard/product-options/edit/${option.id} `}>
                       <Edit className="h-4 w-4" />
                       <span className="sr-only">Edit</span>
                     </Link>
