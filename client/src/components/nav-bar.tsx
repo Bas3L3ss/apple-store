@@ -16,10 +16,11 @@ import {
   LogOut,
 } from "lucide-react";
 
-import { cn } from "@/src/lib/utils";
-import { useNavigate } from "react-router";
+import { cn, formatPrice } from "@/src/lib/utils";
+import { Link, useNavigate } from "react-router";
 import { useAuth } from "../contexts/AuthContext";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
+import { useCartStore } from "../store/useCartStore";
 
 const navigationItems = [
   { name: "Store", href: "" },
@@ -35,6 +36,8 @@ export default function Navbar() {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isShoppingBagOpen, setIsShoppingBagOpen] = useState(false);
   const { isLoggedIn: isAuthenticated, logout, account } = useAuth();
+  const { items } = useCartStore();
+  const subtotal = items.reduce((total, item) => total + item.totalPrice, 0);
 
   const navigate = useNavigate();
   useEffect(() => {
@@ -228,11 +231,28 @@ export default function Navbar() {
               </>
             ) : (
               <>
-                <h2 className="text-xl font-medium   mb-4">
-                  Your bag is empty
+                <h2 className="text-4xl font-medium mb-4">
+                  {items.length === 0 ? (
+                    "Your bag is empty"
+                  ) : (
+                    <span className="inline-flex flex-col">
+                      <span className=" ">
+                        You have {items.length} cart{items.length != 1 && "s"}.
+                      </span>
+                      <span className="text-base text-muted-foreground">
+                        Estimated total: {formatPrice(subtotal)}
+                      </span>
+                      <Link
+                        to="/cart"
+                        className="text-sm underline hover:text-blue-400"
+                      >
+                        go to your cart
+                      </Link>
+                    </span>
+                  )}
                 </h2>
                 <p className="text-gray-400 mb-6">
-                  Sign in to see your saved items or continue shopping.
+                  Sign in to see your account cart or stay with guest cart.
                 </p>
                 <div className="flex flex-col space-y-4">
                   <Button

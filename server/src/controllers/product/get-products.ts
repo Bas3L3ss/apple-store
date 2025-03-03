@@ -11,7 +11,6 @@ export const GetProducts = async (
       search?: string;
       category?: string;
     };
-
     const filter: Record<string, any> = {};
 
     // Full-text search on name & description

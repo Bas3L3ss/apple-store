@@ -55,8 +55,8 @@ export default function CMS() {
           axios.get("/products"),
           axios.get("/product-options"),
         ]);
-        setProducts(productsRes.data);
         setProductOptions(optionsRes.data);
+        setProducts(productsRes.data.data);
       } catch (error) {
         console.error("Error fetching data:", error);
       } finally {
@@ -65,6 +65,8 @@ export default function CMS() {
     };
     fetchData();
   }, []);
+
+  //TODO: Implement deletion for product and its options
 
   const handleDelete = async () => {
     if (!deleteItem) return;
@@ -132,12 +134,7 @@ export default function CMS() {
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction
-              onClick={handleDelete}
-              className="bg-destructive text-destructive-foreground"
-            >
-              Delete
-            </AlertDialogAction>
+            <AlertDialogAction onClick={handleDelete}>Delete</AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>

@@ -20,6 +20,7 @@ export default function ProductsSection({
   products: Product[];
   onDeleteClick: (id: string) => void;
 }) {
+  console.log(products);
   return (
     <Card>
       <CardHeader className="pb-3">
@@ -45,7 +46,7 @@ export default function ProductsSection({
           <ul className="space-y-3">
             {products.map((product) => (
               <li
-                key={product.id}
+                key={product._id}
                 className="flex items-center justify-between p-3 bg-muted/40 rounded-md"
               >
                 <div>

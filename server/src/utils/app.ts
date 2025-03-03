@@ -4,6 +4,7 @@ import { ORIGIN } from "../constants/index";
 import morgan from "morgan";
 // initialize app
 const app = express();
+
 console.log(process.env.NODE_ENV);
 if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
