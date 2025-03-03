@@ -20,6 +20,8 @@ import {
 
 import { cn } from "@/src/lib/utils";
 import { useNavigate } from "react-router";
+import { useAuth } from "../contexts/AuthContext";
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 
 const navigationItems = [
   { name: "Store", href: "" },
@@ -34,7 +36,7 @@ const navigationItems = [
 export default function Navbar() {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isShoppingBagOpen, setIsShoppingBagOpen] = useState(false);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const { isLoggedIn: isAuthenticated, logout, account } = useAuth();
 
   const navigate = useNavigate();
   useEffect(() => {
@@ -175,45 +177,51 @@ export default function Navbar() {
           )}
         >
           <div className="mx-auto max-w-[680px] px-4 py-12">
-            {isAuthenticated ? (
+            {isAuthenticated && account ? (
               <>
                 <div className="flex items-center space-x-4 mb-6">
-                  <div className="h-12 w-12 rounded-full bg-gray-800 flex items-center justify-center">
-                    <User className="h-6 w-6 text-gray-300" />
+                  <div className="h-12 w-12 rounded-full   flex items-center justify-center">
+                    <Avatar className="size-12     ">
+                      <AvatarImage
+                        src={account?.avatar || "/api/placeholder/64/64"}
+                        alt={account?.username}
+                      />
+                      <AvatarFallback>
+                        {account?.username?.charAt(0) || "U"}
+                      </AvatarFallback>
+                    </Avatar>
                   </div>
                   <div>
-                    <p className="text-lg font-medium  ">Apple User</p>
-                    <p className="text-sm text-gray-400">
-                      apple.user@example.com
-                    </p>
+                    <p className="text-lg font-medium  ">{account.username}</p>
+                    <p className="text-sm text-gray-400">{account.email}</p>
                   </div>
                 </div>
                 <div className="grid grid-cols-2 gap-6">
                   <a
-                    href="#"
-                    className="flex items-center space-x-2 text-gray-200    transition-colors duration-200"
+                    href="/order"
+                    className="flex items-center space-x-2      transition-colors duration-200"
                   >
                     <Package className="h-5 w-5" />
                     <span>Your Orders</span>
                   </a>
                   <a
-                    href="#"
-                    className="flex items-center space-x-2 text-gray-200    transition-colors duration-200"
+                    href="/cart"
+                    className="flex items-center space-x-2      transition-colors duration-200"
                   >
-                    <Heart className="h-5 w-5" />
-                    <span>Saved Items</span>
+                    <ShoppingBag className="h-5 w-5" />
+                    <span>Your Cart</span>
                   </a>
                   <a
-                    href="#"
-                    className="flex items-center space-x-2 text-gray-200    transition-colors duration-200"
+                    href="/profile"
+                    className="flex items-center space-x-2      transition-colors duration-200"
                   >
                     <Settings className="h-5 w-5" />
                     <span>Account Settings</span>
                   </a>
                   <a
                     href="#"
-                    className="flex items-center space-x-2 text-gray-200    transition-colors duration-200"
-                    onClick={() => setIsAuthenticated(false)}
+                    className="flex items-center space-x-2      transition-colors duration-200"
+                    onClick={() => logout()}
                   >
                     <LogOut className="h-5 w-5" />
                     <span>Sign Out</span>

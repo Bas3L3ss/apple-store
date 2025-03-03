@@ -1,13 +1,9 @@
 import { type RequestHandler } from "express";
 import jwt from "../../utils/jwt";
-import Account from "../../models/Account";
 
 const loginWithToken: RequestHandler = async (req, res, next) => {
   try {
-    const { uid } = req.auth || {};
-
-    // Get account from DB, password is not verified because we're already token-authorized at this point
-    const account = await Account.findOne({ _id: uid }).select("-password");
+    const account = req.auth || {};
 
     if (!account) {
       return next({

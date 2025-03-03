@@ -6,7 +6,7 @@ import { OrderStatus } from "../@types";
 // axios
 
 export const axios = Axios.create({
-  baseURL: "http://localhost:3000",
+  baseURL: "http://localhost:8080",
 });
 
 // other utils
@@ -31,12 +31,14 @@ export const checkIsNew = (createdAt: string | Date) => {
   //@ts-expect-error : i don't know how to deal with this problem tho it's working so i'll let it slide
   return new Date() - new Date(createdAt) < 30 * 24 * 60 * 60 * 1000;
 };
-export function formatDate(date: Date) {
+export function formatDate(date: Date | string) {
+  const parsedDate = typeof date === "string" ? new Date(date) : date;
+
   return new Intl.DateTimeFormat("en-US", {
     year: "numeric",
     month: "short",
     day: "numeric",
-  }).format(date);
+  }).format(parsedDate);
 }
 
 export function getStatusColor(status: OrderStatus) {

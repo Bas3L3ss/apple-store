@@ -1,4 +1,9 @@
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  Outlet,
+} from "react-router-dom";
 import Home from "./pages/home";
 import ItemDetails from "./pages/product-details-page";
 import ItemsOrder from "./pages/product-order-page";
@@ -15,6 +20,13 @@ import OrderDetailsPage from "./pages/one-order";
 import ProfilePage from "./pages/profile";
 import AppleAuthWrapper from "./provider/AuthWrapper";
 import GuestOnlyWrapper from "./provider/GuestOnlyWrapper";
+import AdminWrapper from "./provider/AdminWrapper";
+import CMS from "./pages/cms";
+import MainDashboard from "./components/dashboard/main-dashboard";
+import ProductDashboard from "./components/dashboard/product-dashboard";
+import ProductOptionsDashboard from "./components/dashboard/product-options-dashboard";
+import ProductsRoutes from "./components/rested-route/product-route";
+import ProductOptionsRoutes from "./components/rested-route/product-option";
 
 function App() {
   return (
@@ -69,6 +81,24 @@ function App() {
                 </AppleAuthWrapper>
               }
             />
+            {/* 🔹 Dashboard Routes */}
+            <Route
+              path="dashboard"
+              element={
+                <AppleAuthWrapper>
+                  <AdminWrapper>
+                    <CMS />
+                  </AdminWrapper>
+                </AppleAuthWrapper>
+              }
+            >
+              <Route index element={<MainDashboard />} />
+              <Route path="products/*" element={<ProductsRoutes />} />
+              <Route
+                path="product-options/*"
+                element={<ProductOptionsRoutes />}
+              />
+            </Route>
 
             <Route path="*" element={<NotFound />} />
           </Routes>

@@ -52,27 +52,16 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { passwordFormSchema, profileFormSchema } from "../schemas";
-import { User as UserType } from "../@types";
 import { formatDate } from "../lib/utils";
+import { useAuth } from "../contexts/AuthContext";
 
 // Mock user data for demonstration
-const mockUser = {
-  id: "user-123",
-  name: "John Appleseed",
-  password: "hashedpassword123",
-  avatar: "/api/placeholder/64/64",
-  verified: false, // Set to false for testing verification UI
-  email: "john.appleseed@example.com",
-  isAdmin: false, // Set to true to test admin badge
-  createdAt: new Date("2023-01-15"),
-  updatedAt: new Date("2024-02-20"),
-};
 
 // Form validation schemas
 
 export default function ProfilePage() {
-  const [user, setUser] = useState<UserType>(mockUser);
-  const [loading, setLoading] = useState(true);
+  const { account: user } = useAuth();
+  const [loading, setLoading] = useState(false);
   const [isEditMode, setIsEditMode] = useState(false);
   const [isVerifying, setIsVerifying] = useState(false);
   const [verificationSent, setVerificationSent] = useState(false);
@@ -94,74 +83,51 @@ export default function ProfilePage() {
     },
   });
 
-  useEffect(() => {
-    // Simulate API call to fetch user data
-    const fetchUser = async () => {
-      try {
-        // In a real app, this would be an API call
-        setTimeout(() => {
-          setUser(mockUser);
-          profileForm.reset({
-            name: mockUser.name,
-            email: mockUser.email,
-          });
-          setLoading(false);
-        }, 1000);
-      } catch (error) {
-        console.error("Error fetching user data:", error);
-        setLoading(false);
-      }
-    };
-
-    fetchUser();
-  }, [profileForm]);
-
   const onProfileSubmit = async (data: { name: string; email: string }) => {
-    try {
-      // Simulate API call to update profile
-      setLoading(true);
-
-      // In a real app, this would be an API call
-      setTimeout(() => {
-        setUser({
-          ...user,
-          name: data.name,
-          email: data.email,
-          updatedAt: new Date(),
-        });
-        setLoading(false);
-        setIsEditMode(false);
-      }, 1000);
-    } catch (error) {
-      console.error("Error updating profile:", error);
-      setLoading(false);
-    }
+    // try {
+    //   // Simulate API call to update profile
+    //   setLoading(true);
+    //   // In a real app, this would be an API call
+    //   setTimeout(() => {
+    //     setUser({
+    //       ...user,
+    //       name: data.name,
+    //       email: data.email,
+    //       updatedAt: new Date(),
+    //     });
+    //     setLoading(false);
+    //     setIsEditMode(false);
+    //   }, 1000);
+    // } catch (error) {
+    //   console.error("Error updating profile:", error);
+    //   setLoading(false);
+    // }
   };
 
   const onPasswordSubmit = async (data: {
     newPassword: string;
     confirmPassword: string;
   }) => {
-    try {
-      setLoading(true);
-      console.log(data);
-      setTimeout(() => {
-        setUser({
-          ...user,
-          password: "newhashpassword123",
-          updatedAt: new Date(),
-        });
-        setLoading(false);
-        passwordForm.reset({
-          currentPassword: "",
-          newPassword: "",
-          confirmPassword: "",
-        });
-      }, 1000);
-    } catch (error) {
-      console.error("Error updating password:", error);
-      setLoading(false);
-    }
+    // try {
+    //   setLoading(true);
+    //   console.log(data);
+    //   setTimeout(() => {
+    //     setUser({
+    //       ...user,
+    //       password: "newhashpassword123",
+    //       updatedAt: new Date(),
+    //     });
+    //     setLoading(false);
+    //     passwordForm.reset({
+    //       currentPassword: "",
+    //       newPassword: "",
+    //       confirmPassword: "",
+    //     });
+    //   }, 1000);
+    // } catch (error) {
+    //   console.error("Error updating password:", error);
+    //   setLoading(false);
+    // }
   };
 
   const sendVerificationEmail = async () => {
@@ -228,11 +194,11 @@ export default function ProfilePage() {
           <Avatar className="h-20 w-20 border-2 border-white shadow-sm">
             <AvatarImage
               src={user?.avatar || "/api/placeholder/64/64"}
-              alt={user?.name}
+              alt={user?.username}
             />
-            <AvatarFallback>{user?.name?.charAt(0) || "U"}</AvatarFallback>
+            <AvatarFallback>{user?.username?.charAt(0) || "U"}</AvatarFallback>
           </Avatar>
-          {user?.isAdmin && (
+          {user?.role == "admin" && (
             <div className="absolute -bottom-2 -right-2">
               <Badge className="bg-blue-600">
                 <Shield className="h-3 w-3 mr-1" />
@@ -243,7 +209,7 @@ export default function ProfilePage() {
         </div>
 
         <div className="text-center md:text-left">
-          <h2 className="text-2xl font-medium">{user?.name}</h2>
+          <h2 className="text-2xl font-medium">{user?.username}</h2>
           <div className="flex flex-col md:flex-row md:items-center text-gray-500 space-y-1 md:space-y-0 md:space-x-2">
             <span>{user?.email}</span>
             {user?.verified ? (
@@ -263,7 +229,7 @@ export default function ProfilePage() {
             )}
           </div>
           <div className="text-gray-400 text-sm mt-1">
-            Member since {formatDate(user?.createdAt)}
+            Member since {formatDate(user!.createdAt)}
           </div>
         </div>
       </div>
@@ -403,7 +369,7 @@ export default function ProfilePage() {
                         Name
                       </h3>
                     </div>
-                    <p className="text-gray-900 pl-8">{user?.name}</p>
+                    <p className="text-gray-900 pl-8">{user?.username}</p>
                   </div>
 
                   <div>
@@ -424,7 +390,7 @@ export default function ProfilePage() {
                       </h3>
                     </div>
                     <p className="text-gray-900 pl-8">
-                      {formatDate(user?.createdAt)}
+                      {formatDate(user!.createdAt)}
                     </p>
                   </div>
 
@@ -436,11 +402,11 @@ export default function ProfilePage() {
                       </h3>
                     </div>
                     <p className="text-gray-900 pl-8">
-                      {formatDate(user?.updatedAt)}
+                      {formatDate(user!.updatedAt)}
                     </p>
                   </div>
 
-                  {user?.isAdmin && (
+                  {user!.role == "admin" && (
                     <div>
                       <div className="flex items-center space-x-3 mb-1">
                         <Shield className="text-gray-400 h-5 w-5" />

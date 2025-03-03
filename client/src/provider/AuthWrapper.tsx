@@ -1,11 +1,11 @@
-import { useState, useEffect, ReactNode } from "react";
-
+import { useState, useEffect, type ReactNode } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { Button } from "../components/ui/button";
 import { useNavigate } from "react-router";
+import LoadingState from "../components/loading";
 
 const AppleAuthWrapper = ({ children }: { children: ReactNode }) => {
-  const { isLoggedIn: isAuthenticated } = useAuth();
+  const { isLoggedIn: isAuthenticated, isLoading } = useAuth();
   const [showAnnouncement, setShowAnnouncement] = useState(!isAuthenticated);
   const navigate = useNavigate();
 
@@ -44,6 +44,11 @@ const AppleAuthWrapper = ({ children }: { children: ReactNode }) => {
       </div>
     </div>
   );
+
+  // Render logic
+  if (isLoading) {
+    return <LoadingState />;
+  }
 
   return (
     <>

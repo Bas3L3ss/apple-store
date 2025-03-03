@@ -59,22 +59,25 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
   const [isLoggedIn, setIsLoggedIn] = useState(initContext.isLoggedIn);
   const [isLoading, setIsLoading] = useState(false);
 
-  const register = useCallback(async (formData: FormData) => {
-    setIsLoading(true);
-    try {
-      const {
-        data: { data: accountData, token: accessToken },
-      } = await axios.post("/auth/register", formData);
-      setAccount(accountData);
-      setToken(accessToken);
-      setIsLoggedIn(true);
-      return true;
-    } catch (error) {
-      throw error?.response?.data?.message || error.message;
-    } finally {
-      setIsLoading(false);
-    }
-  }, []);
+  const register = useCallback(
+    async (formData: { username: string; email: string; password: string }) => {
+      setIsLoading(true);
+      try {
+        const {
+          data: { data: accountData, token: accessToken },
+        } = await axios.post("/auth/register", formData);
+        setAccount(accountData);
+        setToken(accessToken);
+        setIsLoggedIn(true);
+        return true;
+      } catch (error) {
+        throw error?.response?.data?.message || error.message;
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    []
+  );
 
   const login = useCallback(async (formData: FormData) => {
     setIsLoading(true);
@@ -107,7 +110,7 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
     try {
       const {
         data: { data: accountData, token: accessToken },
-      } = await axios.get("/auth/login", {
+      } = await axios("/auth/login", {
         headers: {
           authorization: `Bearer ${token}`,
         },
