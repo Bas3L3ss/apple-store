@@ -8,8 +8,8 @@ export async function sendVerificationEmail() {
       description: "Please check your inbox to verify your email.",
     });
   } catch (err) {
-    console.error("Stripe Checkout Error:", err);
-    toast.error("Payment Failed", {
+    console.error("Error:", err);
+    toast.error("Verification Failed", {
       description: "There was an issue processing your payment.",
     });
   }

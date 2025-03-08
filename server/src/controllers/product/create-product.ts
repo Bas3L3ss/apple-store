@@ -8,7 +8,9 @@ export const CreateProduct = async (
   next: NextFunction
 ): Promise<void> => {
   try {
-    const productData: Product = req.body;
+    const productData: Product = req.body.product;
+    console.log(productData);
+
     const product = new ProductModel(productData);
     await product.save();
     res.status(201).json({ success: true, data: product });

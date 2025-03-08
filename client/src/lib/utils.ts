@@ -2,6 +2,7 @@ import clsx, { ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 import Axios from "axios";
 import { OrderStatus } from "../@types";
+import { colorHexMap } from "../constants/color";
 
 // axios
 
@@ -86,4 +87,9 @@ export const getStatusProgress = (status: OrderStatus) => {
     default:
       return 0;
   }
+};
+
+// Function to get hex color
+export const getColorHex = (color: string): string => {
+  return colorHexMap[color] || "#000000"; // Default to black if not found
 };

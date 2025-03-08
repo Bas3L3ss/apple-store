@@ -1,21 +1,3 @@
-// import { Outlet } from "react-router-dom";
-// import { DashboardSidebar } from "../components/dashboard/dashboard-sidebar";
-// import { SidebarProvider } from "../components/ui/sidebar";
-
-// const CMS = () => {
-//   return (
-//     <SidebarProvider>
-//       <div className="flex min-h-screen">
-//         <DashboardSidebar />
-//         <main className="flex-1 p-6 md:p-8">
-//           <Outlet />
-//         </main>
-//       </div>
-//     </SidebarProvider>
-//   );
-// };
-
-// export default CMS;
 "use client";
 
 import { useEffect, useState } from "react";
@@ -55,7 +37,7 @@ export default function CMS() {
           axios.get("/products"),
           axios.get("/product-options"),
         ]);
-        setProductOptions(optionsRes.data);
+        setProductOptions(optionsRes.data.data);
         setProducts(productsRes.data.data);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -91,6 +73,8 @@ export default function CMS() {
 
   return (
     <div className="container mx-auto py-8 px-4">
+      <Outlet />
+
       <header className="mb-8">
         <h1 className="text-3xl font-bold">Admin Dashboard</h1>
         <p className="text-muted-foreground mt-2">
@@ -118,7 +102,6 @@ export default function CMS() {
           />
         </div>
       )}
-      <Outlet />
 
       <AlertDialog
         open={!!deleteItem}

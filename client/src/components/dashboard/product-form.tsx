@@ -34,6 +34,8 @@ import { Separator } from "@/src/components/ui/separator";
 import { useNavigate } from "react-router";
 import { toast } from "sonner";
 import { ProductSelectionTypes } from "@/src/@types";
+import { createProduct } from "@/src/action/products";
+import { createMockData } from "@/src/action/products/mock";
 
 // Form schema validation
 const formSchema = z.object({
@@ -83,14 +85,17 @@ export default function CreateProductPage() {
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: "",
-      description: "",
-      productImages: [""],
-      slug: "",
-      basePrice: 0,
-      category: undefined,
-      stock: 0,
-      productSelectionStep: [""],
+      name: "Iphone 15",
+      description: "good sleek",
+      productImages: [
+        "https://res.cloudinary.com/dz1d1qgk2/image/upload/v1741417274/Apple-iPhone-14-iPhone-14-Plus-hero-220907-geo.jpg.og_c4bjvb.jpg",
+        "https://res.cloudinary.com/dz1d1qgk2/image/upload/v1741417273/refurb-iphone-13-pro-max-graphite-2023_w6s8yf.jpg",
+      ],
+      slug: "iphone-15",
+      basePrice: 999,
+      category: "iphone",
+      stock: 5,
+      productSelectionStep: ["color", "material"],
     },
   });
 
@@ -103,13 +108,9 @@ export default function CreateProductPage() {
       console.log("Form data:", data);
 
       // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      await createMockData(setIsSubmitting);
 
-      toast("Product created", {
-        description: `Successfully created ${data.name}`,
-      });
-
-      router("/dashboard");
+      // router("/dashboard");
     } catch (error) {
       console.error("Error creating product:", error);
       toast("Product creation error", {

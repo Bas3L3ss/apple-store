@@ -1,12 +1,8 @@
-1/ all action are stored in api.ts
-
 2/ react query fetch, use custom hook
-
-3/ populate with real data
 
 4/ add seo metadate
 
-5/ implement guest cart to user one syncing, conditionally load user/guest cart 
+5/ implement guest cart to user one syncing, conditionally load user/guest cart
 
 6/ add cloudinary for product image upload , delete and update and image optimization
 
@@ -16,4 +12,3 @@
 10/ fix special card theme
 
 final/ add testing , switch to Cookie jwt , add admin analytic
-

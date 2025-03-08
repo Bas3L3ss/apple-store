@@ -23,7 +23,7 @@ export const handleStripeCheckout = async (
       });
     }
   } catch (err) {
-    console.error("Stripe Checkout Error:", err);
+    console.error("Creating error:", err);
     toast.error("Payment Failed", {
       description: "There was an issue processing your payment.",
     });

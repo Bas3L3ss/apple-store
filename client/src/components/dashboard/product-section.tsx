@@ -17,7 +17,7 @@ export default function ProductsSection({
   products,
   onDeleteClick,
 }: {
-  products: Product[];
+  products?: Product[];
   onDeleteClick: (id: string) => void;
 }) {
   console.log(products);
@@ -38,13 +38,13 @@ export default function ProductsSection({
         </div>
       </CardHeader>
       <CardContent>
-        {products.length === 0 ? (
+        {products?.length === 0 ? (
           <div className="text-center py-8 text-muted-foreground">
             No products found. Create your first product to get started.
           </div>
         ) : (
           <ul className="space-y-3">
-            {products.map((product) => (
+            {products?.map((product) => (
               <li
                 key={product._id}
                 className="flex items-center justify-between p-3 bg-muted/40 rounded-md"
@@ -80,7 +80,7 @@ export default function ProductsSection({
         )}
       </CardContent>
       <CardFooter className="border-t pt-4 text-sm text-muted-foreground">
-        {products.length} product{products.length !== 1 ? "s" : ""} in total
+        {products?.length} product{products?.length !== 1 ? "s" : ""} in total
       </CardFooter>
     </Card>
   );

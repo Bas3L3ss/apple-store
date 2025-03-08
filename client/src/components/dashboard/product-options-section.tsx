@@ -16,7 +16,7 @@ export default function ProductOptionsSection({
   productOptions,
   onDeleteClick,
 }: {
-  productOptions: ProductOption[];
+  productOptions?: ProductOption[];
   onDeleteClick: (id: string) => void;
 }) {
   return (
@@ -38,20 +38,26 @@ export default function ProductOptionsSection({
         </div>
       </CardHeader>
       <CardContent>
-        {productOptions.length === 0 ? (
+        {productOptions?.length === 0 ? (
           <div className="text-center py-8 text-muted-foreground">
             No product options found. Create your first option to get started.
           </div>
         ) : (
           <ul className="space-y-3">
-            {productOptions.map((option) => (
+            {productOptions?.map((option) => (
               <li
                 key={option.id}
                 className="flex items-center justify-between p-3 bg-muted/40 rounded-md"
               >
                 <div className="flex gap-2">
                   <span className="font-medium">
-                    {option.color || option.storage || "Option"}
+                    {option.color ||
+                      option.storage ||
+                      option.accessories ||
+                      option.carrier ||
+                      option.size ||
+                      option.material ||
+                      option.processor}
                   </span>
                   {option.color && (
                     <Badge variant="outline" className="capitalize">
@@ -61,6 +67,31 @@ export default function ProductOptionsSection({
                   {option.storage && (
                     <Badge variant="outline" className="capitalize">
                       Storage
+                    </Badge>
+                  )}
+                  {option.accessories && (
+                    <Badge variant="outline" className="capitalize">
+                      Accessories
+                    </Badge>
+                  )}
+                  {option.carrier && (
+                    <Badge variant="outline" className="capitalize">
+                      Carrier
+                    </Badge>
+                  )}
+                  {option.size && (
+                    <Badge variant="outline" className="capitalize">
+                      Size
+                    </Badge>
+                  )}
+                  {option.material && (
+                    <Badge variant="outline" className="capitalize">
+                      Material
+                    </Badge>
+                  )}
+                  {option.processor && (
+                    <Badge variant="outline" className="capitalize">
+                      Processor
                     </Badge>
                   )}
                 </div>
@@ -87,7 +118,7 @@ export default function ProductOptionsSection({
         )}
       </CardContent>
       <CardFooter className="border-t pt-4 text-sm text-muted-foreground">
-        {productOptions.length} option{productOptions.length !== 1 ? "s" : ""}{" "}
+        {productOptions?.length} option{productOptions?.length !== 1 ? "s" : ""}{" "}
         in total
       </CardFooter>
     </Card>

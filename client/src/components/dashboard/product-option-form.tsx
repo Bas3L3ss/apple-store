@@ -152,7 +152,7 @@ export default function CreateProductOptionPage() {
                 name="productId"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Product</FormLabel>
+                    <FormLabel>Product ID</FormLabel>
                     <FormControl>
                       <Input
                         placeholder={"Bind to one product by it's id"}
@@ -215,6 +215,11 @@ export default function CreateProductOptionPage() {
                     <FormLabel>Option Value</FormLabel>
                     <FormControl>
                       <Input
+                        type={
+                          form.getValues("optionType") === "color"
+                            ? "color"
+                            : "text"
+                        }
                         placeholder={getPlaceholder(
                           form.watch("optionType") || ""
                         )}
