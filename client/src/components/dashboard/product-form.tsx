@@ -104,9 +104,6 @@ export default function CreateProductPage() {
     setIsSubmitting(true);
 
     try {
-      // Here you would normally send the data to your API
-      console.log("Form data:", data);
-
       // Simulate API call
       await createMockData(setIsSubmitting);
 

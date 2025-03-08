@@ -9,7 +9,6 @@ export const CreateProduct = async (
 ): Promise<void> => {
   try {
     const productData: Product = req.body.product;
-    console.log(productData);
 
     const product = new ProductModel(productData);
     await product.save();

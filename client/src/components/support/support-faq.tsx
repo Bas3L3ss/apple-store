@@ -66,7 +66,6 @@ const SupportFaq = () => {
   // Handle form submission
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("Form submitted:", formData);
     // Add API call or submission logic here
   };
   return (

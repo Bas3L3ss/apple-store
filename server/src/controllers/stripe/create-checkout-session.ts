@@ -11,7 +11,6 @@ export const createCheckoutSession: RequestHandler = async (
 ) => {
   try {
     const { cartItems }: { cartItems: CartItem[] } = req.body;
-    console.log(cartItems);
 
     if (!req.auth) {
       return next({ statusCode: 401, message: "Unauthorized" });
@@ -53,6 +52,10 @@ export const createCheckoutSession: RequestHandler = async (
                 name: product.name,
                 description: product.description,
                 images: productImage ? [productImage] : [],
+                metadata: {
+                  productId: product._id.toString(),
+                  selectedOptions: JSON.stringify(item.selectedOptions || []),
+                },
               },
               unit_amount: Math.round(item.totalPrice * 100),
             },

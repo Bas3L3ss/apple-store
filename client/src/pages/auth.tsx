@@ -30,12 +30,6 @@ export default function AppleAuthPage() {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     // Handle form submission logic here
-    console.log(isSignIn ? "Signing in" : "Signing up", {
-      email,
-      password,
-      ...(isSignIn ? {} : { firstName, lastName }),
-      rememberMe,
-    });
 
     if (!isSignIn) {
       const formdata = {

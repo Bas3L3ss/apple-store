@@ -1,5 +1,6 @@
 import { model, Schema } from "mongoose";
 import { Product } from "../@types";
+import { ProductOptionModel } from "./ProductOptions";
 
 const ProductSchema = new Schema<Product>(
   {
@@ -29,6 +30,19 @@ const ProductSchema = new Schema<Product>(
   { timestamps: true }
 );
 ProductSchema.index({ name: "text", slug: "text" });
+
+ProductSchema.pre(
+  "deleteOne",
+  { document: true, query: false },
+  async function (next) {
+    try {
+      await ProductOptionModel.deleteMany({ productId: this._id });
+      next();
+    } catch (err) {
+      next(err);
+    }
+  }
+);
 
 const ProductModel = model<Product>("Product", ProductSchema);
 

@@ -24,7 +24,6 @@ const sendVerificationEmail: RequestHandler = async (
     }
 
     const { email, _id } = req.auth;
-    console.log(req.auth);
 
     const token = jwt.signToken({ uid: _id, email }, "10m");
 

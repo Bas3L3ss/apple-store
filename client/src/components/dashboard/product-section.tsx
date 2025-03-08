@@ -20,7 +20,6 @@ export default function ProductsSection({
   products?: Product[];
   onDeleteClick: (id: string) => void;
 }) {
-  console.log(products);
   return (
     <Card>
       <CardHeader className="pb-3">

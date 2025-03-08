@@ -1,5 +1,7 @@
 import { type Document, model, Schema } from "mongoose";
 import { type Account } from "../@types";
+import { OrderModel } from "./Order";
+import { CartItemModel } from "./CartItem";
 
 interface I extends Document, Account {
   verified: boolean;

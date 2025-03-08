@@ -16,7 +16,8 @@ export const handleStripeWebhook = async (req: Request, res: Response) => {
     event = stripe.webhooks.constructEvent(req.body, sig, WEBHOOKSECRET);
   } catch (err) {
     console.error("Webhook signature verification failed:", err);
-    return res.status(400).send(`Webhook Error: ${err.message}`);
+    res.status(400).send(`Webhook Error: ${err.message}`);
+    return;
   }
 
   if (event.type === "checkout.session.completed") {
@@ -25,14 +26,15 @@ export const handleStripeWebhook = async (req: Request, res: Response) => {
     try {
       // 🔥 Fetch the line items from the session
       const line_items = await stripe.checkout.sessions.listLineItems(
-        stripeSession.id
+        stripeSession.id,
+        {
+          expand: ["data.price.product"],
+        }
       );
+
       const customer = await stripe.customers.retrieve(
         stripeSession.customer as string
       );
-
-      console.log("Customer Metadata:", customer.metadata);
-      console.log("Line Items:", line_items.data);
 
       // ✅ Extract order details
       const userId = customer.metadata.userId;
@@ -56,12 +58,16 @@ export const handleStripeWebhook = async (req: Request, res: Response) => {
         // ✅ Create Order Items with the correct `orderId`
         const orderItems = await Promise.all(
           line_items.data.map(async (item) => {
+            const metadata = item.price?.product.metadata;
+
             const orderItem = new OrderItemModel({
-              orderId: newOrder._id, // Associate with the created Order
-              productId: item.price?.product, // TODO: Assuming Stripe price stores product ID
+              orderId: newOrder._id,
+              productId: metadata.productId, // TODO: Pass this long with lines item
               quantity: item.quantity,
               finalPrice: item.amount_total! / 100,
-              selectedOptions: [], // TODO: Need to fetch from frontend or database
+              selectedOptions: metadata.selectedOptions
+                ? JSON.parse(metadata.selectedOptions)
+                : [],
             });
 
             await orderItem.save({ session });

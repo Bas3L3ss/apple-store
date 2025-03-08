@@ -10,11 +10,9 @@ interface ProductCardProps {
 }
 
 export default function ProductCard({ product }: ProductCardProps) {
-  console.log(product.productOptions.filter((option) => option.color));
-
   return (
     <Card className="overflow-hidden border-none shadow-sm hover:shadow-md transition-shadow duration-300">
-      <a href={`/shop/product/${product.id}`}>
+      <a href={`/shop/product/${product._id}`}>
         <div className="relative aspect-square overflow-hidden bg-gray-100">
           <motion.div
             whileHover={{ scale: 1.05 }}

@@ -1,9 +1,10 @@
 import { model, Schema } from "mongoose";
 import { Order, OrderStatus, PaymentMethod } from "../@types";
+import { OrderItemModel } from "./OrderItem";
 
 const OrderSchema = new Schema<Order>(
   {
-    userId: { type: Schema.Types.ObjectId, ref: "User", required: true },
+    userId: { type: Schema.Types.ObjectId, ref: "Account", required: true },
     calculatedTotal: { type: Number, required: true },
     items: [{ type: Schema.Types.ObjectId, ref: "OrderItem" }],
     shippingAddress: { type: String, required: false },
@@ -17,6 +18,19 @@ const OrderSchema = new Schema<Order>(
     estimatedDelivery: { type: Date, required: true },
   },
   { timestamps: true }
+);
+
+OrderSchema.pre(
+  "deleteOne",
+  { document: true, query: false },
+  async function (next) {
+    try {
+      await OrderItemModel.deleteMany({ orderId: this._id });
+      next();
+    } catch (err) {
+      next(err);
+    }
+  }
 );
 
 const OrderModel = model<Order>("Order", OrderSchema);

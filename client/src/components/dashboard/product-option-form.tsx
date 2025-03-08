@@ -90,9 +90,6 @@ export default function CreateProductOptionPage() {
         stock: data.stock,
       };
 
-      // Here you would normally send the data to your API
-      console.log("Form data:", submitData);
-
       // Simulate API call
       await new Promise((resolve) => setTimeout(resolve, 1000));
 
