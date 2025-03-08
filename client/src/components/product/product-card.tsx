@@ -1,9 +1,9 @@
-import { Button } from "@/src/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/src/components/ui/card";
 import { Product } from "@/src/@types";
 import { formatPrice } from "@/src/lib/utils";
 import { motion } from "framer-motion";
 import { ShoppingCart } from "lucide-react";
+import { Link } from "react-router";
 
 interface ProductCardProps {
   product: Product;
@@ -66,11 +66,12 @@ export default function ProductCard({ product }: ProductCardProps) {
         )}
       </CardContent>
       <CardFooter className="p-4 pt-0">
-        <Button className="w-full rounded-full bg-blue-600 hover:bg-blue-700 text-white">
-          <a href={`/shop/${product.slug ?? product.name}`} className="flex">
-            <ShoppingCart className="h-4 w-4 mr-2" /> Buy now
-          </a>
-        </Button>
+        <Link
+          to={`/shop/${product.slug ?? product.name}`}
+          className="flex w-full rounded-full bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 items-center justify-center"
+        >
+          <ShoppingCart className="h-4 w-4 mr-2" /> Buy now
+        </Link>
       </CardFooter>
     </Card>
   );

@@ -19,6 +19,7 @@ import AdminWrapper from "./provider/AdminWrapper";
 import CMS from "./pages/cms";
 import CreateProductPage from "./components/dashboard/product-form";
 import CreateProductOptionPage from "./components/dashboard/product-option-form";
+import { CheckoutCancelled, CheckoutSuccess } from "./pages/checkout";
 
 function App() {
   return (
@@ -95,6 +96,9 @@ function App() {
                 element={<CreateProductOptionPage />}
               />
             </Route>
+
+            <Route path="/checkout-success" element={<CheckoutSuccess />} />
+            <Route path="/checkout-cancelled" element={<CheckoutCancelled />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </main>

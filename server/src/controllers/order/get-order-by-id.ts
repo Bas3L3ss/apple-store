@@ -13,7 +13,7 @@ export const GetOrderById = async (
       return next({ success: false, message: "Order ID is required" });
     }
     // TODO: Vague, make sure this productOptions is from each orderItem not the OrderId specifically
-    const order = await OrderModel.findById(id).populate("productOptions");
+    const order = await OrderModel.findById(id).populate("items");
 
     if (!order) {
       return next({ success: false, message: "Order not found" });

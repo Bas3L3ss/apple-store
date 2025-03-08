@@ -40,6 +40,7 @@ export interface CartItem extends Document {
   quantity: number;
   totalPrice: number;
 }
+
 export interface OrderItem extends Document {
   orderId: Types.ObjectId;
   productId: Types.ObjectId;
@@ -60,7 +61,6 @@ export enum PaymentMethod {
   CC = "CC:credit-card",
   AC = "ac:apple-card",
 }
-
 export interface Order extends Document {
   userId: Types.ObjectId;
   calculatedTotal: number;

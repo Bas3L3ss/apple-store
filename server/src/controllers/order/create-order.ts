@@ -1,23 +1,83 @@
-import { Request, Response, NextFunction } from "express";
-import { Order } from "../../@types";
-import { OrderModel } from "../../models/Order";
+// import { RequestHandler } from "express";
+// import mongoose from "mongoose";
+// import { webhookSecret } from "../../constants";
+// import { stripe } from "../../utils/stripe";
+// import { OrderItemModel } from "../../models/OrderItem";
+// import { OrderModel } from "../../models/Order";
 
-export const CreateOrder = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-): Promise<void> => {
-  try {
-    // TODO 1: Only stripe can call this or atleast allow to create Order, to avoid normal people creating order without paying
-    // TODO 2: Bind OrderItems (meaning req.body has more than just Order)
-    // TODO 3: Bind userId
-    // TODO 4: Current user account must be verified to create one
-    const user = req.auth;
-    const orderData: Order = req.body;
-    const order = new OrderModel(orderData);
-    await order.save();
-    res.status(201).json({ success: true, data: order });
-  } catch (error) {
-    next(error);
-  }
-};
+// export const handleStripeWebhook: RequestHandler = async (req, res, next) => {
+//   let event;
+
+//   try {
+//     const signature = req.headers["stripe-signature"];
+//     if (!signature || !webhookSecret) {
+//       throw new Error("No signature or webhook secret found");
+//     }
+
+//     event = stripe.webhooks.constructEvent(req.body, signature, webhookSecret);
+//   } catch (err) {
+//     console.error(`⚠️  Webhook signature verification failed: ${err.message}`);
+//     return next({ statusCode: 400, message: "Webhook verification failed" });
+//   }
+
+//   const data = event.data.object;
+//   const eventType = event.type;
+
+//   if (eventType === "checkout.session.completed") {
+//     const session = await mongoose.startSession();
+//     session.startTransaction();
+
+//     try {
+//       const customer = await stripe.customers.retrieve(data.customer);
+//       if (!customer || !customer.metadata.userId) {
+//         throw new Error("Unauthorized order creation");
+//       }
+
+//       const userId = customer.metadata.userId;
+//       const cartItems = JSON.parse(customer.metadata.cartItems || "[]");
+
+//       if (!cartItems.length) {
+//         throw new Error("No items in order");
+//       }
+
+//       // Create OrderItems first
+//       const orderItems = await Promise.all(
+//         cartItems.map(async (item) => {
+//           const orderItem = new OrderItemModel({
+//             productId: item.productId,
+//             quantity: item.quantity,
+//             finalPrice: item.totalPrice,
+//             selectedOptions: item.selectedOptions || [],
+//           });
+//           await orderItem.save({ session });
+//           return orderItem._id;
+//         })
+//       );
+
+//       // Create Order
+//       const order = new OrderModel({
+//         userId,
+//         calculatedTotal: data.amount_total / 100,
+//         items: orderItems,
+//         shippingAddress: "", // TODO: Can be updated later
+//         orderNotes: "",
+//         status: "PREPARING",
+//         paymentMethod: "CC",
+//         estimatedDelivery: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000), // next 2 weeks
+//       });
+
+//       await order.save({ session });
+//       await session.commitTransaction();
+//       session.endSession();
+
+//       res.status(200).json({ success: true, data: order });
+//     } catch (error) {
+//       await session.abortTransaction();
+//       session.endSession();
+//       console.error("Error processing Stripe webhook:", error);
+//       next(error);
+//     }
+//   } else {
+//     res.status(200).end();
+//   }
+// };

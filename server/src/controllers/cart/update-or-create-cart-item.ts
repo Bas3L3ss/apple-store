@@ -45,6 +45,8 @@ export const CreateOrUpdateCartItem: RequestHandler = async (
 
     res.status(200).json({ message: "Cart updated successfully" });
   } catch (error) {
-    next(error);
+    console.log(JSON.stringify(error));
+
+    next({ statusCode: 500, message: "Failed to create checkout session." });
   }
 };

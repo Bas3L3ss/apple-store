@@ -11,4 +11,14 @@ const MONGO_OPTIONS = {};
 
 const JWT_SECRET = process.env.JWT_SECRET || "unsafe_secret";
 
-export { ISDEVELOPMENT, ORIGIN, PORT, MONGO_URI, MONGO_OPTIONS, JWT_SECRET };
+const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET ?? "";
+
+export {
+  ISDEVELOPMENT,
+  ORIGIN,
+  PORT,
+  MONGO_URI,
+  MONGO_OPTIONS,
+  JWT_SECRET,
+  webhookSecret,
+};

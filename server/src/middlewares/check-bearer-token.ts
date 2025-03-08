@@ -2,7 +2,7 @@ import { type RequestHandler, Request, Response, NextFunction } from "express";
 import jwt from "../utils/jwt";
 
 // Extend Request type to include `auth`
-interface AuthenticatedRequest extends Request {
+export interface AuthenticatedRequest extends Request {
   auth?: any; // Adjust this type based on the token payload
 }
 

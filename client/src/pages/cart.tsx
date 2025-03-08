@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useCartStore } from "../store/useCartStore";
 import { ArrowLeft, ShoppingBag } from "lucide-react";
@@ -7,14 +7,13 @@ import { GuestCartAlert } from "../components/cart/sync-cart-alert";
 import { CartItem } from "../components/cart/cart-item";
 import { CartSummary } from "../components/cart/cart-summary";
 import { useAuth } from "../contexts/AuthContext";
+import { handleStripeCheckout } from "../action/checkout";
+import { Button } from "../components/ui/button";
 
 const Cart: React.FC = () => {
   const { items, clearCart } = useCartStore();
   const { isLoggedIn: isAuthenticated } = useAuth();
-
-  const handleCheckout = () => {
-    alert("Proceeding to checkout...");
-  };
+  const [isLoading, setIsLoading] = useState(false);
 
   if (items.length === 0) {
     return (
@@ -68,12 +67,17 @@ const Cart: React.FC = () => {
           <CartSummary />
 
           {isAuthenticated ? (
-            <button
-              onClick={handleCheckout}
-              className="w-full mt-6 bg-blue-600 text-white py-3 px-4 rounded-md font-medium hover:bg-blue-700 transition-colors"
+            <Button
+              onClick={() => handleStripeCheckout(setIsLoading, items)}
+              className={`w-full mt-6 py-3 px-4 rounded-md font-medium transition-colors ${
+                isLoading
+                  ? "bg-gray-400 cursor-not-allowed"
+                  : "bg-blue-600 text-white hover:bg-blue-700"
+              }`}
+              disabled={isLoading}
             >
-              Proceed to Checkout
-            </button>
+              {isLoading ? "Processing..." : "Proceed to Checkout"}
+            </Button>
           ) : (
             <div className="mt-6 space-y-4">
               <Link

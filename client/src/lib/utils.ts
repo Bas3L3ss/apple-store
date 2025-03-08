@@ -6,8 +6,30 @@ import { OrderStatus } from "../@types";
 // axios
 
 export const axios = Axios.create({
+  // TODO: replace with env domain
   baseURL: "http://localhost:8080",
 });
+
+export const makeAxiosRequest = async <T>(
+  method: "get" | "post" | "put" | "delete",
+  url: string,
+  data?: unknown
+): Promise<T> => {
+  const token = sessionStorage.getItem("token");
+
+  try {
+    const response = await axios({
+      method,
+      url,
+      data,
+      headers: token ? { Authorization: `Bearer ${token}` } : {},
+    });
+
+    return response.data;
+  } catch (error) {
+    throw error?.response?.data?.message || error.message;
+  }
+};
 
 // other utils
 

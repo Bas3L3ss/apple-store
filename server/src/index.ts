@@ -8,6 +8,7 @@ import authRoutes from "./routes/auth";
 import cartRoutes from "./routes/cart";
 import orderRoutes from "./routes/order";
 import productRoutes from "./routes/product";
+import stripeRoutes from "./routes/checkout";
 
 const bootstrap = async () => {
   await mongo.connect();
@@ -24,6 +25,7 @@ const bootstrap = async () => {
   app.use("/products", productRoutes);
   app.use("/orders", orderRoutes);
   app.use("/carts", cartRoutes);
+  app.use("/checkout", stripeRoutes);
 
   app.listen(PORT, () => {
     console.log(`✅ Server is listening on port: ${PORT}`);
