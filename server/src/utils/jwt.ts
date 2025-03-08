@@ -24,6 +24,7 @@ class JWT {
     try {
       const decoded = this.instance.verify(token, this.secret) as {
         uid: string;
+        email?: string;
       };
 
       const user = await Account.findById(decoded?.uid).select("-password"); // Exclude sensitive fields

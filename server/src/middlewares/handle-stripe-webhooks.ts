@@ -1,6 +1,6 @@
 import { RequestHandler } from "express";
 import mongoose from "mongoose";
-import { webhookSecret } from "../constants";
+import { WEBHOOKSECRET } from "../constants";
 import { stripe } from "../utils/stripe";
 import { OrderItemModel } from "../models/OrderItem";
 import { OrderModel } from "../models/Order";
@@ -10,11 +10,11 @@ export const handleStripeWebhook: RequestHandler = async (req, res, next) => {
 
   try {
     const signature = req.headers["stripe-signature"];
-    if (!signature || !webhookSecret) {
+    if (!signature || !WEBHOOKSECRET) {
       throw new Error("No signature or webhook secret found");
     }
 
-    event = stripe.webhooks.constructEvent(req.body, signature, webhookSecret);
+    event = stripe.webhooks.constructEvent(req.body, signature, WEBHOOKSECRET);
   } catch (err) {
     console.error(`⚠️  Webhook signature verification failed: ${err.message}`);
     return next({ statusCode: 400, message: "Webhook verification failed" });

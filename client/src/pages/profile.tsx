@@ -54,6 +54,7 @@ import { useForm } from "react-hook-form";
 import { passwordFormSchema, profileFormSchema } from "../schemas";
 import { formatDate } from "../lib/utils";
 import { useAuth } from "../contexts/AuthContext";
+import { sendVerificationEmail } from "../action/auth";
 
 // Mock user data for demonstration
 
@@ -130,17 +131,15 @@ export default function ProfilePage() {
     // }
   };
 
-  const sendVerificationEmail = async () => {
+  const handleSendVerificationEmail = async () => {
     try {
       setIsVerifying(true);
-
-      // Simulate API call to send verification email
-      setTimeout(() => {
-        setIsVerifying(false);
-        setVerificationSent(true);
-      }, 1500);
+      sendVerificationEmail();
+      setVerificationSent(true);
     } catch (error) {
       console.error("Error sending verification email:", error);
+      setVerificationSent(false);
+    } finally {
       setIsVerifying(false);
     }
   };
@@ -265,7 +264,7 @@ export default function ProfilePage() {
                   {user?.email}.
                 </p>
                 <Button
-                  onClick={sendVerificationEmail}
+                  onClick={handleSendVerificationEmail}
                   disabled={isVerifying}
                   className="bg-blue-600 hover:bg-blue-700"
                 >

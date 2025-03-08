@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import { ORIGIN } from "../constants/index";
 import morgan from "morgan";
+import path from "path";
 // initialize app
 const app = express();
 
@@ -13,5 +14,6 @@ if (process.env.NODE_ENV === "development") {
 app.use(cors({ origin: ORIGIN }));
 app.use(express.json()); // body parser
 app.use(express.urlencoded({ extended: false })); // url parser
-
+app.set("view engine", "ejs");
+app.set("views", path.join(__dirname, "../views"));
 export default app;
