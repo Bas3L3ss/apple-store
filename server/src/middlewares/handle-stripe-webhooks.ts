@@ -1,84 +1,94 @@
-import { RequestHandler } from "express";
-import mongoose from "mongoose";
-import { WEBHOOKSECRET } from "../constants";
+import { Request, Response } from "express";
 import { stripe } from "../utils/stripe";
-import { OrderItemModel } from "../models/OrderItem";
+import Stripe from "stripe";
+import { WEBHOOKSECRET } from "../constants";
 import { OrderModel } from "../models/Order";
+import { OrderItemModel } from "../models/OrderItem";
+import mongoose from "mongoose";
+import { OrderStatus, PaymentMethod } from "../@types";
 
-export const handleStripeWebhook: RequestHandler = async (req, res, next) => {
+export const handleStripeWebhook = async (req: Request, res: Response) => {
   let event;
-
   try {
-    const signature = req.headers["stripe-signature"];
-    if (!signature || !WEBHOOKSECRET) {
-      throw new Error("No signature or webhook secret found");
-    }
+    const sig = req.headers["stripe-signature"];
+    if (!sig) throw new Error("No Stripe signature found");
 
-    event = stripe.webhooks.constructEvent(req.body, signature, WEBHOOKSECRET);
+    event = stripe.webhooks.constructEvent(req.body, sig, WEBHOOKSECRET);
   } catch (err) {
-    console.error(`⚠️  Webhook signature verification failed: ${err.message}`);
-    return next({ statusCode: 400, message: "Webhook verification failed" });
+    console.error("Webhook signature verification failed:", err);
+    return res.status(400).send(`Webhook Error: ${err.message}`);
   }
 
-  const data = event.data.object;
-  const eventType = event.type;
-
-  if (eventType === "checkout.session.completed") {
-    const session = await mongoose.startSession();
-    session.startTransaction();
+  if (event.type === "checkout.session.completed") {
+    const stripeSession = event.data.object as Stripe.Checkout.Session;
 
     try {
-      const customer = await stripe.customers.retrieve(data.customer);
-      if (!customer || !customer.metadata.userId) {
-        throw new Error("Unauthorized order creation");
-      }
-      console.log(data);
-
-      const userId = customer.metadata.userId;
-      const cartItems = JSON.parse(customer.metadata.cartItems || "[]");
-
-      if (!cartItems.length) {
-        throw new Error("No items in order");
-      }
-
-      // Create OrderItems first
-      const orderItems = await Promise.all(
-        cartItems.map(async (item) => {
-          const orderItem = new OrderItemModel({
-            productId: item.productId,
-            quantity: item.quantity,
-            finalPrice: item.totalPrice,
-            selectedOptions: item.selectedOptions || [],
-          });
-          await orderItem.save({ session });
-          return orderItem._id;
-        })
+      // 🔥 Fetch the line items from the session
+      const line_items = await stripe.checkout.sessions.listLineItems(
+        stripeSession.id
+      );
+      const customer = await stripe.customers.retrieve(
+        stripeSession.customer as string
       );
 
-      // Create Order
-      const order = new OrderModel({
-        userId,
-        calculatedTotal: data.amount_total / 100,
-        items: orderItems,
-        shippingAddress: "", // TODO: Can be updated later
-        orderNotes: "",
-        status: "PREPARING",
-        paymentMethod: "CC",
-        estimatedDelivery: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000), // next 2 weeks
-      });
+      console.log("Customer Metadata:", customer.metadata);
+      console.log("Line Items:", line_items.data);
 
-      await order.save({ session });
-      await session.commitTransaction();
-      session.endSession();
+      // ✅ Extract order details
+      const userId = customer.metadata.userId;
+      if (!userId) throw new Error("User ID not found in metadata");
 
-      res.status(200).json({ success: true, data: order });
+      // Start MongoDB transaction
+      const session = await mongoose.startSession();
+      session.startTransaction();
+
+      try {
+        // ✅ Create Order first
+        const newOrder = await new OrderModel({
+          userId,
+          calculatedTotal: stripeSession.amount_total! / 100,
+          items: [], // Will populate after creating OrderItems
+          status: OrderStatus.PREPARING,
+          paymentMethod: PaymentMethod.CC,
+          estimatedDelivery: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 7 days from now
+        }).save({ session });
+
+        // ✅ Create Order Items with the correct `orderId`
+        const orderItems = await Promise.all(
+          line_items.data.map(async (item) => {
+            const orderItem = new OrderItemModel({
+              orderId: newOrder._id, // Associate with the created Order
+              productId: item.price?.product, // TODO: Assuming Stripe price stores product ID
+              quantity: item.quantity,
+              finalPrice: item.amount_total! / 100,
+              selectedOptions: [], // TODO: Need to fetch from frontend or database
+            });
+
+            await orderItem.save({ session });
+            return orderItem._id;
+          })
+        );
+
+        // ✅ Update Order with orderItems
+        newOrder.items = orderItems;
+        await newOrder.save({ session });
+
+        // Commit transaction
+        await session.commitTransaction();
+        session.endSession();
+
+        console.log("✅ Order & OrderItems saved to MongoDB:", newOrder);
+        res.json({ received: true });
+      } catch (error) {
+        await session.abortTransaction();
+        session.endSession();
+        throw error;
+      }
     } catch (error) {
-      await session.abortTransaction();
-      session.endSession();
-      console.error("Error processing Stripe webhook:", error);
-      next(error);
+      console.error("Error processing order:", error);
+      res.status(500).send("Failed to process order.");
     }
   } else {
-    res.status(200).end();
+    res.json({ received: false });
   }
 };

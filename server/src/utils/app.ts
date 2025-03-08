@@ -3,8 +3,8 @@ import cors from "cors";
 import { ORIGIN } from "../constants/index";
 import morgan from "morgan";
 import path from "path";
-import { handleStripeWebhook } from "../middlewares/handle-stripe-webhooks";
 import errorHandler from "../middlewares/error-handler";
+import { handleStripeWebhook } from "../middlewares/handle-stripe-webhooks";
 // initialize app
 const app = express();
 
