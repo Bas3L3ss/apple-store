@@ -33,6 +33,7 @@ import {
 import { Separator } from "@/src/components/ui/separator";
 import { useNavigate } from "react-router";
 import { toast } from "sonner";
+import { ProductSelectionTypes } from "@/src/@types";
 
 // Form schema validation
 const formSchema = z.object({
@@ -70,6 +71,13 @@ type FormValues = z.infer<typeof formSchema>;
 export default function CreateProductPage() {
   const router = useNavigate();
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const productSelectionOptions = Object.entries(ProductSelectionTypes).map(
+    ([label, value]) => ({
+      label,
+      value,
+    })
+  );
 
   // Initialize form with default values
   const form = useForm<FormValues>({
@@ -166,6 +174,7 @@ export default function CreateProductPage() {
                       <FormControl>
                         <Input placeholder="iPhone 15 Pro" {...field} />
                       </FormControl>
+                      <FormDescription>Get name from apple new</FormDescription>
                       <FormMessage />
                     </FormItem>
                   )}
@@ -189,7 +198,6 @@ export default function CreateProductPage() {
                   )}
                 />
               </div>
-
               {/* Description */}
               <FormField
                 control={form.control}
@@ -208,7 +216,6 @@ export default function CreateProductPage() {
                   </FormItem>
                 )}
               />
-
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {/* Base Price */}
                 <FormField
@@ -272,9 +279,7 @@ export default function CreateProductPage() {
                   )}
                 />
               </div>
-
               <Separator />
-
               {/* Product Images */}
               <div>
                 <div className="flex justify-between items-center mb-2">
@@ -327,9 +332,7 @@ export default function CreateProductPage() {
                   </div>
                 ))}
               </div>
-
               <Separator />
-
               {/* Product Selection Steps */}
               <div>
                 <div className="flex justify-between items-center mb-2">
@@ -355,10 +358,23 @@ export default function CreateProductPage() {
                       render={({ field }) => (
                         <FormItem className="flex-1">
                           <FormControl>
-                            <Input
-                              placeholder="e.g., Color, Storage, Size"
-                              {...field}
-                            />
+                            <Select
+                              onValueChange={field.onChange}
+                              value={field.value}
+                            >
+                              <SelectTrigger>
+                                <SelectValue placeholder="Select a step" />
+                              </SelectTrigger>
+                              <SelectContent>
+                                {productSelectionOptions.map(
+                                  ({ label, value }) => (
+                                    <SelectItem key={value} value={value}>
+                                      {label}
+                                    </SelectItem>
+                                  )
+                                )}
+                              </SelectContent>
+                            </Select>
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -377,9 +393,10 @@ export default function CreateProductPage() {
                     </Button>
                   </div>
                 ))}
+
                 <FormDescription>
-                  Add steps that customers will follow when selecting product
-                  options (e.g., "Color", "Storage")
+                  Select steps that customers will follow when choosing product
+                  options (e.g., "Color", "Storage").
                 </FormDescription>
               </div>
 
@@ -391,7 +408,6 @@ export default function CreateProductPage() {
                   options like colors, storage capacities, etc.
                 </p>
               </div>
-
               <div className="flex justify-end gap-3">
                 <Button
                   type="button"

@@ -28,7 +28,7 @@ export const createCheckoutSession: RequestHandler = async (
       metadata: {
         role,
         userId: req.auth.id,
-        cartItems: JSON.stringify(cartItems),
+        cartItemIds: cartItems.map((item) => item.id).join(","),
       },
     });
 
