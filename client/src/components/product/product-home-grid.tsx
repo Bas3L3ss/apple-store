@@ -1,3 +1,4 @@
+import { Link } from "react-router";
 import { Button } from "../ui/button";
 import { Card, CardContent } from "../ui/card";
 
@@ -78,10 +79,10 @@ const ProductGrid = () => {
               </p>
               <div className="flex gap-4 mt-4">
                 <Button size="sm" className="rounded-full">
-                  <a href={`/more/${product.name}`}>Learn more</a>
+                  <Link to={`/more/${product.name}`}>Learn more</Link>
                 </Button>
                 <Button size="sm" variant="outline" className="rounded-full">
-                  <a href={`/shop/${product.name}`}>Buy</a>
+                  <Link to={`/shop/${product.name}`}>Buy</Link>
                 </Button>
               </div>
             </div>

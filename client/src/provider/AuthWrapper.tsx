@@ -1,7 +1,7 @@
 import { useState, useEffect, type ReactNode } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { Button } from "../components/ui/button";
-import { useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router";
 import LoadingState from "../components/loading";
 
 const AppleAuthWrapper = ({ children }: { children: ReactNode }) => {
@@ -35,9 +35,9 @@ const AppleAuthWrapper = ({ children }: { children: ReactNode }) => {
           <div className="text-center">
             <span className="text-sm text-gray-400">
               Need an Apple ID?{" "}
-              <a href="/auth" className="text-blue-400 hover:underline">
+              <Link to="/auth" className="text-blue-400 hover:underline">
                 Create one now
-              </a>
+              </Link>
             </span>
           </div>
         </div>

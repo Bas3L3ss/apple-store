@@ -1,3 +1,5 @@
+import { Link } from "react-router";
+
 export default function Footer() {
   return (
     <footer className="w-full bg-[#f5f5f7] text-[#1d1d1f]">
@@ -27,9 +29,9 @@ export default function Footer() {
                 "Phụ Kiện",
               ].map((item) => (
                 <li key={item}>
-                  <a href="#" className="text-[#424245] hover:text-[#1d1d1f]">
+                  <Link to="#" className="text-[#424245] hover:text-[#1d1d1f]">
                     {item}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -37,9 +39,9 @@ export default function Footer() {
             <ul className="space-y-2 text-xs">
               {["Ví", "Apple Pay"].map((item) => (
                 <li key={item}>
-                  <a href="#" className="text-[#424245] hover:text-[#1d1d1f]">
+                  <Link to="#" className="text-[#424245] hover:text-[#1d1d1f]">
                     {item}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -58,9 +60,9 @@ export default function Footer() {
                 "Apple Books",
               ].map((item) => (
                 <li key={item}>
-                  <a href="#" className="text-[#424245] hover:text-[#1d1d1f]">
+                  <Link to="#" className="text-[#424245] hover:text-[#1d1d1f]">
                     {item}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -78,9 +80,9 @@ export default function Footer() {
                 "Hỗ Trợ Mua Hàng",
               ].map((item) => (
                 <li key={item}>
-                  <a href="#" className="text-[#424245] hover:text-[#1d1d1f]">
+                  <Link to="#" className="text-[#424245] hover:text-[#1d1d1f]">
                     {item}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -93,9 +95,12 @@ export default function Footer() {
               {["Apple Và Doanh Nghiệp", "Mua Hàng Cho Doanh Nghiệp"].map(
                 (item) => (
                   <li key={item}>
-                    <a href="#" className="text-[#424245] hover:text-[#1d1d1f]">
+                    <Link
+                      to="#"
+                      className="text-[#424245] hover:text-[#1d1d1f]"
+                    >
                       {item}
-                    </a>
+                    </Link>
                   </li>
                 )
               )}
@@ -104,9 +109,9 @@ export default function Footer() {
             <ul className="space-y-2 text-xs">
               {["Apple Và Giáo Dục", "Mua Hàng Cho Bậc Đại Học"].map((item) => (
                 <li key={item}>
-                  <a href="#" className="text-[#424245] hover:text-[#1d1d1f]">
+                  <Link to="#" className="text-[#424245] hover:text-[#1d1d1f]">
                     {item}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -123,9 +128,9 @@ export default function Footer() {
                 "Chuỗi Cung Ứng",
               ].map((item) => (
                 <li key={item}>
-                  <a href="#" className="text-[#424245] hover:text-[#1d1d1f]">
+                  <Link to="#" className="text-[#424245] hover:text-[#1d1d1f]">
                     {item}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -136,9 +141,9 @@ export default function Footer() {
         <div className="border-b border-[#d2d2d7] py-4 text-xs text-[#6e6e73]">
           <p>
             Xem thêm cách để mua hàng:{" "}
-            <a href="#" className="text-[#0066cc] hover:underline">
+            <Link to="#" className="text-[#0066cc] hover:underline">
               Tìm cửa hàng bán lẻ
-            </a>{" "}
+            </Link>{" "}
             gần bạn. Hoặc gọi 1800 1192.
           </p>
         </div>
@@ -157,9 +162,9 @@ export default function Footer() {
               "Pháp Lý",
               "Bản Đồ Trang Web",
             ].map((item) => (
-              <a key={item} href="#" className="hover:underline">
+              <Link key={item} to="#" className="hover:underline">
                 {item}
-              </a>
+              </Link>
             ))}
           </div>
           <div className="mt-4 space-y-2">

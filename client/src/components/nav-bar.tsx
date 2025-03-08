@@ -126,22 +126,22 @@ export default function Navbar() {
                     <div className="flex-1 overflow-y-auto px-6 py-6">
                       <div className="space-y-6 mb-8">
                         {navigationItems.map((item) => (
-                          <a
+                          <Link
                             key={item.name}
-                            href={`/shop?category=${item.href}`}
+                            to={`/shop?category=${item.href}`}
                             className="flex items-center justify-between py-2 text-base font-medium text-black-200 transition-colors hover:text-black/70"
                           >
                             {item.name}
                             <ChevronRight className="h-4 w-4 opacity-50" />
-                          </a>
+                          </Link>
                         ))}
-                        <a
-                          href="/support"
+                        <Link
+                          to="/support"
                           className="flex items-center justify-between py-2 text-base font-medium text-black-200 transition-colors hover:text-black/70"
                         >
                           Support
                           <ChevronRight className="h-4 w-4 opacity-50" />
-                        </a>
+                        </Link>
                       </div>
 
                       <div className="relative mb-8">
@@ -177,35 +177,35 @@ export default function Navbar() {
                           </div>
 
                           <div className="space-y-4">
-                            <a
-                              href="/order"
+                            <Link
+                              to="/order"
                               className="flex items-center space-x-3 text-sm font-medium transition-colors duration-200 hover:text-blue-600 py-2"
                             >
                               <Package className="h-5 w-5" />
                               <span>Your Orders</span>
-                            </a>
-                            <a
-                              href="/cart"
+                            </Link>
+                            <Link
+                              to="/cart"
                               className="flex items-center space-x-3 text-sm font-medium transition-colors duration-200 hover:text-blue-600 py-2"
                             >
                               <ShoppingBag className="h-5 w-5" />
                               <span>Your Cart</span>
-                            </a>
-                            <a
-                              href="/profile"
+                            </Link>
+                            <Link
+                              to="/profile"
                               className="flex items-center space-x-3 text-sm font-medium transition-colors duration-200 hover:text-blue-600 py-2"
                             >
                               <Settings className="h-5 w-5" />
                               <span>Account Settings</span>
-                            </a>
-                            <a
-                              href="#"
+                            </Link>
+                            <Link
+                              to="#"
                               className="flex items-center space-x-3 text-sm font-medium transition-colors duration-200 hover:text-blue-600 py-2"
                               onClick={() => logout()}
                             >
                               <LogOut className="h-5 w-5" />
                               <span>Sign Out</span>
-                            </a>
+                            </Link>
                           </div>
                         </div>
                       ) : (
@@ -219,12 +219,12 @@ export default function Navbar() {
                           <div className="text-center">
                             <span className="text-xs text-gray-500">
                               Need an Apple ID?{" "}
-                              <a
-                                href="/auth"
+                              <Link
+                                to="/auth"
                                 className="text-blue-600 hover:underline font-medium"
                               >
                                 Create one now
-                              </a>
+                              </Link>
                             </span>
                           </div>
                         </div>
@@ -245,32 +245,32 @@ export default function Navbar() {
 
             {/* Apple Logo - Visible on all screens */}
             <NavigationMenuItem className="hidden lg:flex  items-center">
-              <a
-                href="/"
+              <Link
+                to="/"
                 className="flex items-center transition-transform duration-300 ease-in-out hover:scale-110"
               >
                 <Apple className="h-5 w-5 text-black-200" />
-              </a>
+              </Link>
             </NavigationMenuItem>
             {/* Desktop Navigation - Hidden on mobile */}
             <NavigationMenuList className="hidden lg:flex flex-1 justify-center space-x-8">
               {navigationItems.map((item) => (
                 <NavigationMenuItem key={item.name}>
-                  <a
-                    href={`/shop?category=${item.href}`}
+                  <Link
+                    to={`/shop?category=${item.href}`}
                     className="text-[12px] font-medium text-black-200 transition-all duration-300 hover:text-black hover:opacity-80 relative after:absolute after:bottom-[-3px] after:left-0 after:right-0 after:h-[1px] after:bg-current after:origin-center after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300"
                   >
                     {item.name}
-                  </a>
+                  </Link>
                 </NavigationMenuItem>
               ))}
               <NavigationMenuItem>
-                <a
-                  href={`/support`}
+                <Link
+                  to={`/support`}
                   className="text-[12px] font-medium text-black-200 transition-all duration-300 hover:text-black hover:opacity-80 relative after:absolute after:bottom-[-3px] after:left-0 after:right-0 after:h-[1px] after:bg-current after:origin-center after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300"
                 >
                   Support
-                </a>
+                </Link>
               </NavigationMenuItem>
             </NavigationMenuList>
 
@@ -345,14 +345,14 @@ export default function Navbar() {
                   "Apple TV",
                   "Accessories",
                 ].map((link) => (
-                  <a
+                  <Link
                     key={link}
-                    href={`/more/${link}`}
+                    to={`/more/${link}`}
                     className="text-sm transition-colors duration-200 hover:text-blue-600 flex items-center space-x-1 group"
                   >
                     <span>{link}</span>
                     <ChevronRight className="h-3 w-3 opacity-0 transition-opacity duration-200 group-hover:opacity-100" />
-                  </a>
+                  </Link>
                 ))}
               </div>
             </div>
@@ -391,39 +391,39 @@ export default function Navbar() {
                   </div>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                  <a
-                    href="/order"
+                  <Link
+                    to="/order"
                     className="flex items-center space-x-3 group transition-colors duration-200 hover:text-blue-600"
                   >
                     <Package className="h-5 w-5" />
                     <span className="font-medium">Your Orders</span>
                     <ChevronRight className="h-4 w-4 ml-auto opacity-0 group-hover:opacity-100 transition-opacity" />
-                  </a>
-                  <a
-                    href="/cart"
+                  </Link>
+                  <Link
+                    to="/cart"
                     className="flex items-center space-x-3 group transition-colors duration-200 hover:text-blue-600"
                   >
                     <ShoppingBag className="h-5 w-5" />
                     <span className="font-medium">Your Cart</span>
                     <ChevronRight className="h-4 w-4 ml-auto opacity-0 group-hover:opacity-100 transition-opacity" />
-                  </a>
-                  <a
-                    href="/profile"
+                  </Link>
+                  <Link
+                    to="/profile"
                     className="flex items-center space-x-3 group transition-colors duration-200 hover:text-blue-600"
                   >
                     <Settings className="h-5 w-5" />
                     <span className="font-medium">Account Settings</span>
                     <ChevronRight className="h-4 w-4 ml-auto opacity-0 group-hover:opacity-100 transition-opacity" />
-                  </a>
-                  <a
-                    href="#"
+                  </Link>
+                  <Link
+                    to="#"
                     className="flex items-center space-x-3 group transition-colors duration-200 hover:text-blue-600"
                     onClick={() => logout()}
                   >
                     <LogOut className="h-5 w-5" />
                     <span className="font-medium">Sign Out</span>
                     <ChevronRight className="h-4 w-4 ml-auto opacity-0 group-hover:opacity-100 transition-opacity" />
-                  </a>
+                  </Link>
                 </div>
               </>
             ) : (

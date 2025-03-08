@@ -2,6 +2,7 @@ import { Button } from "@/src/components/ui/button";
 import { Product } from "@/src/@types";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
+import { Link } from "react-router";
 
 interface ProductShowcaseProps {
   title: string;
@@ -40,7 +41,7 @@ export default function ProductShowcase({
                 {subtitle}
               </p>
               <div className="mt-8">
-                <a href={`/shop/product/${product.id}`}>
+                <Link to={`/shop/product/${product.id}`}>
                   <Button
                     variant="ghost"
                     className="group text-blue-600 hover:text-blue-700 px-0"
@@ -48,7 +49,7 @@ export default function ProductShowcase({
                     Learn more{" "}
                     <ArrowRight className="ml-1 h-4 w-4 group-hover:translate-x-1 transition-transform" />
                   </Button>
-                </a>
+                </Link>
               </div>
             </motion.div>
           </div>

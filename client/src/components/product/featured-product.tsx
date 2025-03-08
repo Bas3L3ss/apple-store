@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { formatPrice } from "@/src/lib/utils";
 import { useGetFeaturedProductsWithAmount } from "@/src/react-query-hooks/use-get-featured-products-with-amount";
 import GlobalLoader from "../global-loader";
+import { Link } from "react-router";
 
 export default function FeaturedProduct() {
   const { data, isLoading: featuredProductLoading } =
@@ -34,18 +35,18 @@ export default function FeaturedProduct() {
           </p>
           <div className="flex flex-col sm:flex-row gap-4">
             <Button className="bg-blue-600 hover:bg-blue-700 text-white rounded-full px-8 py-6 text-lg">
-              <a href={`/shop/${product.slug ?? product.name}`}>Buy Now</a>
+              <Link to={`/shop/${product.slug ?? product.name}`}>Buy Now</Link>
             </Button>
             <Button
               variant="outline"
               className="rounded-full px-8 py-6 text-lg border-gray-300 text-gray-900"
             >
-              <a
+              <Link
                 className="flex items-center"
-                href={`/more/${product.slug ?? product.name}`}
+                to={`/more/${product.slug ?? product.name}`}
               >
                 Learn More <ArrowRight className="ml-2 h-5 w-5" />
-              </a>
+              </Link>
             </Button>
           </div>
         </div>

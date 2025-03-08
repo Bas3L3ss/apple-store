@@ -11,7 +11,7 @@ const Home = () => {
   return (
     <>
       <SEO
-        title="Apple Store - Home"
+        title="Apple Store"
         description="Welcome to the Apple Store Clone. Shop the latest Apple products."
         canonical="https://your-website.com/" //fix later
         image="https://your-website.com/banner.png"

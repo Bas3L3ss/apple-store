@@ -12,7 +12,7 @@ interface ProductCardProps {
 export default function ProductCard({ product }: ProductCardProps) {
   return (
     <Card className="overflow-hidden border-none shadow-sm hover:shadow-md transition-shadow duration-300">
-      <a href={`/shop/product/${product._id}`}>
+      <Link to={`/shop/product/${product._id}`}>
         <div className="relative aspect-square overflow-hidden bg-gray-100">
           <motion.div
             whileHover={{ scale: 1.05 }}
@@ -25,7 +25,7 @@ export default function ProductCard({ product }: ProductCardProps) {
             />
           </motion.div>
         </div>
-      </a>
+      </Link>
       <CardContent className="p-4">
         <h3 className="text-lg font-medium text-gray-900 mb-1">
           {product.name}

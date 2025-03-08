@@ -18,6 +18,7 @@ import RecommendationCarousel from "../components/product/recommendation";
 import { toast } from "sonner";
 import { useProductGetBySlug } from "../react-query-hooks/use-get-product-by-slug";
 import GlobalLoader from "../components/global-loader";
+import SEO from "../components/SEO";
 
 const BuyProduct = () => {
   const { slug } = useParams();
@@ -68,76 +69,115 @@ const BuyProduct = () => {
   };
 
   return (
-    <div className="min-h-screen bg-white">
-      <ProductBuyingHeader
-        handleAddCart={handleAddCart}
-        isDone={isDone}
-        productName={product.name}
-        totalPrice={totalPrice}
+    <>
+      {/* TODO: more dynamic SEO */}
+      <SEO
+        title={`${product.name} - Buy Now | Apple Store`}
+        description={product.description}
+        canonical={`https://yourstore.com/shop/${product.slug}`}
+        image={
+          product.productImages?.[0] ||
+          "https://yourstore.com/default-image.jpg"
+        }
+        language="en"
+        type="product"
+        twitterCard="summary_large_image"
+        twitterSite="@yourstore"
+        twitterCreator="@yourstore"
+        structuredData={{
+          "@context": "https://schema.org/",
+          "@type": "Product",
+          name: product.name,
+          description: product.description,
+          image: product.productImages,
+          brand: {
+            "@type": "Brand",
+            name: "Apple",
+          },
+          offers: {
+            "@type": "Offer",
+            price: product.basePrice,
+            priceCurrency: "USD",
+            availability: product.stock > 0 ? "InStock" : "OutOfStock",
+            url: `https://yourstore.com/shop/${product.slug}`,
+          },
+        }}
       />
-      <ProductBuyingGallery
-        product={product}
-        configSectionRef={configSectionRef}
-      />
-      <div ref={configSectionRef} className="container mx-auto px-4 md:px-8  ">
-        <div className="flex flex-col lg:flex-row gap-8 py-12 relative">
-          {/* Left Section (Sticky Product Info) */}
-          <ProductBuyingLeftSection isNew={isNew} product={product} />
 
-          {/* Right Section (Scrollable Configuration) */}
-          <div className="lg:w-1/2">
-            <div
-              ref={configSectionRef}
-              className="bg-white rounded-2xl p-6 border border-gray-200 shadow-sm"
-            >
-              <h2 className="text-2xl font-semibold mb-6">
-                Customize your {product.name}
-              </h2>
+      <div className="min-h-screen bg-white">
+        <ProductBuyingHeader
+          handleAddCart={handleAddCart}
+          isDone={isDone}
+          productName={product.name}
+          totalPrice={totalPrice}
+        />
+        <ProductBuyingGallery
+          product={product}
+          configSectionRef={configSectionRef}
+        />
+        <div
+          ref={configSectionRef}
+          className="container mx-auto px-4 md:px-8  "
+        >
+          <div className="flex flex-col lg:flex-row gap-8 py-12 relative">
+            {/* Left Section (Sticky Product Info) */}
+            <ProductBuyingLeftSection isNew={isNew} product={product} />
 
-              <ProductBuyingRightSection
-                product={product}
-                selectedOptions={selectedOptions}
-                handleSelect={handleSelect}
-              />
-            </div>
-          </div>
-        </div>
-
-        {/* Summary section */}
-        <section className="py-12 border-t border-gray-200">
-          <h2 className="text-2xl font-semibold mb-6">
-            Your {product.name} Summary
-          </h2>
-          <div className="bg-gray-50 rounded-2xl p-6 border border-gray-200">
-            <Summary
-              selectionOption={selectedOptions}
-              productName={product.name}
-              selectionType={product.productSelectionStep}
-              totalPrice={totalPrice}
-            />
-            <div className="mt-6 flex justify-end">
-              <Button
-                className="bg-blue-600 hover:bg-blue-700 rounded-full px-8"
-                disabled={!isDone}
-                onClick={handleAddCart}
+            {/* Right Section (Scrollable Configuration) */}
+            <div className="lg:w-1/2">
+              <div
+                ref={configSectionRef}
+                className="bg-white rounded-2xl p-6 border border-gray-200 shadow-sm"
               >
-                <ShoppingBag className="mr-2 h-4 w-4" /> Add to Bag
-              </Button>
+                <h2 className="text-2xl font-semibold mb-6">
+                  Customize your {product.name}
+                </h2>
+
+                <ProductBuyingRightSection
+                  product={product}
+                  selectedOptions={selectedOptions}
+                  handleSelect={handleSelect}
+                />
+              </div>
             </div>
           </div>
-        </section>
 
-        {/* Recommendations section */}
-      </div>
-      <section className="py-12 border-t border-gray-200">
-        <section className="py-16 px-4 md:px-6 lg:px-8 bg-gray-50">
-          <Title className="text-3xl font-semibold text-gray-900 mb-8">
-            You May Also Like
-          </Title>
-          <RecommendationCarousel />
+          {/* Summary section */}
+          <section className="py-12 border-t border-gray-200">
+            <h2 className="text-2xl font-semibold mb-6">
+              Your {product.name} Summary
+            </h2>
+            <div className="bg-gray-50 rounded-2xl p-6 border border-gray-200">
+              <Summary
+                selectionOption={selectedOptions}
+                productName={product.name}
+                selectionType={product.productSelectionStep}
+                totalPrice={totalPrice}
+              />
+              <div className="mt-6 flex justify-end">
+                <Button
+                  className="bg-blue-600 hover:bg-blue-700 rounded-full px-8"
+                  disabled={!isDone}
+                  onClick={handleAddCart}
+                >
+                  <ShoppingBag className="mr-2 h-4 w-4" /> Add to Bag
+                </Button>
+              </div>
+            </div>
+          </section>
+
+          {/* Recommendations section */}
+        </div>
+        <section className="py-12 border-t border-gray-200">
+          <section className="py-16 px-4 md:px-6 lg:px-8 bg-gray-50">
+            <Title className="text-3xl font-semibold text-gray-900 mb-8">
+              You May Also Like
+            </Title>
+            <RecommendationCarousel />
+          </section>
         </section>
-      </section>
-    </div>
+      </div>
+    </>
   );
 };
 

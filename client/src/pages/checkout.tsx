@@ -1,4 +1,4 @@
-import { useSearchParams } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { CheckCircle, XCircle } from "lucide-react";
 import { useCartStore } from "../store/useCartStore";
 
@@ -44,12 +44,12 @@ export function CheckoutCancelled() {
           Payment Cancelled
         </h1>
         <p className="text-gray-600 mt-2">You cancelled the payment process.</p>
-        <button
-          onClick={() => (window.location.href = "/checkout")}
-          className="mt-6 px-6 py-2 text-white bg-gray-900 rounded-full hover:bg-gray-800 transition"
+        <Link
+          to={"/cart"}
+          className="mt-6 px-6 py-2 block text-white bg-gray-900 rounded-full hover:bg-gray-800 transition"
         >
           Try Again
-        </button>
+        </Link>
       </div>
     </div>
   );
