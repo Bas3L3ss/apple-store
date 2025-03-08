@@ -11,26 +11,32 @@ export const createCheckoutSession: RequestHandler = async (
 ) => {
   try {
     const { cartItems }: { cartItems: CartItem[] } = req.body;
+    console.log(cartItems);
 
     if (!req.auth) {
       return next({ statusCode: 401, message: "Unauthorized" });
     }
 
-    const { username, email, role, verified } = req.auth;
+    const { username, email, role, verified, id: userId } = req.auth;
 
     if (!verified) {
       return next({ statusCode: 403, message: "Account not verified" });
     }
+    const existingCustomers = await stripe.customers.list({ email });
 
-    const customer = await stripe.customers.create({
-      email,
-      name: username,
-      metadata: {
-        role,
-        userId: req.auth.id,
-        cartItemIds: cartItems.map((item) => item.id).join(","),
-      },
-    });
+    let customer;
+    if (existingCustomers.data.length > 0) {
+      customer = existingCustomers.data[0];
+    } else {
+      customer = await stripe.customers.create({
+        email,
+        name: username,
+        metadata: {
+          role,
+          userId,
+        },
+      });
+    }
 
     try {
       const line_items = await Promise.all(
@@ -50,7 +56,7 @@ export const createCheckoutSession: RequestHandler = async (
               },
               unit_amount: Math.round(item.totalPrice * 100),
             },
-            quantity: item.quantity,
+            quantity: 1,
           };
         })
       );

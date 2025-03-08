@@ -1,4 +1,5 @@
 import { ProductOption } from "@/src/@types";
+import { getColorHex } from "@/src/lib/utils";
 import { motion } from "framer-motion";
 
 interface ColorSelectionProps {
@@ -13,32 +14,25 @@ const ColorSelection = ({
   setSelectedColor,
 }: ColorSelectionProps) => {
   // Map color names to actual color values for visual representation
-  const colorMap: Record<string, string> = {
-    "Natural Titanium": "bg-amber-100",
-    "Blue Titanium": "bg-blue-400",
-    "White Titanium": "bg-gray-100",
-    "Black Titanium": "bg-gray-800",
-  };
 
   return (
     <div className="space-y-4">
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {colorOptions.map((option) => (
           <motion.button
-            key={option.id}
+            key={option._id}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            onClick={() => setSelectedColor(option.color!)}
+            onClick={() => setSelectedColor(option._id!)}
             className={`relative flex flex-col items-center p-4 rounded-xl border-2 transition-all ${
-              selectedColor === option.color
+              selectedColor === option._id
                 ? "border-blue-500 bg-blue-50"
                 : "border-gray-200 hover:border-gray-300"
             }`}
           >
             <div
-              className={`w-12 h-12 rounded-full mb-3 ${
-                colorMap[option.color!] || "bg-gray-300"
-              }`}
+              className={`w-12 h-12 rounded-full mb-3`}
+              style={{ backgroundColor: getColorHex(option.color!) }}
             />
             <span className="text-sm font-medium">{option.color}</span>
             {option.price > 0 && (
@@ -46,7 +40,7 @@ const ColorSelection = ({
                 +${option.price}
               </span>
             )}
-            {selectedColor === option.color && (
+            {selectedColor === option._id && (
               <div className="absolute top-2 right-2 w-5 h-5 bg-blue-500 rounded-full flex items-center justify-center">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"

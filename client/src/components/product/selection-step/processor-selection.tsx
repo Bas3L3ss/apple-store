@@ -17,12 +17,12 @@ const ProcessorSelection = ({
       <div className="grid grid-cols-2 gap-4">
         {processorOptions.map((option) => (
           <motion.button
-            key={option.id}
+            key={option._id}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            onClick={() => setSelectedProcessor(option.processor!)}
+            onClick={() => setSelectedProcessor(option._id!)}
             className={`relative flex flex-col items-center p-4 rounded-xl border-2 transition-all ${
-              selectedProcessor === option.processor
+              selectedProcessor === option._id
                 ? "border-blue-500 bg-blue-50"
                 : "border-gray-200 hover:border-gray-300"
             }`}
@@ -33,7 +33,7 @@ const ProcessorSelection = ({
             <span className="text-sm text-gray-500">
               {option.price === 0 ? "Included" : `+$${option.price}`}
             </span>
-            {selectedProcessor === option.processor && (
+            {selectedProcessor === option._id && (
               <div className="absolute top-2 right-2 w-5 h-5 bg-blue-500 rounded-full flex items-center justify-center">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"

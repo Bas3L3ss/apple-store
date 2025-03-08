@@ -21,11 +21,14 @@ const ProductSchema = new Schema<Product>(
       required: true,
     },
     stock: { type: Number, required: true },
+    isFeatured: { type: Boolean, default: false }, // Add new field
+
     productSelectionStep: { type: [String], required: true },
     productOptions: [{ type: Schema.Types.ObjectId, ref: "ProductOption" }],
   },
   { timestamps: true }
 );
+ProductSchema.index({ name: "text", slug: "text" });
 
 const ProductModel = model<Product>("Product", ProductSchema);
 

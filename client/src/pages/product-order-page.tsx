@@ -1,13 +1,7 @@
-"use client";
-
 import { useRef } from "react";
 import { Navigate, useNavigate, useParams } from "react-router-dom";
 import { ShoppingBag } from "lucide-react";
-import {
-  type Product,
-  ProductCategory,
-  ProductSelectionTypes,
-} from "@/src/@types";
+
 import { Button } from "@/src/components/ui/button";
 import Summary from "../components/product/selection-step/summary";
 
@@ -22,193 +16,19 @@ import ProductBuyingRightSection from "../components/product/product-buying-righ
 import Title from "../components/reusable/title";
 import RecommendationCarousel from "../components/product/recommendation";
 import { toast } from "sonner";
-
-const mockProduct: Product = {
-  id: "iphone-15-pro",
-  productSelectionStep: [
-    ProductSelectionTypes.Processor,
-    ProductSelectionTypes.Color,
-    ProductSelectionTypes.Storage,
-    ProductSelectionTypes.Material,
-    ProductSelectionTypes.Accessories,
-    ProductSelectionTypes.Size,
-    ProductSelectionTypes.Carrier,
-  ],
-  name: "iPhone 15 Pro",
-  description:
-    "                    iPhone 15 Pro is the first iPhone to feature an\
-                    aerospace-grade titanium design, using the same alloy that\
-                    spacecraft use for missions to Mars. Titanium has one of the\
-                    highest strength-to-weight ratios of any metal, making these\
-                    our lightest Pro models ever.",
-  productImages: [
-    "/api/placeholder/800/600",
-    "/api/placeholder/800/600",
-    "/api/placeholder/800/600",
-  ],
-  slug: "iphone-15-pro",
-  basePrice: 999,
-
-  category: ProductCategory.Iphone,
-  stock: 100,
-  createdAt: new Date(),
-  updatedAt: new Date(),
-  productOptions: [
-    // Color options
-    {
-      id: "1",
-      productId: "iphone-15-pro",
-      color: "Natural Titanium",
-      price: 0,
-      stock: 25,
-    },
-    {
-      id: "2",
-      productId: "iphone-15-pro",
-      color: "Blue Titanium",
-      price: 0,
-      stock: 25,
-    },
-    {
-      id: "3",
-      productId: "iphone-15-pro",
-      color: "White Titanium",
-      price: 0,
-      stock: 25,
-    },
-    {
-      id: "4",
-      productId: "iphone-15-pro",
-      color: "Black Titanium",
-      price: 0,
-      stock: 25,
-    },
-
-    // Storage options
-    {
-      id: "5",
-      productId: "iphone-15-pro",
-      storage: "128GB",
-      price: 0,
-      stock: 25,
-    },
-    {
-      id: "6",
-      productId: "iphone-15-pro",
-      storage: "256GB",
-      price: 100,
-      stock: 25,
-    },
-    {
-      id: "7",
-      productId: "iphone-15-pro",
-      storage: "512GB",
-      price: 300,
-      stock: 25,
-    },
-    {
-      id: "8",
-      productId: "iphone-15-pro",
-      storage: "1TB",
-      price: 500,
-      stock: 25,
-    },
-    // material options
-    {
-      id: "9",
-      productId: "iphone-15-pro",
-      material: "Idk",
-      price: 0,
-      stock: 25,
-    },
-    {
-      id: "10",
-      productId: "iphone-15-pro",
-      material: "LOL",
-      price: 100,
-      stock: 25,
-    },
-    // accessories options
-    {
-      id: "11",
-      productId: "iphone-15-pro",
-      accessories: "Magic keyboard",
-      price: 0,
-      stock: 25,
-    },
-    {
-      id: "12",
-      productId: "iphone-15-pro",
-      accessories: "Iphone Pen",
-      price: 100,
-      stock: 25,
-    },
-    {
-      id: "12.1",
-      productId: "iphone-15-pro",
-      accessories: "None",
-      price: 0,
-      stock: 0,
-    },
-    // size options
-    {
-      id: "13",
-      productId: "iphone-15-pro",
-      size: "normal",
-      price: 0,
-      stock: 25,
-    },
-    {
-      id: "14",
-      productId: "iphone-15-pro",
-      size: "huge",
-      price: 100,
-      stock: 25,
-    },
-    // carrier options
-    {
-      id: "15",
-      productId: "iphone-15-pro",
-      carrier: "AT&T",
-      price: 0,
-      stock: 25,
-    },
-    {
-      id: "16",
-      productId: "iphone-15-pro",
-      carrier: "Verizon",
-      price: 100,
-      stock: 25,
-    },
-    // processor options
-    {
-      id: "17",
-      productId: "iphone-15-pro",
-      processor: "M1",
-      price: 0,
-      stock: 25,
-    },
-    {
-      id: "18",
-      productId: "iphone-15-pro",
-      processor: "M2",
-      price: 100,
-      stock: 25,
-    },
-  ],
-};
-const searchProducts = [mockProduct];
+import { useProductGetBySlug } from "../react-query-hooks/use-get-product-by-slug";
+import GlobalLoader from "../components/global-loader";
 
 const BuyProduct = () => {
   const { slug } = useParams();
-  console.log(slug);
+  const { data: product, isLoading, error } = useProductGetBySlug(slug);
+
   const navigate = useNavigate();
 
   const { account } = useAuth();
 
   const { addItem } = useCartStore();
 
-  const product = searchProducts[0];
   const {
     handleSelect,
     selectedOptions,
@@ -219,39 +39,33 @@ const BuyProduct = () => {
 
   const configSectionRef = useRef<HTMLDivElement>(null);
 
+  if (isLoading) return <GlobalLoader />;
+  if (error || !product) return <Navigate to="/not-found" />;
+
   const isNew = checkIsNew(product.createdAt);
 
   const isDone = getLastStepSelected() && isConfigurationComplete();
 
   const handleAddCart = () => {
     const cartOption: string[] = [];
-    let price = product.basePrice;
 
-    for (const prodOption of product.productOptions) {
-      for (const [key, selectedOption] of Object.entries(selectedOptions)) {
-        if (prodOption[key as keyof typeof prodOption] === selectedOption) {
-          cartOption.push(prodOption.id);
-          price += prodOption.price;
-        }
-      }
+    for (const element of Object.entries(selectedOptions)) {
+      cartOption.push(element[1]);
     }
-
     const cartItem: CartInput = {
       selectedOptions: cartOption,
-      totalPrice: price,
-      productId: product.id,
+      totalPrice,
+      productId: product._id,
       userId: account?._id,
     };
+
     addItem(cartItem);
+
     toast.success("Added sucessfully", {
       description: "Go to cart",
       action: { label: "Go to cart", onClick: () => navigate("/cart") },
     });
   };
-
-  if (!product) {
-    return <Navigate to={"/not-found"} />;
-  }
 
   return (
     <div className="min-h-screen bg-white">
@@ -262,10 +76,10 @@ const BuyProduct = () => {
         totalPrice={totalPrice}
       />
       <ProductBuyingGallery
-        configSectionRef={configSectionRef}
         product={product}
+        configSectionRef={configSectionRef}
       />
-      <div className="container mx-auto px-4 md:px-8  ">
+      <div ref={configSectionRef} className="container mx-auto px-4 md:px-8  ">
         <div className="flex flex-col lg:flex-row gap-8 py-12 relative">
           {/* Left Section (Sticky Product Info) */}
           <ProductBuyingLeftSection isNew={isNew} product={product} />

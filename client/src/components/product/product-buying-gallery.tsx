@@ -1,7 +1,6 @@
 import { ChevronDown } from "lucide-react";
 import { Button } from "../ui/button";
 import React, { useState } from "react";
-import { useScroll, useTransform } from "framer-motion";
 import { Product } from "@/src/@types";
 import { motion } from "framer-motion";
 
@@ -12,13 +11,6 @@ const ProductBuyingGallery = ({
   configSectionRef: React.RefObject<null | HTMLDivElement>;
   product: Product;
 }) => {
-  const { scrollYProgress } = useScroll({
-    target: configSectionRef,
-    offset: ["start start", "end end"],
-  });
-  const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
-  const scale = useTransform(scrollYProgress, [0, 0.5], [1, 0.95]);
-
   const scrollToConfig = () => {
     configSectionRef.current?.scrollIntoView({ behavior: "smooth" });
   };
@@ -27,8 +19,8 @@ const ProductBuyingGallery = ({
   return (
     <section className="sticky h-[70vh] overflow-hidden bg-gray-50">
       <motion.div
+        ref={configSectionRef}
         className="h-full flex items-center justify-center"
-        style={{ opacity, scale }}
       >
         <img
           src={product.productImages[activeImage] || "/placeholder.svg"}

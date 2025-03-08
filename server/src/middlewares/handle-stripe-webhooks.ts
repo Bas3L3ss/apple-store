@@ -32,6 +32,7 @@ export const handleStripeWebhook: RequestHandler = async (req, res, next) => {
       if (!customer || !customer.metadata.userId) {
         throw new Error("Unauthorized order creation");
       }
+      console.log(data);
 
       const userId = customer.metadata.userId;
       const cartItems = JSON.parse(customer.metadata.cartItems || "[]");

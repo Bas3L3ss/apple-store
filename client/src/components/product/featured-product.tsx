@@ -1,14 +1,19 @@
 import { Button } from "@/src/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
-import { Product } from "@/src/@types";
 import { formatPrice } from "@/src/lib/utils";
+import { useGetFeaturedProductsWithAmount } from "@/src/react-query-hooks/use-get-featured-products-with-amount";
+import GlobalLoader from "../global-loader";
 
-interface FeaturedProductProps {
-  product: Product;
-}
+export default function FeaturedProduct() {
+  const { data, isLoading: featuredProductLoading } =
+    useGetFeaturedProductsWithAmount(1);
 
-export default function FeaturedProduct({ product }: FeaturedProductProps) {
+  if (featuredProductLoading) {
+    return <GlobalLoader />;
+  }
+  const product = data[0] ?? {};
+
   return (
     <div className="max-w-7xl mx-auto">
       <motion.div

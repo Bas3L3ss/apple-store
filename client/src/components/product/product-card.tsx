@@ -1,6 +1,6 @@
 import { Card, CardContent, CardFooter } from "@/src/components/ui/card";
 import { Product } from "@/src/@types";
-import { formatPrice } from "@/src/lib/utils";
+import { formatPrice, getColorHex } from "@/src/lib/utils";
 import { motion } from "framer-motion";
 import { ShoppingCart } from "lucide-react";
 import { Link } from "react-router";
@@ -10,6 +10,8 @@ interface ProductCardProps {
 }
 
 export default function ProductCard({ product }: ProductCardProps) {
+  console.log(product.productOptions.filter((option) => option.color));
+
   return (
     <Card className="overflow-hidden border-none shadow-sm hover:shadow-md transition-shadow duration-300">
       <a href={`/shop/product/${product.id}`}>
@@ -39,29 +41,18 @@ export default function ProductCard({ product }: ProductCardProps) {
 
         {product.productOptions && product.productOptions.length > 0 && (
           <div className="flex items-center gap-1 mt-3">
-            {product.productOptions.map((color) => (
-              <div
-                key={color.id}
-                className="w-4 h-4 rounded-full border border-gray-300"
-                style={{
-                  backgroundColor: color.color!.toLowerCase().includes("silver")
-                    ? "#C0C0C0"
-                    : color.color!.toLowerCase().includes("space gray")
-                    ? "#36454F"
-                    : color.color!.toLowerCase().includes("rose gold")
-                    ? "#B76E79"
-                    : color.color!.toLowerCase().includes("black")
-                    ? "#000000"
-                    : color.color!.toLowerCase().includes("white")
-                    ? "#FFFFFF"
-                    : color.color!.toLowerCase().includes("blue")
-                    ? "#0000FF"
-                    : color.color!.toLowerCase().includes("titanium")
-                    ? "#878681"
-                    : "#CCCCCC",
-                }}
-              />
-            ))}
+            {product.productOptions
+              .filter((option) => option.color) // Keep only options with color
+              .slice(0, 5) // Limit to 5 colors
+              .map((colorOption) => (
+                <div
+                  key={colorOption._id}
+                  className="w-4 h-4 rounded-full border border-gray-300"
+                  style={{
+                    backgroundColor: getColorHex(colorOption.color),
+                  }}
+                />
+              ))}
           </div>
         )}
       </CardContent>

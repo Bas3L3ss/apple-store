@@ -23,7 +23,7 @@ export interface Account {
 
 // each productOption can only have one data like only one color or material not both, meaning material -> color
 export interface ProductOption {
-  id: string;
+  _id: string;
   productId: string; // Reference for a specific product
 
   // Selection attributes (optional based on product type)
@@ -41,7 +41,7 @@ export interface ProductOption {
 }
 
 export interface Product {
-  id: string;
+  _id: string;
   name: string;
   description: string;
   productImages: string[];
@@ -75,7 +75,7 @@ export enum ProductCategory {
 }
 
 export interface CartItem {
-  id: string;
+  _id: string;
   productId: string;
   selectedOptions: string[];
   userId?: string;
@@ -84,7 +84,7 @@ export interface CartItem {
 }
 
 export interface Order {
-  id: string;
+  _id: string;
   userId: string;
   calculatedTotal: number; // this is the price calculated using all totalPrice of each CartItem
   items: OrderItem[];
@@ -97,7 +97,7 @@ export interface Order {
   updatedAt: Date;
 }
 export interface OrderItem {
-  id: string;
+  _id: string;
   orderId: string;
   productId: string;
   selectedOptions: string[];
@@ -115,4 +115,15 @@ export enum PaymentMethod {
   PP = "pp:paypal",
   CC = "CC:credit-card",
   AC = "ac:apple-card",
+}
+
+export interface FetchProductsResponse {
+  success: boolean;
+  data: Product[];
+  pagination: {
+    total: number;
+    totalPages: number;
+    currentPage: number;
+    limit: number;
+  };
 }

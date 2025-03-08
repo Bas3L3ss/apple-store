@@ -1,24 +1,45 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import type { Product } from "@/src/@types";
 
-export function useProductConfiguration(product: Product) {
+export function useProductConfiguration(product?: Product) {
+  // Provide fallback values if product is undefined
+  const selectionSteps = useMemo(
+    () => product?.productSelectionStep ?? [],
+    [product?.productSelectionStep]
+  );
+
+  const basePrice = product?.basePrice ?? 0;
+
+  const productOptions = useMemo(
+    () => product?.productOptions ?? [],
+    [product?.productOptions]
+  );
+
   const [selectedOptions, setSelectedOptions] = useState<
     Record<string, string>
-  >(() => {
-    return product.productSelectionStep.reduce((acc, step) => {
-      acc[step.toLowerCase()] = "";
-      return acc;
-    }, {} as Record<string, string>);
-  });
+  >({});
 
-  const [totalPrice, setTotalPrice] = useState(product.basePrice);
+  const [totalPrice, setTotalPrice] = useState(basePrice);
 
   useEffect(() => {
-    let newPrice = product.basePrice;
+    if (!selectionSteps.length) return;
+
+    setSelectedOptions(
+      selectionSteps.reduce((acc, step) => {
+        acc[step] = "";
+        return acc;
+      }, {} as Record<string, string>)
+    );
+  }, [selectionSteps]);
+
+  useEffect(() => {
+    if (!product) return;
+
+    let newPrice = basePrice;
     Object.entries(selectedOptions).forEach(([key, value]) => {
       if (!value) return;
 
-      const option = product.productOptions.find((opt) => {
+      const option = productOptions.find((opt) => {
         const optionKey = key as keyof typeof opt;
         return opt[optionKey] === value;
       });
@@ -27,7 +48,7 @@ export function useProductConfiguration(product: Product) {
     });
 
     setTotalPrice(newPrice);
-  }, [selectedOptions, product.basePrice, product.productOptions]);
+  }, [selectedOptions, basePrice, productOptions, product]);
 
   const handleSelect = (value: string, optionType: string) => {
     setSelectedOptions((prev) => ({
@@ -37,15 +58,14 @@ export function useProductConfiguration(product: Product) {
   };
 
   const isConfigurationComplete = () => {
-    return product.productSelectionStep.every(
+    return selectionSteps.every(
       (step) => selectedOptions[step.toLowerCase()] !== ""
     );
   };
 
   const getLastStepSelected = () => {
-    const lastStep =
-      product.productSelectionStep[product.productSelectionStep.length - 1];
-    return selectedOptions[lastStep.toLowerCase()] !== "";
+    const lastStep = selectionSteps[selectionSteps.length - 1];
+    return lastStep ? selectedOptions[lastStep.toLowerCase()] !== "" : false;
   };
 
   return {

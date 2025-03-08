@@ -1,6 +1,64 @@
-import { ProductOption } from "@/src/@types";
-import { makeAxiosRequest } from "@/src/lib/utils";
+import { FetchProductsResponse, ProductOption } from "@/src/@types";
+import { axios, makeAxiosRequest } from "@/src/lib/utils";
 import { toast } from "sonner";
+
+export const getFeaturedProductsWithAmount = async (amount: number) => {
+  try {
+    const data = await axios.get(`/products/featured?amount=${amount}`);
+
+    return data.data.data;
+  } catch {
+    toast.error("Error fetching products", {
+      description: "Please try again or reach support if necessary",
+    });
+    return [];
+  }
+};
+
+export const getProducts = async ({
+  search = "",
+  category = "",
+  page = 1,
+  limit = 10,
+}: {
+  search?: string;
+  category?: string;
+  page?: number;
+  limit?: number;
+}): Promise<FetchProductsResponse> => {
+  try {
+    const response = await axios.get<FetchProductsResponse>("/products", {
+      params: { search, category, page, limit },
+    });
+    return response.data;
+  } catch (error) {
+    console.log("Error fetching products: ", error);
+
+    toast.error("Error fetching products", {
+      description: "Please try again or reach support if necessary",
+    });
+    return {
+      data: [],
+      pagination: {
+        currentPage: 0,
+        limit: 0,
+        total: 0,
+        totalPages: 0,
+      },
+      success: false,
+    };
+  }
+};
+
+export const fetchProductBySlug = async (slug?: string) => {
+  try {
+    const { data } = await axios.get(`/products/slug/${slug}`);
+    return data.data;
+  } catch (error) {
+    console.log("not found");
+    throw error;
+  }
+};
 
 export const createProduct = async (
   setIsLoading: (loading: boolean) => void,

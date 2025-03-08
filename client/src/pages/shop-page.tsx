@@ -1,33 +1,24 @@
+import { useEffect, useState } from "react";
 import CategoryNav from "../components/product/category-nav";
 import FeaturedProduct from "../components/product/featured-product";
 import ProductGrid from "../components/product/product-grid";
 import RecommendationCarousel from "../components/product/recommendation";
 import Title from "../components/reusable/title";
-import { ProductCategory } from "@/src/@types";
 import SEO from "../components/SEO";
 
 const ShopPage = () => {
+  const [productsFound, setProductsFound] = useState(0);
   return (
     <>
       <SEO
-        title="Apple Store - Store"
+        title={`Apple products (${productsFound}) - Shop`}
         description="Welcome to the Apple Store Clone. Shop the latest Apple products."
         canonical="https://your-website.com/" //fix later
         image="https://your-website.com/banner.png"
       />
       <div className="  bg-white">
         <section className="py-16 px-4 md:px-6 lg:px-8">
-          <FeaturedProduct
-            // @ts-expect-error : this is intentional
-            product={{
-              id: "iphone-15-pro",
-              name: "iPhone 15 Pro",
-              description: "Titan. Siêu bền. Siêu nhẹ.",
-              basePrice: 999,
-              category: ProductCategory.Iphone,
-              productImages: ["/api/placeholder/1200/600"],
-            }}
-          />
+          <FeaturedProduct />
         </section>
         <section className="py-8 px-4 md:px-6 lg:px-8 border-b border-gray-200">
           <CategoryNav />
@@ -36,7 +27,7 @@ const ShopPage = () => {
           <Title className="text-3xl font-semibold text-gray-900 mb-8">
             All Products
           </Title>
-          <ProductGrid />
+          <ProductGrid setProductsFound={setProductsFound} />
         </section>
         {/* Recommendation Carousel */}
         <section className="py-16 px-4 md:px-6 lg:px-8 bg-gray-50">

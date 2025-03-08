@@ -3,7 +3,6 @@ import checkBearerToken from "../middlewares/check-bearer-token";
 import errorHandler from "../middlewares/error-handler";
 import { GetOrderById } from "../controllers/order/get-order-by-id";
 import { GetOrders } from "../controllers/order/get-orders";
-import { handleStripeWebhook } from "../middlewares/handle-stripe-webhooks";
 
 const router = express.Router();
 
@@ -15,14 +14,6 @@ const router = express.Router();
 //   [handleStripeWebhook, CreateOrder],
 //   errorHandler
 // );
-
-// POST: webhook to create order from Stripe
-router.post(
-  "/webhook",
-  express.raw({ type: "application/json" }),
-  [handleStripeWebhook],
-  errorHandler
-);
 
 // GET: Fetch all orders
 router.get("/", [checkBearerToken, GetOrders], errorHandler);

@@ -17,12 +17,12 @@ const AccessoriesSelection = ({
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {accessoriesOptions.map((option) => (
           <motion.button
-            key={option.id}
+            key={option._id}
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
-            onClick={() => setSelectedAccessories(option.accessories!)}
+            onClick={() => setSelectedAccessories(option._id!)}
             className={`relative flex flex-col items-start p-4 rounded-xl border-2 transition-all text-left ${
-              selectedAccessories === option.accessories
+              selectedAccessories === option._id
                 ? "border-blue-500 bg-blue-50"
                 : "border-gray-200 hover:border-gray-300"
             }`}
@@ -33,7 +33,7 @@ const AccessoriesSelection = ({
             <span className="text-sm text-gray-500">
               {option.price === 0 ? "Included" : `+$${option.price}`}
             </span>
-            {selectedAccessories === option.accessories && (
+            {selectedAccessories === option._id && (
               <div className="absolute top-2 right-2 w-5 h-5 bg-blue-500 rounded-full flex items-center justify-center">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"

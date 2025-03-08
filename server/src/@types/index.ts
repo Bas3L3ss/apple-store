@@ -20,6 +20,7 @@ export interface Product extends Document {
   stock: number;
   productSelectionStep: string[];
   productOptions: ProductOption[];
+  isFeatured: boolean;
 }
 export interface ProductOption extends Document {
   productId: Types.ObjectId;
