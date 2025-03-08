@@ -11,4 +11,6 @@
 
 10/ fix special card theme
 
-final/ add testing , switch to Cookie jwt , add admin analytic
+11/ devs op: docker, k8s/helm, terraform
+
+final/ add testing , switch to Cookie jwt , add admin analytic, TODO, fix types
