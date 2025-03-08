@@ -1,10 +1,14 @@
 import { useSearchParams } from "react-router-dom";
 import { CheckCircle, XCircle } from "lucide-react";
+import { useCartStore } from "../store/useCartStore";
 
 export function CheckoutSuccess() {
   const [searchParams] = useSearchParams();
   const sessionId = searchParams.get("session_id");
-
+  const { clearCart } = useCartStore();
+  if (sessionId) {
+    clearCart();
+  }
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-neutral-100 text-center px-6">
       <div className="max-w-lg bg-white shadow-xl rounded-2xl p-8">
