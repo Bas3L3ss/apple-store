@@ -1,3 +1,16 @@
+export interface ShippingAddress {
+  fullAddress: string;
+  line1: string;
+  line2?: string;
+  city: string;
+  state: string;
+  postalCode: string;
+  country: string;
+  coordinates: {
+    lat: number;
+    lng: number;
+  };
+}
 import { Types } from "mongoose";
 
 export interface Account {
@@ -71,4 +84,18 @@ export interface Order extends Document {
   status: OrderStatus;
   paymentMethod: PaymentMethod;
   estimatedDelivery: Date;
+}
+
+export interface ShippingAddress {
+  fullAddress: string;
+  line1: string;
+  line2?: string;
+  city: string;
+  state: string;
+  postalCode: string;
+  country: string;
+  coordinates: {
+    lat: number;
+    lng: number;
+  };
 }

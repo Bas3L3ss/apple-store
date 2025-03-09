@@ -1,7 +1,7 @@
 import clsx, { ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 import Axios from "axios";
-import { OrderStatus } from "../@types";
+import { OrderStatus, ShippingAddress } from "../@types";
 import { colorHexMap } from "../constants/color";
 
 // axios
@@ -92,4 +92,11 @@ export const getStatusProgress = (status: OrderStatus) => {
 // Function to get hex color
 export const getColorHex = (color: string): string => {
   return colorHexMap[color] || "#000000"; // Default to black if not found
+};
+// Format address for display
+export const formatAddress = (address: ShippingAddress) => {
+  if (!address) return "";
+  const { line1, line2, city, state, postalCode } = address;
+  const line2Display = line2 ? `, ${line2}` : "";
+  return `${line1}${line2Display}, ${city}, ${state} ${postalCode}`;
 };

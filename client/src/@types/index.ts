@@ -127,3 +127,33 @@ export interface FetchProductsResponse {
     limit: number;
   };
 }
+
+export interface ShippingAddress {
+  fullAddress: string;
+  line1: string;
+  line2?: string;
+  city: string;
+  state: string;
+  postalCode: string;
+  country: string;
+  coordinates: {
+    lat: number;
+    lng: number;
+  };
+}
+
+export interface LocationSuggestion {
+  lat: string;
+  lon: string;
+  display_name: string;
+  address: {
+    road?: string;
+    house_number?: string;
+    city?: string;
+    town?: string;
+    county?: string;
+    state?: string;
+    postcode?: string;
+    country?: string;
+  };
+}

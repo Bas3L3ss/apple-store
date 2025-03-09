@@ -73,7 +73,14 @@ const ShoppingBagDropDown = ({
                 className="flex items-center space-x-3 group transition-colors duration-200 hover:text-blue-600"
               >
                 <ShoppingBag className="h-5 w-5" />
-                <span className="font-medium">Your Cart</span>
+                <p className="font-medium group inline-flex w-full  items-center">
+                  <span className="  ">
+                    Your Cart <span>{items.length && `(${items.length})`}</span>
+                  </span>
+                  <span className="text-sm ml-2 hidden group-hover:inline">
+                    {formatPrice(subtotal)}
+                  </span>
+                </p>
                 <ChevronRight className="h-4 w-4 ml-auto opacity-0 group-hover:opacity-100 transition-opacity" />
               </Link>
               <Link

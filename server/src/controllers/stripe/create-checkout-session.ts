@@ -1,6 +1,6 @@
 import { RequestHandler } from "express";
 import { stripe } from "../../utils/stripe";
-import { CartItem } from "../../@types";
+import { CartItem, ShippingAddress } from "../../@types";
 import { ProductModel } from "../../models/Product";
 import { AuthenticatedRequest } from "../../middlewares/check-bearer-token";
 
@@ -10,7 +10,16 @@ export const createCheckoutSession: RequestHandler = async (
   next
 ) => {
   try {
-    const { cartItems }: { cartItems: CartItem[] } = req.body;
+    const {
+      cartItems,
+      orderNotes,
+      shippingAddress,
+    }: {
+      cartItems: CartItem[];
+      orderNotes: string;
+      shippingAddress: ShippingAddress;
+    } = req.body;
+    console.log(req.body);
 
     if (!req.auth) {
       return next({ statusCode: 401, message: "Unauthorized" });
@@ -70,6 +79,10 @@ export const createCheckoutSession: RequestHandler = async (
         line_items: line_items,
         customer: customer.id,
         success_url: `${req.headers.origin}/checkout-success?session_id={CHECKOUT_SESSION_ID}`,
+        metadata: {
+          shippingAddress: JSON.stringify(shippingAddress),
+          orderNotes,
+        },
         cancel_url: `${req.headers.origin}/checkout-cancelled`,
       });
 

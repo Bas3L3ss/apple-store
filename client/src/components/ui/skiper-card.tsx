@@ -76,17 +76,17 @@ function FeatureCard({
     >
       <div
         className={cn(
-          "group relative w-full overflow-hidden rounded-3xl border border-black/10 bg-gradient-to-b from-neutral-900/90 to-stone-800 transition duration-300 dark:from-neutral-950/90 dark:to-neutral-800/90",
+          "group relative w-full overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-b from-neutral-100/90 to-stone-100 transition duration-300  ",
           "md:hover:border-transparent",
           bgClass
         )}
       >
         <div className="m-10 min-h-[550px] w-full">
           <div className="flex w-4/6 flex-col gap-3">
-            <h2 className="text-xl font-bold tracking-tight text-white md:text-2xl">
+            <h2 className="text-xl font-bold tracking-tight text-black md:text-2xl">
               {title}
             </h2>
-            <p className="text-sm leading-5 text-neutral-300 dark:text-zinc-400 sm:text-base sm:leading-5">
+            <p className="text-sm leading-5 text-black dark:text-zinc-400 sm:text-base sm:leading-5">
               <Balancer>{description}</Balancer>
             </p>
           </div>
@@ -257,20 +257,19 @@ export function Steps({ steps, current, onChange }: StepsProps) {
                     className={cn(
                       "flex shrink-0 items-center justify-center rounded-full duration-300",
                       isCompleted &&
-                        "bg-brand-400 dark:bg-brand-400 size-4 text-white",
+                        "bg-brand-400 dark:bg-brand-400 size-4 text-black",
                       isCurrent &&
                         "bg-brand-300/80 size-4 p-2 text-neutral-400 dark:bg-neutral-500/50",
-                      isFuture &&
-                        "bg-brand-300/10 size-4 p-2 dark:bg-neutral-500/20"
+                      isFuture && " size-4 p-2   "
                     )}
                   >
                     {isCompleted ? (
-                      <IconCheck className="size-3 stroke-white stroke-[3] text-white dark:stroke-black" />
+                      <IconCheck className="size-3 stroke-black stroke-[3] text-black dark:stroke-black" />
                     ) : (
                       <span
                         className={cn(
                           "text-xs",
-                          !isCurrent && "text-[#C6EA7E]"
+                          !isCurrent && "text-[#63e0e9]"
                         )}
                       >
                         {stepIdx + 1}

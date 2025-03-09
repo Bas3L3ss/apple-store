@@ -1,17 +1,25 @@
-import { CartItem } from "@/src/@types";
+import { CartItem, ShippingAddress } from "@/src/@types";
 import { makeAxiosRequest } from "@/src/lib/utils";
 import { toast } from "sonner";
 
 export const handleStripeCheckout = async (
   setIsLoading: (loading: boolean) => void,
-  cartItems: CartItem[]
+  cartItems: {
+    items: CartItem[];
+    shippingAddress: ShippingAddress | null;
+    orderNotes?: string;
+  }
 ) => {
   setIsLoading(true);
   try {
     const { url: checkoutUrl } = await makeAxiosRequest<{ url: string }>(
       "post",
       "/checkout/session",
-      { cartItems }
+      {
+        cartItems: cartItems.items,
+        shippingAddress: cartItems.shippingAddress,
+        orderNotes: cartItems.orderNotes,
+      }
     );
 
     if (checkoutUrl) {

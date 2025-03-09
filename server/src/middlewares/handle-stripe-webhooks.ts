@@ -35,6 +35,7 @@ export const handleStripeWebhook = async (req: Request, res: Response) => {
       const customer = await stripe.customers.retrieve(
         stripeSession.customer as string
       );
+      console.log(stripeSession.metadata);
 
       // ✅ Extract order details
       const userId = customer.metadata.userId;
@@ -46,11 +47,16 @@ export const handleStripeWebhook = async (req: Request, res: Response) => {
 
       try {
         // ✅ Create Order first
+        const shippingAddress = stripeSession?.metadata?.shippingAddress;
+        const orderNotes = stripeSession?.metadata?.orderNotes;
         const newOrder = await new OrderModel({
           userId,
           calculatedTotal: stripeSession.amount_total! / 100,
           items: [], // Will populate after creating OrderItems
           status: OrderStatus.PREPARING,
+          orderNotes: orderNotes ?? "",
+          shippingAddress:
+            shippingAddress ?? "Into the space! contact to the customer",
           paymentMethod: PaymentMethod.CC,
           estimatedDelivery: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 7 days from now
         }).save({ session });

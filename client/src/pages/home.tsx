@@ -67,7 +67,7 @@ const Home = () => {
                         "pointer-events-none w-[90%] overflow-hidden rounded-t-[24px] border border-stone-100/10 transition-all duration-500 dark:border-stone-700",
                         "left-[5%] top-[50%] md:left-1/2 md:left-[68px] md:top-[30%]"
                       )}
-                      description="Make your app 🤌"
+                      description="Choose your product 🤌"
                       bgClass="lg:bg-gradient-to-tr"
                       // @ts-expect-error: ProductHero expects different props, but this is intentional
                       image={{
@@ -79,7 +79,7 @@ const Home = () => {
                         step4light: "skiper,",
                         alt: "Something",
                       }}
-                      title="Components that pop"
+                      title="Fit your style"
                     />
                   </div>
                 </div>

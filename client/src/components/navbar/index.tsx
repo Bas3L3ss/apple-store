@@ -145,9 +145,9 @@ export default function Navbar() {
           isAuthenticated={isAuthenticated}
           isShoppingBagOpen={isShoppingBagOpen}
           items={items}
+          subtotal={subtotal}
           logout={logout}
           navigate={navigate}
-          subtotal={subtotal}
         />
       </div>
     </header>

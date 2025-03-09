@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useCartStore } from "../store/useCartStore";
-import { ArrowLeft, ShoppingBag } from "lucide-react";
+import { ArrowLeft, ShoppingBag, MapPin, MessageSquare } from "lucide-react";
 import { EmptyCart } from "../components/cart/empty-cart";
 import { GuestCartAlert } from "../components/cart/sync-cart-alert";
 import { CartItem } from "../components/cart/cart-item";
@@ -9,11 +9,25 @@ import { CartSummary } from "../components/cart/cart-summary";
 import { useAuth } from "../contexts/AuthContext";
 import { handleStripeCheckout } from "../action/checkout";
 import { Button } from "../components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "../components/ui/dialog";
+import NotesForm from "../components/cart/notes-form";
+import { ShippingAddress } from "../@types";
+import AddressForm from "../components/cart/address-form";
+import { formatAddress } from "../lib/utils";
 
 const Cart: React.FC = () => {
   const { items, clearCart } = useCartStore();
   const { isLoggedIn: isAuthenticated } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
+  const [addressData, setAddressData] = useState<ShippingAddress | null>(null);
+  const [orderNotes, setOrderNotes] = useState<string>("");
+  const [formErrors, setFormErrors] = useState<string[]>([]);
 
   if (items.length === 0) {
     return (
@@ -22,6 +36,30 @@ const Cart: React.FC = () => {
       </div>
     );
   }
+
+  const handleCheckout = async () => {
+    const errors = [];
+    if (!addressData) {
+      errors.push("Shipping address is required");
+    }
+
+    if (errors.length > 0) {
+      setFormErrors(errors);
+      return;
+    }
+
+    setFormErrors([]);
+    setIsLoading(true);
+
+    // Enhanced checkout data
+    const checkoutData = {
+      items,
+      shippingAddress: addressData,
+      orderNotes,
+    };
+
+    await handleStripeCheckout(setIsLoading, checkoutData);
+  };
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -66,9 +104,94 @@ const Cart: React.FC = () => {
         <div className="lg:col-span-4 mt-6 lg:mt-0">
           <CartSummary />
 
+          <div className="mt-6 bg-white rounded-lg shadow-sm p-6">
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center">
+                <MapPin className="h-5 w-5 mr-2 text-gray-500" />
+                <h3 className="font-medium text-gray-900">Shipping Address</h3>
+              </div>
+              <Dialog>
+                <DialogTrigger asChild>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="text-blue-600 border-blue-600 hover:bg-blue-50"
+                  >
+                    {addressData ? "Edit" : "Add"}
+                  </Button>
+                </DialogTrigger>
+                <DialogContent className="sm:max-w-md">
+                  <DialogHeader>
+                    <DialogTitle>Shipping Address</DialogTitle>
+                  </DialogHeader>
+                  <AddressForm
+                    onSave={(address) => setAddressData(address)}
+                    initialValue={addressData}
+                  />
+                </DialogContent>
+              </Dialog>
+            </div>
+
+            {addressData ? (
+              <div className="text-sm text-gray-700 p-3 bg-gray-50 rounded-md">
+                <p>{formatAddress(addressData)}</p>
+              </div>
+            ) : (
+              <p className="text-sm text-gray-500 italic">
+                No address added yet
+              </p>
+            )}
+          </div>
+
+          {/* Order Notes Section */}
+          <div className="mt-4 bg-white rounded-lg shadow-sm p-6">
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center">
+                <MessageSquare className="h-5 w-5 mr-2 text-gray-500" />
+                <h3 className="font-medium text-gray-900">Order Notes</h3>
+              </div>
+              <Dialog>
+                <DialogTrigger asChild>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="text-blue-600 border-blue-600 hover:bg-blue-50"
+                  >
+                    {orderNotes ? "Edit" : "Add"}
+                  </Button>
+                </DialogTrigger>
+                <DialogContent className="sm:max-w-md">
+                  <DialogHeader>
+                    <DialogTitle>Order Notes</DialogTitle>
+                  </DialogHeader>
+                  <NotesForm onSave={setOrderNotes} initialValue={orderNotes} />
+                </DialogContent>
+              </Dialog>
+            </div>
+
+            {orderNotes ? (
+              <div className="text-sm text-gray-700 p-3 bg-gray-50 rounded-md">
+                <p>{orderNotes}</p>
+              </div>
+            ) : (
+              <p className="text-sm text-gray-500 italic">No notes added yet</p>
+            )}
+          </div>
+
+          {/* Validation Errors */}
+          {formErrors.length > 0 && (
+            <div className="mt-4 p-3 bg-red-50 border border-red-100 rounded-md">
+              {formErrors.map((error, index) => (
+                <p key={index} className="text-sm text-red-600">
+                  {error}
+                </p>
+              ))}
+            </div>
+          )}
+
           {isAuthenticated ? (
             <Button
-              onClick={() => handleStripeCheckout(setIsLoading, items)}
+              onClick={handleCheckout}
               className={`w-full mt-6 py-3 px-4 rounded-md font-medium transition-colors ${
                 isLoading
                   ? "bg-gray-400 cursor-not-allowed"
@@ -97,4 +220,5 @@ const Cart: React.FC = () => {
     </div>
   );
 };
+
 export default Cart;
