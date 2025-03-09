@@ -2,7 +2,6 @@ import { useState, useEffect, useMemo } from "react";
 import type { Product } from "@/src/@types";
 
 export function useProductConfiguration(product?: Product) {
-  // Provide fallback values if product is undefined
   const selectionSteps = useMemo(
     () => product?.productSelectionStep ?? [],
     [product?.productSelectionStep]
@@ -36,12 +35,11 @@ export function useProductConfiguration(product?: Product) {
     if (!product) return;
 
     let newPrice = basePrice;
-    Object.entries(selectedOptions).forEach(([key, value]) => {
+    Object.entries(selectedOptions).forEach(([_, value]) => {
       if (!value) return;
 
       const option = productOptions.find((opt) => {
-        const optionKey = key as keyof typeof opt;
-        return opt[optionKey] === value;
+        return opt._id === value;
       });
 
       if (option) newPrice += option.price;

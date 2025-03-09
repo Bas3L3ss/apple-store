@@ -150,8 +150,7 @@ const BuyProduct = () => {
             <div className="bg-gray-50 rounded-2xl p-6 border border-gray-200">
               <Summary
                 selectionOption={selectedOptions}
-                productName={product.name}
-                selectionType={product.productSelectionStep}
+                product={product}
                 totalPrice={totalPrice}
               />
               <div className="mt-6 flex justify-end">
@@ -173,7 +172,7 @@ const BuyProduct = () => {
             <Title className="text-3xl font-semibold text-gray-900 mb-8">
               You May Also Like
             </Title>
-            <RecommendationCarousel />
+            <RecommendationCarousel amount={10} category={product.category} />
           </section>
         </section>
       </div>

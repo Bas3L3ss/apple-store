@@ -1,4 +1,4 @@
-import { FetchProductsResponse, ProductOption } from "@/src/@types";
+import { FetchProductsResponse, Product, ProductOption } from "@/src/@types";
 import { axios, makeAxiosRequest } from "@/src/lib/utils";
 import { toast } from "sonner";
 
@@ -50,13 +50,44 @@ export const getProducts = async ({
   }
 };
 
-export const fetchProductBySlug = async (slug?: string) => {
+export const getProductById = async (id: string) => {
+  try {
+    const { data } = await axios.get<{ success: boolean; data: Product }>(
+      `/products/${id}`
+    );
+    return data.success ? data.data : {};
+  } catch (error) {
+    console.error("Error fetching product:", error);
+    return {}; // Return empty object to prevent crashes
+  }
+};
+
+export const getProductBySlug = async (slug?: string) => {
   try {
     const { data } = await axios.get(`/products/slug/${slug}`);
     return data.data;
   } catch (error) {
     console.log("not found");
     throw error;
+  }
+};
+
+export const getProductRecommendations = async (
+  amount: number = 5,
+  category?: string
+) => {
+  try {
+    const response = await axios.get("/products/recommendations", {
+      params: { amount, category },
+    });
+    return response.data.data || []; // Ensure it always returns an array
+  } catch (err) {
+    toast.error("Error fetching products", {
+      description: "Please try again or reach support if necessary",
+    });
+    console.log(err);
+
+    return []; // Return an empty array to prevent crashes in UI
   }
 };
 

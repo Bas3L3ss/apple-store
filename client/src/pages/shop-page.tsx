@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import CategoryNav from "../components/product/category-nav";
 import FeaturedProduct from "../components/product/featured-product";
 import ProductGrid from "../components/product/product-grid";
 import RecommendationCarousel from "../components/product/recommendation";
 import Title from "../components/reusable/title";
 import SEO from "../components/SEO";
+import { ProductCategory } from "../@types";
 
 const ShopPage = () => {
   const [productsFound, setProductsFound] = useState(0);
@@ -34,13 +35,16 @@ const ShopPage = () => {
           <Title className="text-3xl font-semibold text-gray-900 mb-8">
             You May Also Like
           </Title>
-          <RecommendationCarousel />
+          <RecommendationCarousel
+            amount={20}
+            category={ProductCategory.Iphone}
+          />
         </section>
         <section className="py-16 px-4 md:px-6 lg:px-8 bg-gray-50">
           <Title className="text-3xl font-semibold text-gray-900 mb-8">
             You May Also Like
           </Title>
-          <RecommendationCarousel />
+          <RecommendationCarousel amount={20} category={ProductCategory.Ipad} />
         </section>
       </div>
     </>

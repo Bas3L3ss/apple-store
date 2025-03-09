@@ -3,7 +3,7 @@ import Home from "./pages/home";
 import ItemDetails from "./pages/product-details-page";
 import ItemsOrder from "./pages/product-order-page";
 import ShopPage from "@/src/pages/shop-page";
-import Navbar from "./components/nav-bar";
+import Navbar from "./components/navbar";
 import Footer from "./components/footer";
 import NotFound from "./pages/not-found";
 import AppleAuthPage from "./pages/auth";

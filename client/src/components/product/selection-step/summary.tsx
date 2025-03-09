@@ -1,18 +1,18 @@
 import { motion } from "framer-motion";
 import { Check } from "lucide-react";
-import type { ProductSelectionTypes } from "@/src/@types";
+import type { Product } from "@/src/@types";
 
 interface SummaryProps {
   selectionOption: Record<string, string>;
-  productName: string;
-  selectionType: ProductSelectionTypes[];
+  product: Product;
+
   totalPrice: number;
 }
 
 const Summary = ({
   selectionOption,
-  productName,
-  selectionType,
+  product,
+
   totalPrice,
 }: SummaryProps) => {
   const formatOptionName = (type: string): string => {
@@ -24,13 +24,13 @@ const Summary = ({
       <div className="flex items-center gap-4 mb-6">
         <div className="w-16 h-16 bg-gray-100 rounded-xl flex items-center justify-center">
           <img
-            src="/api/placeholder/100/100"
-            alt={productName}
+            src={product.productImages[0]}
+            alt={product.name}
             className="w-12 h-12 object-contain"
           />
         </div>
         <div>
-          <h3 className="font-medium text-lg">{productName}</h3>
+          <h3 className="font-medium text-lg">{product.name}</h3>
           <p className="text-gray-500 text-sm">
             Customized to your specifications
           </p>
@@ -38,9 +38,14 @@ const Summary = ({
       </div>
 
       <div className="space-y-3">
-        {selectionType.map((type) => {
+        {product.productSelectionStep.map((type) => {
           const optionKey = type.toLowerCase();
-          const selectedValue = selectionOption[optionKey];
+          const selectedId = selectionOption[optionKey];
+          const selectedOption = product.productOptions.find(
+            (opt) => opt._id == selectedId
+          );
+          //@ts-expect-error: no problem
+          const selectedValue = selectedOption?.[optionKey] ?? "Not selected";
 
           return (
             <motion.div
@@ -50,16 +55,15 @@ const Summary = ({
               className="flex items-center justify-between py-2"
             >
               <div className="flex items-center gap-2">
-                {selectedValue && (
+                {selectedValue != "Not selected" && (
                   <span className="w-5 h-5 bg-green-500 rounded-full flex items-center justify-center">
                     <Check className="w-3 h-3 text-white" />
                   </span>
                 )}
+
                 <span className="text-gray-600">{formatOptionName(type)}</span>
               </div>
-              <span className="font-medium">
-                {selectedValue || "Not selected"}
-              </span>
+              <span className="font-medium">{selectedValue}</span>
             </motion.div>
           );
         })}

@@ -75,7 +75,7 @@ export enum ProductCategory {
 }
 
 export interface CartItem {
-  _id: string;
+  id: string;
   productId: string;
   selectedOptions: string[];
   userId?: string;

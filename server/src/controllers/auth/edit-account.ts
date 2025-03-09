@@ -13,7 +13,7 @@ const editAccount: RequestHandler = async (req, res, next) => {
     );
 
     if (!updatedAccount) {
-      return next({ message: "Account not found" });
+      return next({ statusCode: 404, message: "Account not found" });
     }
     res.status(200).json({
       success: true,

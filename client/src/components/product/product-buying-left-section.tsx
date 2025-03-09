@@ -10,8 +10,8 @@ const ProductBuyingLeftSection = ({
   product: Product;
 }) => {
   return (
-    <div className="space-y-8 lg:w-1/2 lg:sticky lg:top-24 lg:self-start">
-      <div className="mt-6">
+    <div className="space-y-8  lg:w-1/2 lg:sticky lg:top-24 lg:self-start">
+      <div className="mt-10">
         {isNew && (
           <Badge className="mb-4 bg-blue-100 text-blue-800 hover:bg-blue-100">
             New

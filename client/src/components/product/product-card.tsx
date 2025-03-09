@@ -47,7 +47,7 @@ export default function ProductCard({ product }: ProductCardProps) {
                   key={colorOption._id}
                   className="w-4 h-4 rounded-full border border-gray-300"
                   style={{
-                    backgroundColor: getColorHex(colorOption.color),
+                    backgroundColor: getColorHex(colorOption.color!),
                   }}
                 />
               ))}

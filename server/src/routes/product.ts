@@ -7,6 +7,7 @@ import { CreateProduct } from "../controllers/product/create-product";
 import checkAdminRole from "../controllers/auth/check-admin-role";
 import { GetFeaturedProducts } from "../controllers/product/get-featured-products";
 import { GetProductBySlug } from "../controllers/product/get-product-by-slug";
+import { GetProductRecommendations } from "../controllers/product/get-product-recommendations";
 
 const router = express.Router();
 
@@ -21,6 +22,9 @@ router.get("/", GetProducts, errorHandler);
 
 // GET: Fetch a number of featured products
 router.get("/featured", GetFeaturedProducts, errorHandler);
+
+// GET: Fetch recommended products by category and with amoun
+router.get("/recommendations", GetProductRecommendations, errorHandler);
 
 // GET: Fetch a single product by Slug
 router.get("/slug/:slug", GetProductBySlug, errorHandler);

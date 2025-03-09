@@ -2,7 +2,8 @@ import React from "react";
 import { Minus, Plus, Trash2 } from "lucide-react";
 import { CartItem as CartItemType, Product } from "@/src/@types";
 import { useCartStore } from "@/src/store/useCartStore";
-import { formatPrice } from "@/src/lib/utils";
+import { formatPrice, getColorHex } from "@/src/lib/utils";
+import { useGetProductById } from "@/src/react-query-hooks/use-get-product-by-id";
 
 interface CartItemProps {
   cart: CartItemType;
@@ -10,11 +11,44 @@ interface CartItemProps {
 
 export const CartItem: React.FC<CartItemProps> = ({ cart }) => {
   const { updateQuantity, removeItem } = useCartStore();
-  const product: Product = {
-    description: "g",
-    name: "hi",
-    productImages: ["s "],
-  };
+
+  const { data: data, isLoading, isError } = useGetProductById(cart.productId);
+  if (isLoading) {
+    return (
+      <div className="py-6 animate-pulse bg-gray-100 h-24 rounded-md"></div>
+    );
+  }
+  if (isError || !data) {
+    return <div className="py-6 text-red-500">Error loading product</div>;
+  }
+  // @ts-expect-error: fine
+  const product: Product = data;
+  const selectedOptions = product.productOptions.filter((opt) =>
+    cart.selectedOptions.includes(opt._id)
+  );
+
+  // Group options by type for better display
+  const optionsByType = selectedOptions.reduce((acc, option) => {
+    // Find the first key that isn't _id, productId, price, stock, __v, createdAt, or updatedAt
+    const optionType = Object.keys(option).find(
+      (key) =>
+        ![
+          "_id",
+          "productId",
+          "price",
+          "stock",
+          "__v",
+          "createdAt",
+          "updatedAt",
+        ].includes(key)
+    );
+
+    if (optionType) {
+      // @ts-expect-error: fine
+      acc[optionType] = option[optionType];
+    }
+    return acc;
+  }, {} as Record<string, any>);
 
   return (
     <div className="flex items-center py-6 border-b border-gray-200">
@@ -31,6 +65,27 @@ export const CartItem: React.FC<CartItemProps> = ({ cart }) => {
           <h3>{product.name}</h3>
           <p className="ml-4">{formatPrice(cart.totalPrice)}</p>
         </div>
+
+        {/* Rich description of selected options */}
+        <div className="mt-1 text-sm text-gray-700">
+          {Object.entries(optionsByType).map(([type, value], index) => (
+            <div key={index} className="flex items-center gap-2">
+              <span className="font-medium capitalize">{type}:</span>
+              {type.toLowerCase() === "color" ? (
+                <div className="flex items-center gap-1">
+                  <span
+                    className="inline-block h-4 w-4 rounded-full border border-gray-300"
+                    style={{ backgroundColor: getColorHex(value as string) }}
+                  />
+                  <span>{value as string}</span>
+                </div>
+              ) : (
+                <span>{value as string}</span>
+              )}
+            </div>
+          ))}
+        </div>
+
         <p className="mt-1 text-sm text-gray-500 line-clamp-1">
           {product.description}
         </p>
@@ -41,8 +96,13 @@ export const CartItem: React.FC<CartItemProps> = ({ cart }) => {
               onClick={() => updateQuantity(cart.id, -1)}
               className="p-1 hover:bg-gray-100 rounded-l-md"
               aria-label="Decrease quantity"
+              disabled={cart.quantity <= 1}
             >
-              <Minus className="h-4 w-4" />
+              <Minus
+                className={`h-4 w-4 ${
+                  cart.quantity <= 1 ? "text-gray-300" : ""
+                }`}
+              />
             </button>
             <span className="px-2 py-1 min-w-[2rem] text-center">
               {cart.quantity}
@@ -58,7 +118,7 @@ export const CartItem: React.FC<CartItemProps> = ({ cart }) => {
 
           <button
             type="button"
-            onClick={() => removeItem(cart.id)} // Changed from item.id to cart.id
+            onClick={() => removeItem(cart.id)}
             className="text-red-500 hover:text-red-600 flex items-center"
           >
             <Trash2 className="h-4 w-4 mr-1" />
