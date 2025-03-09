@@ -7,8 +7,7 @@ export const GetOrders = async (
   next: NextFunction
 ): Promise<void> => {
   try {
-    const user = req.auth; // Assuming authentication middleware adds this
-
+    const user = req.auth;
     if (!user) {
       res
         .status(401)
@@ -16,17 +15,27 @@ export const GetOrders = async (
       return;
     }
 
-    // Retrieve all orders for the user
-    const orders = await OrderModel.find({ userId: user.id }).populate(
-      "orderItems.productOptions"
-    );
+    // Pagination parameters
+    const page = Math.max(parseInt(req.query.page as string) || 1, 1);
+    const limit = Math.max(parseInt(req.query.limit as string) || 10, 1);
+    const skip = (page - 1) * limit;
 
-    if (!orders.length) {
-      res.status(404).json({ success: false, message: "No orders found" });
-      return;
-    }
+    // Fetch orders with pagination
+    const orders = await OrderModel.find({ userId: user.id })
+      .skip(skip)
+      .limit(limit);
+    const totalOrders = await OrderModel.countDocuments({ userId: user.id });
 
-    res.status(200).json({ success: true, data: orders });
+    res.status(200).json({
+      success: true,
+      data: orders,
+      pagination: {
+        page,
+        limit,
+        totalPages: Math.ceil(totalOrders / limit),
+        totalOrders,
+      },
+    });
   } catch (error) {
     next(error);
   }

@@ -18,6 +18,7 @@ import "leaflet/dist/leaflet.css";
 import axios from "axios";
 import { X } from "lucide-react";
 import { Skeleton } from "../ui/skeleton";
+import { toast } from "sonner";
 
 const addressSchema = z.object({
   fullAddress: z.string().min(1, "Address is required"),
@@ -126,10 +127,10 @@ const AddressForm = ({
 
   const handleSuggestionClick = (place: LocationSuggestion) => {
     const { lat, lon, display_name, address } = place;
+
     const parsedLat = parseFloat(lat);
     const parsedLng = parseFloat(lon);
 
-    // Update the map view and marker
     if (leafletMapRef.current) {
       leafletMapRef.current.setView([parsedLat, parsedLng], 15);
 
@@ -142,7 +143,6 @@ const AddressForm = ({
       }
     }
 
-    // Extract address components
     const line1 = [address.house_number, address.road]
       .filter(Boolean)
       .join(" ");
@@ -151,7 +151,6 @@ const AddressForm = ({
     const postalCode = address.postcode || "";
     const country = address.country || "";
 
-    // Update form values
     form.setValue("fullAddress", display_name);
     form.setValue("line1", line1);
     form.setValue("city", city);
@@ -163,7 +162,6 @@ const AddressForm = ({
       lng: parsedLng,
     });
 
-    // Clear suggestions
     setQuery(display_name);
     setSuggestions([]);
   };
@@ -174,10 +172,18 @@ const AddressForm = ({
   };
 
   const onSubmit = (data: AddressFormValues) => {
-    console.log(data, "data?");
-
     onSave(data);
   };
+
+  useEffect(() => {
+    if (Object.keys(form.formState.errors).length > 0) {
+      toast.error("Saving address incomplete!", {
+        description:
+          "We suggest you to use recommended search and have map pinned to the exact location",
+      });
+      console.log(form.formState.errors);
+    }
+  }, [form.formState.errors]);
 
   return (
     <Form {...form}>

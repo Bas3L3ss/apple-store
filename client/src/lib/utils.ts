@@ -64,18 +64,28 @@ export function formatDate(date: Date | string) {
   }).format(parsedDate);
 }
 
-export function getStatusColor(status: OrderStatus) {
-  switch (status) {
-    case OrderStatus.PREPARING:
-      return "bg-yellow-100 text-yellow-800";
-    case OrderStatus.DELIVERING:
-      return "bg-blue-100 text-blue-800";
-    case OrderStatus.FINISHED:
-      return "bg-green-100 text-green-800";
-    default:
-      return "bg-gray-100 text-gray-800";
+export function formatEstimatedDelivery(estimatedDate) {
+  const now = new Date();
+  const deliveryDate = new Date(estimatedDate);
+
+  // If the delivery date is in the past, fallback to dd/mm/yyyy format
+  if (deliveryDate < now) {
+    return deliveryDate.toLocaleDateString("en-GB"); // Format: dd/mm/yyyy
   }
+
+  const oneDay = 24 * 60 * 60 * 1000; // One day in milliseconds
+  const diffInDays = Math.ceil((deliveryDate - now) / oneDay);
+
+  if (diffInDays === 0) return "Today";
+  if (diffInDays === 1) return "Tomorrow";
+  if (diffInDays === 2) return "Next 2 days";
+  if (diffInDays <= 7) return "Next week";
+  if (diffInDays <= 14) return "Next 2 weeks";
+  if (diffInDays <= 30) return "Next month";
+
+  return deliveryDate.toLocaleDateString("en-GB"); // Default fallback
 }
+
 export const getStatusProgress = (status: OrderStatus) => {
   switch (status) {
     case OrderStatus.PREPARING:
@@ -99,4 +109,41 @@ export const formatAddress = (address: ShippingAddress) => {
   const { line1, line2, city, state, postalCode } = address;
   const line2Display = line2 ? `, ${line2}` : "";
   return `${line1}${line2Display}, ${city}, ${state} ${postalCode}`;
+};
+
+export const formatShippingAddress = (addressStr: string) => {
+  if (!addressStr) return "No address provided";
+  try {
+    const address = JSON.parse(addressStr);
+    return address.fullAddress || "No address provided";
+  } catch (e) {
+    return "Invalid address format";
+  }
+};
+
+export const getStatusColor = (status: OrderStatus) => {
+  switch (status) {
+    case "preparing":
+      return "bg-amber-100 text-amber-800";
+    case "delivering":
+      return "bg-blue-100 text-blue-800";
+    case "finished":
+      return "bg-green-100 text-green-800";
+    default:
+      return "bg-gray-100 text-gray-800";
+  }
+};
+
+export const calculateTimeSinceLastPurchase = (lastPurchaseDate: string) => {
+  const now = new Date();
+  const lastPurchase = new Date(lastPurchaseDate);
+  const diffTime = Math.abs(now.getTime() - lastPurchase.getTime());
+  const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+
+  if (diffDays === 0) return "Today";
+  if (diffDays === 1) return "Yesterday";
+  if (diffDays < 7) return `${diffDays} days ago`;
+  if (diffDays < 30) return `${Math.floor(diffDays / 7)} weeks ago`;
+  if (diffDays < 365) return `${Math.floor(diffDays / 30)} months ago`;
+  return `${Math.floor(diffDays / 365)} years ago`;
 };

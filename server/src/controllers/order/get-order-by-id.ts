@@ -1,22 +1,43 @@
-import { NextFunction, Request, Response } from "express";
+import { NextFunction, Response } from "express";
 import { OrderModel } from "../../models/Order";
+import { AuthenticatedRequest } from "../../middlewares/check-bearer-token";
 
 export const GetOrderById = async (
-  req: Request,
+  req: AuthenticatedRequest,
   res: Response,
   next: NextFunction
 ): Promise<void> => {
   try {
     const { id } = req.params;
+    const { _id: userId } = req.auth;
 
     if (!id) {
-      return next({ success: false, message: "Order ID is required" });
+      return next({ statusCode: 400, message: "Order ID is required" });
     }
-    // TODO: Vague, make sure this productOptions is from each orderItem not the OrderId specifically
-    const order = await OrderModel.findById(id).populate("items");
+
+    const order = await OrderModel.findById(id).populate({
+      path: "items",
+      populate: [
+        {
+          path: "selectedOptions", // Populate selected options
+          model: "ProductOption",
+        },
+        {
+          path: "productId", // Populate the actual product details
+          model: "Product",
+        },
+      ],
+    });
 
     if (!order) {
-      return next({ success: false, message: "Order not found" });
+      return next({ statusCode: 404, message: "Order not found" });
+    }
+
+    if (order.userId.toString() !== userId.toString()) {
+      return next({
+        statusCode: 403,
+        message: "You are not authorized to view this order",
+      });
     }
 
     res.status(200).json({ success: true, data: order });
