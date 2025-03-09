@@ -17,6 +17,7 @@ import {
 } from "swiper/modules";
 
 import { Badge } from "@/src/components/ui/badge";
+import CloudinaryImage from "../reusable/cloudinary-image";
 
 interface CarouselProps {
   images: { src: string; alt: string }[];
@@ -114,11 +115,9 @@ export const CardCarousel: React.FC<CarouselProps> = ({
                 {images.map((image, index) => (
                   <SwiperSlide key={index}>
                     <div className="size-full rounded-3xl">
-                      <img
-                        src={image.src}
-                        width={500}
-                        height={500}
-                        className="size-full rounded-xl"
+                      <CloudinaryImage
+                        className="size-full rounded-xl select-none"
+                        publicId="hero__gb4d3fd8jnu6_large_vs7v6i"
                         alt={image.alt}
                       />
                     </div>
@@ -127,11 +126,9 @@ export const CardCarousel: React.FC<CarouselProps> = ({
                 {images.map((image, index) => (
                   <SwiperSlide key={index}>
                     <div className="size-full rounded-3xl">
-                      <img
-                        src={image.src}
-                        width={200}
-                        height={200}
-                        className="size-full rounded-xl"
+                      <CloudinaryImage
+                        className="size-full rounded-xl select-none"
+                        publicId="hero__gb4d3fd8jnu6_large_vs7v6i"
                         alt={image.alt}
                       />
                     </div>

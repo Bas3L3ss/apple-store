@@ -8,6 +8,7 @@ import {
 } from "motion/react";
 import Balancer from "react-wrap-balancer";
 import { cn } from "@/src/lib/utils";
+import CloudinaryImage from "../reusable/cloudinary-image";
 
 // Removed Next.js Image import and type
 
@@ -128,92 +129,69 @@ export function SkiperCard({
           { "translate-x-0 opacity-0": step < 3 }
         )}
       >
-        <img
+        <CloudinaryImage
+          className="pointer-events-none top-1/2 w-[90%] absolute select-none max-w-[unset] overflow-hidden rounded-2xl border border-neutral-100/10 transition-all duration-500 dark:border-zinc-700 md:left-[35px] md:top-[30%] md:w-full"
+          publicId="hero__gb4d3fd8jnu6_large_vs7v6i"
           alt={image.alt}
-          className="pointer-events-none top-1/2 w-[90%] overflow-hidden rounded-2xl border border-neutral-100/10 transition-all duration-500 dark:border-zinc-700 md:left-[35px] md:top-[30%] md:w-full"
-          src={image.step4light}
-          style={{
-            position: "absolute",
-            userSelect: "none",
-            maxWidth: "unset",
-          }}
         />
       </div>
 
       <>
         {/* step 1 */}
-        <img
-          alt={image.alt}
-          className={cn(step1img1Class, {
+        <CloudinaryImage
+          className={cn("absolute select-none max-w-[unset]", step1img1Class, {
             "-translate-x-36 opacity-0 rounded-2xl": step > 0,
           })}
-          src={image.step1light1}
-          style={{
-            position: "absolute",
-            userSelect: "none",
-            maxWidth: "unset",
-          }}
-        />
-        <img
+          publicId="hero__gb4d3fd8jnu6_large_vs7v6i"
           alt={image.alt}
-          className={cn(step1img2Class, {
+        />
+
+        <CloudinaryImage
+          className={cn("absolute select-none max-w-[unset]", step1img2Class, {
             "-translate-x-24 opacity-0 rounded-2xl": step > 0,
           })}
-          src={image.step1light2}
-          style={{
-            position: "absolute",
-            userSelect: "none",
-            maxWidth: "unset",
-          }}
+          publicId="hero__gb4d3fd8jnu6_large_vs7v6i"
+          alt={image.alt}
         />
 
         {/* step 2 */}
-        <img
-          alt={image.alt}
+
+        <CloudinaryImage
           className={cn(
+            "absolute select-none max-w-[unset]",
             step2img1Class,
             "rounded-2xl",
             { "translate-x-36 opacity-0": step < 1 },
             { "-translate-x-36 opacity-0": step > 1 }
           )}
-          src={image.step2light1}
-          style={{
-            position: "absolute",
-            userSelect: "none",
-            maxWidth: "unset",
-          }}
-        />
-        <img
+          publicId="hero__gb4d3fd8jnu6_large_vs7v6i"
           alt={image.alt}
+        />
+
+        <CloudinaryImage
           className={cn(
+            "absolute select-none max-w-[unset]",
             step2img2Class,
             "rounded-2xl",
             { "translate-x-24 opacity-0": step < 1 },
             { "-translate-x-24 opacity-0": step > 1 }
           )}
-          src={image.step2light2}
-          style={{
-            position: "absolute",
-            userSelect: "none",
-            maxWidth: "unset",
-          }}
-        />
-        {/* step 3 */}
-        <img
+          publicId="hero__gb4d3fd8jnu6_large_vs7v6i"
           alt={image.alt}
+        />
+
+        {/* step 3 */}
+        <CloudinaryImage
           className={cn(
+            "absolute select-none max-w-[unset]",
             step3imgClass,
             "rounded-2xl",
             { "translate-x-36 opacity-0": step < 2 },
             { "-translate-x-36 opacity-0": step > 2 },
             { "opacity-90": step === 2 }
           )}
-          src={image.step3light}
-          style={{
-            position: "absolute",
-            userSelect: "none",
-            maxWidth: "unset",
-          }}
+          publicId="hero__gb4d3fd8jnu6_large_vs7v6i"
+          alt={image.alt}
         />
         <div className="absolute left-48 top-5 z-50 size-full cursor-pointer md:left-0">
           <Steps current={step} onChange={() => {}} steps={steps} />

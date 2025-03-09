@@ -13,12 +13,11 @@ const Home = () => {
       <SEO
         title="Apple Store"
         description="Welcome to the Apple Store Clone. Shop the latest Apple products."
-        canonical="https://your-website.com/" //fix later
+        canonical="https://your-website.com/" //TODO: fix later
         image="https://your-website.com/banner.png"
       />
       <section>
         {products.map((product) => (
-          // @ts-expect-error: ProductHero expects different props, but this is intentional
           <ProductHero key={product.id} product={product} />
         ))}
         <ProductGrid />

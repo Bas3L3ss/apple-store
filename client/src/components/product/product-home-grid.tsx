@@ -1,6 +1,7 @@
 import { Link } from "react-router";
 import { Button } from "../ui/button";
 import { Card, CardContent } from "../ui/card";
+import CloudinaryImage from "../reusable/cloudinary-image";
 
 const ProductGrid = () => {
   const gridProducts = [
@@ -57,10 +58,10 @@ const ProductGrid = () => {
           className="overflow-hidden min-h-[400px] md:min-h-[760px]"
         >
           <CardContent className="p-0 relative">
-            <img
-              src={product.image}
-              alt={product.name}
+            <CloudinaryImage
               className="w-full h-[400px] object-cover"
+              publicId="hero__gb4d3fd8jnu6_large_vs7v6i"
+              alt={product.name}
             />
             <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
               <h2

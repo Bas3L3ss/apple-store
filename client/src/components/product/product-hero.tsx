@@ -1,5 +1,6 @@
 import { Link } from "react-router";
 import { Button } from "../ui/button";
+import CloudinaryImage from "../reusable/cloudinary-image";
 
 const ProductHero = ({
   product,
@@ -9,16 +10,11 @@ const ProductHero = ({
     name: string;
     description: string;
     image: string;
-    theme: "light" | "dark";
   };
 }) => {
   return (
     <div className="relative overflow-hidden">
-      <img
-        src={product.image}
-        alt={product.name}
-        className="w-full h-[600px] object-cover transition-transform duration-700 hover:scale-110"
-      />
+      <CloudinaryImage publicId="hero__gb4d3fd8jnu6_large_vs7v6i" />
       <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
         <h1 className={`text-6xl font-bold  text-black`}>{product.name}</h1>
         <p className={`text-2xl mt-4 text-black`}>{product.description}</p>
