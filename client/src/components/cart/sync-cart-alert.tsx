@@ -1,7 +1,6 @@
 import { useCartStore } from "@/src/store/useCartStore";
-import React from "react";
 
-export const GuestCartAlert: React.FC = () => {
+export const GuestCartAlert = () => {
   const { syncGuestCart, rejectGuestCart, hasGuestCart } = useCartStore();
 
   if (!hasGuestCart) return null;

@@ -1,4 +1,3 @@
-import React from "react";
 import { Package, Truck, CheckCircle, Clock } from "lucide-react";
 import {
   Card,
@@ -15,12 +14,12 @@ interface OrderStatusCardProps {
   createdAt: string;
 }
 
-const OrderStatusCard: React.FC<OrderStatusCardProps> = ({
+const OrderStatusCard = ({
   status,
   estimatedDelivery,
   progressPercent,
   createdAt,
-}) => {
+}: OrderStatusCardProps) => {
   console.log(estimatedDelivery);
 
   return (

@@ -1,6 +1,5 @@
 "use client";
 
-import type React from "react";
 import {
   Card,
   CardContent,
@@ -17,11 +16,11 @@ interface ShippingInfoCardProps {
   estimatedDelivery?: string;
 }
 
-const ShippingInfoCard: React.FC<ShippingInfoCardProps> = ({
+const ShippingInfoCard = ({
   shippingAddress,
   orderNotes = "",
   estimatedDelivery = "2-3 business days",
-}) => {
+}: ShippingInfoCardProps) => {
   // Parse the address if it's a string
   const addressData: ShippingAddress =
     typeof shippingAddress === "string"

@@ -1,4 +1,3 @@
-import React from "react";
 import { Minus, Plus, Trash2 } from "lucide-react";
 import { CartItem as CartItemType, Product } from "@/src/@types";
 import { useCartStore } from "@/src/store/useCartStore";
@@ -9,7 +8,7 @@ interface CartItemProps {
   cart: CartItemType;
 }
 
-export const CartItem: React.FC<CartItemProps> = ({ cart }) => {
+export const CartItem = ({ cart }: CartItemProps) => {
   const { updateQuantity, removeItem } = useCartStore();
 
   const { data: data, isLoading, isError } = useGetProductById(cart.productId);

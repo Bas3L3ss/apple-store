@@ -8,6 +8,7 @@ import { useCustomerAnalytics } from "../react-query-hooks/use-get-user-buying-a
 import OrderHistory from "../components/order/order-history";
 import UserAnalytics from "../components/order/user-analytics";
 import SEO from "../components/SEO";
+import LoadingState from "../components/loading";
 
 export default function OrdersPage() {
   const { account } = useAuth();
@@ -93,9 +94,7 @@ export default function OrdersPage() {
           )}
 
           {isLoading ? (
-            <div className="flex justify-center py-16">
-              <div className="w-6 h-6 border-t-2 border-gray-500 rounded-full animate-spin"></div>
-            </div>
+            <LoadingState />
           ) : isError ? (
             <div className="bg-white rounded-2xl shadow-sm p-8 text-center">
               <p className="text-red-500">

@@ -18,7 +18,7 @@ const Home = () => {
       />
       <section>
         {products.map((product) => (
-          <ProductHero key={product.id} product={product} />
+          <ProductHero key={product._id} product={product} />
         ))}
         <ProductGrid />
         <article className="w-full">

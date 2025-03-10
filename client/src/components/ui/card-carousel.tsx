@@ -1,4 +1,3 @@
-import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 //@ts-expect-error : it just work
 import "swiper/css";
@@ -24,12 +23,12 @@ interface CarouselProps {
   showNavigation?: boolean;
 }
 
-export const CardCarousel: React.FC<CarouselProps> = ({
+export const CardCarousel = ({
   images,
   autoplayDelay = 1500,
   showPagination = true,
   showNavigation = true,
-}) => {
+}: CarouselProps) => {
   const css = `
   .swiper {
     width: 100%;

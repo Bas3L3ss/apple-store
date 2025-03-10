@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useCartStore } from "../store/useCartStore";
 import { ArrowLeft, ShoppingBag, MapPin, MessageSquare } from "lucide-react";
@@ -22,7 +22,7 @@ import AddressForm from "../components/cart/address-form";
 import { formatAddress } from "../lib/utils";
 import { toast } from "sonner";
 
-const Cart: React.FC = () => {
+const Cart = () => {
   const { items, clearCart } = useCartStore();
   const { isLoggedIn: isAuthenticated, account } = useAuth();
   const [isLoading, setIsLoading] = useState(false);

@@ -6,7 +6,7 @@ const ProductHero = ({
   product,
 }: {
   product: {
-    id: string;
+    _id: string;
     name: string;
     description: string;
     image: string;

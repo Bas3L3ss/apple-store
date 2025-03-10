@@ -1,4 +1,4 @@
-import { JSX, useEffect, useId, useRef, useState } from "react";
+import React, { JSX, useEffect, useId, useRef, useState } from "react";
 import { motion, useAnimation, useInView } from "framer-motion";
 import { Headphones, Laptop, Smartphone, Tablet, Watch } from "lucide-react";
 

@@ -62,7 +62,7 @@ import { sendVerificationEmail } from "../action/auth";
 
 export default function ProfilePage() {
   const { account: user } = useAuth();
-  const [loading, setLoading] = useState(false);
+  const [loading] = useState(false);
   const [isEditMode, setIsEditMode] = useState(false);
   const [isVerifying, setIsVerifying] = useState(false);
   const [verificationSent, setVerificationSent] = useState(false);
@@ -88,6 +88,8 @@ export default function ProfilePage() {
     // try {
     //   // Simulate API call to update profile
     //   setLoading(true);
+    console.log(data);
+
     //   // In a real app, this would be an API call
     //   setTimeout(() => {
     //     setUser({
@@ -109,6 +111,8 @@ export default function ProfilePage() {
     newPassword: string;
     confirmPassword: string;
   }) => {
+    console.log(data);
+
     // try {
     //   setLoading(true);
     //   console.log(data);

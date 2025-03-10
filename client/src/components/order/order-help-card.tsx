@@ -1,4 +1,3 @@
-import React from "react";
 import {
   Card,
   CardContent,
@@ -7,7 +6,7 @@ import {
 } from "@/src/components/ui/card";
 import { Button } from "@/src/components/ui/button";
 
-const HelpCard: React.FC = () => {
+const HelpCard = () => {
   return (
     <Card className="shadow-md border-0">
       <CardHeader className="border-b bg-gray-50">

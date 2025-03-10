@@ -1,4 +1,4 @@
-import { useEffect, useState, type MouseEvent } from "react";
+import React, { useEffect, useState, type MouseEvent } from "react";
 import {
   motion,
   useMotionTemplate,

@@ -1,4 +1,3 @@
-import React from "react";
 import { Helmet } from "react-helmet-async";
 
 interface AlternateLanguage {
@@ -21,7 +20,7 @@ interface SEOProps {
   alternateLanguages?: AlternateLanguage[];
 }
 
-const SEO: React.FC<SEOProps> = ({
+const SEO = ({
   title,
   description,
   canonical,
@@ -34,7 +33,7 @@ const SEO: React.FC<SEOProps> = ({
   twitterCreator,
   structuredData,
   alternateLanguages = [],
-}) => {
+}: SEOProps) => {
   const metaTags = [
     { name: "description", content: description },
     { property: "og:title", content: title },

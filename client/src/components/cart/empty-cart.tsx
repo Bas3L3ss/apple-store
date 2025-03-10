@@ -1,8 +1,7 @@
-import React from "react";
 import { ShoppingBag } from "lucide-react";
 import { Link } from "react-router-dom";
 
-export const EmptyCart: React.FC = () => {
+export const EmptyCart = () => {
   return (
     <div className="flex flex-col items-center justify-center py-12">
       <ShoppingBag className="h-16 w-16 text-gray-300 mb-4" />

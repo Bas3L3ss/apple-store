@@ -1,4 +1,3 @@
-import React from "react";
 import {
   Card,
   CardContent,
@@ -22,12 +21,8 @@ interface OrderItemsCardProps {
   calculatedTotal: number;
 }
 
-const OrderItemsCard: React.FC<OrderItemsCardProps> = ({
-  items,
-  calculatedTotal,
-}) => {
+const OrderItemsCard = ({ items, calculatedTotal }: OrderItemsCardProps) => {
   // Get formatted option display
-  console.log(items);
 
   const getOptionDisplay = (option: SelectedOption) => {
     // Find the first key that's not _id, productId, price, stock, __v, createdAt, updatedAt

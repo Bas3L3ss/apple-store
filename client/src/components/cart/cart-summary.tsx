@@ -1,8 +1,7 @@
-import React from "react";
 import { formatPrice } from "@/src/lib/utils";
 import { useCartStore } from "@/src/store/useCartStore";
 
-export const CartSummary: React.FC = () => {
+export const CartSummary = () => {
   const { items } = useCartStore();
 
   const subtotal = items.reduce((total, item) => total + item.totalPrice, 0);

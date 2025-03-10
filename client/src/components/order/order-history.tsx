@@ -7,6 +7,7 @@ import {
 } from "@/src/lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronLeft, ChevronRight, ExternalLink } from "lucide-react";
+import React from "react";
 
 type Props = {
   orders:

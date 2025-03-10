@@ -1,4 +1,3 @@
-import React from "react";
 import {
   Card,
   CardContent,
@@ -15,13 +14,13 @@ interface PaymentDetailsCardProps {
   total: number;
 }
 
-const PaymentDetailsCard: React.FC<PaymentDetailsCardProps> = ({
+const PaymentDetailsCard = ({
   paymentMethod,
   subtotal,
   shipping,
   tax,
   total,
-}) => {
+}: PaymentDetailsCardProps) => {
   return (
     <Card className="shadow-md border-0">
       <CardHeader className="border-b bg-gray-50">

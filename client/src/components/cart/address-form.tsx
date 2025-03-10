@@ -8,17 +8,18 @@ import {
   FormMessage,
 } from "../ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, Suspense } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import L from "leaflet";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
-import "leaflet/dist/leaflet.css";
-import axios from "axios";
 import { X } from "lucide-react";
 import { Skeleton } from "../ui/skeleton";
 import { toast } from "sonner";
+import axios from "axios";
+
+// Lazy load Leaflet
+const LeafletMap = React.lazy(() => import("./address-map"));
 
 const addressSchema = z.object({
   fullAddress: z.string().min(1, "Address is required"),
@@ -41,13 +42,15 @@ const AddressForm = ({
   onSave: (s: ShippingAddress) => void;
   initialValue: ShippingAddress | null;
 }) => {
-  const mapRef = useRef(null);
-  const leafletMapRef = useRef<L.Map | null>(null);
-  const markerRef = useRef<L.Marker | null>(null);
   const [query, setQuery] = useState("");
   const [suggestions, setSuggestions] = useState<LocationSuggestion[]>([]);
   const [isLoading, setIsLoading] = useState(false);
-  const debounceRef = useRef<NodeJS.Timeout | null>(null);
+  const [mapCoordinates, setMapCoordinates] = useState({
+    lat: initialValue?.coordinates?.lat || 40.7128,
+    lng: initialValue?.coordinates?.lng || -74.006,
+  });
+
+  const debounceRef = useRef<any | null>(null);
   type AddressFormValues = z.infer<typeof addressSchema>;
   const form = useForm({
     resolver: zodResolver(addressSchema),
@@ -65,38 +68,6 @@ const AddressForm = ({
       },
     },
   });
-
-  // Initialize map when component mounts
-  useEffect(() => {
-    if (!leafletMapRef.current && mapRef.current) {
-      // Initialize the map
-      leafletMapRef.current = L.map(mapRef.current).setView(
-        [40.7128, -74.006],
-        13
-      );
-
-      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-        attribution:
-          '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-      }).addTo(leafletMapRef.current);
-
-      // Initial marker if we have coordinates
-      if (initialValue?.coordinates) {
-        const { lat, lng } = initialValue.coordinates;
-        leafletMapRef.current.setView([lat, lng], 15);
-
-        markerRef.current = L.marker([lat, lng]).addTo(leafletMapRef.current);
-      }
-    }
-
-    // Cleanup on unmount
-    return () => {
-      if (leafletMapRef.current) {
-        leafletMapRef.current.remove();
-        leafletMapRef.current = null;
-      }
-    };
-  }, [initialValue]);
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -131,17 +102,11 @@ const AddressForm = ({
     const parsedLat = parseFloat(lat);
     const parsedLng = parseFloat(lon);
 
-    if (leafletMapRef.current) {
-      leafletMapRef.current.setView([parsedLat, parsedLng], 15);
-
-      if (markerRef.current) {
-        markerRef.current.setLatLng([parsedLat, parsedLng]);
-      } else {
-        markerRef.current = L.marker([parsedLat, parsedLng]).addTo(
-          leafletMapRef.current
-        );
-      }
-    }
+    // Update map coordinates
+    setMapCoordinates({
+      lat: parsedLat,
+      lng: parsedLng,
+    });
 
     const line1 = [address.house_number, address.road]
       .filter(Boolean)
@@ -223,26 +188,42 @@ const AddressForm = ({
               <Skeleton className="h-6 bg-gray-200 rounded animate-pulse"></Skeleton>
             </div>
           )}
-
-          {suggestions.length > 0 && (
-            <ul className=" absolute z-50 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-              {suggestions.map((item, idx) => (
-                <li
-                  key={idx}
-                  onClick={() => handleSuggestionClick(item)}
-                  className="relative cursor-pointer select-none px-4 py-2 text-gray-900 hover:bg-gray-100"
-                >
-                  {item.display_name}
-                </li>
-              ))}
-            </ul>
+          {!isLoading && (
+            <>
+              {suggestions.length > 0 && (
+                <ul className="absolute z-50 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                  {suggestions.map((item, idx) => (
+                    <li
+                      key={idx}
+                      onClick={() => handleSuggestionClick(item)}
+                      className="relative cursor-pointer select-none px-4 py-2 text-gray-900 hover:bg-gray-100"
+                    >
+                      {item.display_name}
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </>
           )}
         </div>
 
-        <div
-          ref={mapRef}
-          className="h-64 rounded-lg border border-gray-200 mt-4 mb-4 z-10!"
-        ></div>
+        <div className="h-64 rounded-lg border border-gray-200 mt-4 mb-4">
+          <Suspense
+            fallback={
+              <div className="h-full flex items-center justify-center bg-gray-100">
+                <Skeleton className="h-full w-full bg-gray-200 rounded" />
+              </div>
+            }
+          >
+            <LeafletMap
+              coordinates={mapCoordinates}
+              onPositionChange={(coords) => {
+                form.setValue("coordinates", coords);
+                setMapCoordinates(coords);
+              }}
+            />
+          </Suspense>
+        </div>
 
         <div className="grid grid-cols-1 gap-4">
           <FormField
@@ -372,7 +353,6 @@ const AddressForm = ({
 
         <Button
           type="submit"
-          onClick={() => {}}
           className="mt-4 w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"
         >
           Save Address
@@ -381,4 +361,5 @@ const AddressForm = ({
     </Form>
   );
 };
+
 export default AddressForm;

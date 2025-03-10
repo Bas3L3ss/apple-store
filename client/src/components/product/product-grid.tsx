@@ -2,7 +2,8 @@ import ProductCard from "./product-card";
 import { motion } from "framer-motion";
 import { useSearchParams } from "react-router";
 import { useGetProducts } from "@/src/react-query-hooks/use-get-products";
-import GlobalLoader from "../global-loader";
+import LoadingState from "../loading";
+import { useEffect, useRef } from "react";
 
 export default function ProductGrid({
   setProductsFound,
@@ -14,6 +15,28 @@ export default function ProductGrid({
   const searchQuery = searchParams.get("search") || "";
   const currentPage = parseInt(searchParams.get("page") || "1", 10);
 
+  // Use refs to track previous values for comparison
+  const prevCategoryRef = useRef(category);
+  const prevSearchQueryRef = useRef(searchQuery);
+
+  // Effect to reset page when category or search changes
+  useEffect(() => {
+    const prevCategory = prevCategoryRef.current;
+    const prevSearchQuery = prevSearchQueryRef.current;
+
+    // Check if category or search query has changed
+    if (category !== prevCategory || searchQuery !== prevSearchQuery) {
+      // Reset to page 1
+      const params = new URLSearchParams(searchParams);
+      params.set("page", "1");
+      setSearchParams(params);
+    }
+
+    // Update refs with current values
+    prevCategoryRef.current = category;
+    prevSearchQueryRef.current = searchQuery;
+  }, [category, searchQuery, searchParams, setSearchParams]);
+
   const { data, isLoading, isError } = useGetProducts({
     search: searchQuery,
     category,
@@ -24,11 +47,11 @@ export default function ProductGrid({
   const handlePageChange = (newPage: number) => {
     const params = new URLSearchParams(searchParams);
     params.set("page", newPage.toString());
-    setSearchParams(params.toString());
+    setSearchParams(params);
   };
 
   if (isLoading) {
-    return <GlobalLoader />;
+    return <LoadingState />;
   }
   const products = data?.data ?? [];
   const totalPages = data?.pagination.totalPages ?? 1;
