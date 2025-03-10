@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useCartStore } from "../store/useCartStore";
 import { ArrowLeft, ShoppingBag, MapPin, MessageSquare } from "lucide-react";
 import { EmptyCart } from "../components/cart/empty-cart";
@@ -15,18 +15,20 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "../components/ui/dialog";
+} from "@/src/components/ui/dialog";
 import NotesForm from "../components/cart/notes-form";
 import { ShippingAddress } from "../@types";
 import AddressForm from "../components/cart/address-form";
 import { formatAddress } from "../lib/utils";
+import { toast } from "sonner";
 
 const Cart: React.FC = () => {
   const { items, clearCart } = useCartStore();
-  const { isLoggedIn: isAuthenticated } = useAuth();
+  const { isLoggedIn: isAuthenticated, account } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
   const [addressData, setAddressData] = useState<ShippingAddress | null>(null);
   const [orderNotes, setOrderNotes] = useState<string>("");
+  const navigate = useNavigate();
   const [formErrors, setFormErrors] = useState<string[]>([]);
 
   if (items.length === 0) {
@@ -42,7 +44,15 @@ const Cart: React.FC = () => {
     if (!addressData) {
       errors.push("Shipping address is required");
     }
+    if (!account?.verified) {
+      toast.error("Payment cancelled", {
+        description:
+          "Your account has not been verfied, proceed to profile setting and verify your email",
+        action: { label: "Go to setting", onClick: () => navigate("/profile") },
+      });
 
+      return;
+    }
     if (errors.length > 0) {
       setFormErrors(errors);
       return;
