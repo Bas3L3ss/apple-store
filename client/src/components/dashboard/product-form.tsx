@@ -34,7 +34,7 @@ import { Separator } from "@/src/components/ui/separator";
 import { useNavigate } from "react-router";
 import { toast } from "sonner";
 import { ProductSelectionTypes } from "@/src/@types";
-import { createProduct } from "@/src/action/products";
+// import { createProduct } from "@/src/action/products";
 import { createMockData } from "@/src/action/products/mock";
 
 // Form schema validation
@@ -102,6 +102,7 @@ export default function CreateProductPage() {
   // Handle form submission
   async function onSubmit(data: FormValues) {
     setIsSubmitting(true);
+    console.log(data);
 
     try {
       // Simulate API call

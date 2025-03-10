@@ -27,7 +27,6 @@ router.get(
 );
 
 // GET: Fetch a single order by ID
-// TODO: only allow the right user to view this
 router.get("/:id", [checkBearerToken, GetOrderById], errorHandler);
 
 export default router;

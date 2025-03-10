@@ -1,3 +1,4 @@
+import { Order } from "@/src/@types";
 import {
   formatDate,
   formatPrice,
@@ -10,14 +11,19 @@ import { ChevronLeft, ChevronRight, ExternalLink } from "lucide-react";
 type Props = {
   orders:
     | {
-        data: any[];
-        pagination: any;
+        data: Order[];
+        pagination: {
+          page: number;
+          limit: number;
+          totalPages: number;
+          totalOrders: number;
+        };
       }
     | undefined;
 
   handleViewDetails: (orderId: string) => void;
   page: number;
-  setPage: (page: number) => void;
+  setPage: React.Dispatch<React.SetStateAction<number>>;
 };
 
 const OrderHistory = ({ orders, handleViewDetails, page, setPage }: Props) => {

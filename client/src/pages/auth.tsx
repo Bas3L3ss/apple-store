@@ -39,7 +39,9 @@ export default function AppleAuthPage() {
       };
       try {
         register(formdata);
-      } catch (error) {}
+      } catch (error) {
+        console.log(error);
+      }
     } else {
       const formdata = {
         email: email,

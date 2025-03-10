@@ -15,8 +15,12 @@ interface Context {
   token: string | null;
   account: User | null;
   isLoggedIn: boolean;
-  register: (payload: FormData) => Promise<unknown>;
-  login: (payload: FormData) => Promise<unknown>;
+  register: (payload: {
+    username: string;
+    email: string;
+    password: string;
+  }) => Promise<unknown>;
+  login: (payload: { email: string; password: string }) => Promise<unknown>;
   logout: () => void;
   isLoading: boolean;
 }
@@ -71,6 +75,7 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
         setIsLoggedIn(true);
         return true;
       } catch (error) {
+        // @ts-expect-error: no problem
         throw error?.response?.data?.message || error.message;
       } finally {
         setIsLoading(false);
@@ -79,22 +84,26 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
     []
   );
 
-  const login = useCallback(async (formData: FormData) => {
-    setIsLoading(true);
-    try {
-      const {
-        data: { data: accountData, token: accessToken },
-      } = await axios.post("/auth/login", formData);
-      setAccount(accountData);
-      setToken(accessToken);
-      setIsLoggedIn(true);
-      return true;
-    } catch (error) {
-      throw error?.response?.data?.message || error.message;
-    } finally {
-      setIsLoading(false);
-    }
-  }, []);
+  const login = useCallback(
+    async (formData: { email: string; password: string }) => {
+      setIsLoading(true);
+      try {
+        const {
+          data: { data: accountData, token: accessToken },
+        } = await axios.post("/auth/login", formData);
+        setAccount(accountData);
+        setToken(accessToken);
+        setIsLoggedIn(true);
+        return true;
+      } catch (error) {
+        // @ts-expect-error: no problem
+        throw error?.response?.data?.message || error.message;
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    []
+  );
 
   const logout = useCallback(() => {
     sessionStorage.removeItem("token");

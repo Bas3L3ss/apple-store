@@ -44,7 +44,6 @@ const register: RequestHandler = async (req, res, next) => {
     await newAccount.save();
 
     const token = jwt.signToken({ uid: newAccount._id, role: newAccount.role });
-
     const { password: _, ...data } = newAccount.toObject();
 
     res.status(201).json({
@@ -52,8 +51,6 @@ const register: RequestHandler = async (req, res, next) => {
       data,
       token,
     });
-
-    // TODO: Send a verification email here (optional)
   } catch (error) {
     next(error);
   }

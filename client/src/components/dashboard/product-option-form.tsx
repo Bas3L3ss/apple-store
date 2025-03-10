@@ -89,6 +89,7 @@ export default function CreateProductOptionPage() {
         price: data.price,
         stock: data.stock,
       };
+      console.log(submitData);
 
       // Simulate API call
       await new Promise((resolve) => setTimeout(resolve, 1000));

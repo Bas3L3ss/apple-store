@@ -48,7 +48,7 @@ export const CartItem: React.FC<CartItemProps> = ({ cart }) => {
       acc[optionType] = option[optionType];
     }
     return acc;
-  }, {} as Record<string, any>);
+  }, {} as Record<string, string>);
 
   return (
     <div className="flex items-center py-6 border-b border-gray-200">

@@ -28,6 +28,7 @@ export const makeAxiosRequest = async <T>(
 
     return response.data;
   } catch (error) {
+    // @ts-expect-error: fine
     throw error?.response?.data?.message || error.message;
   }
 };
@@ -64,7 +65,7 @@ export function formatDate(date: Date | string) {
   }).format(parsedDate);
 }
 
-export function formatEstimatedDelivery(estimatedDate) {
+export function formatEstimatedDelivery(estimatedDate: string) {
   const now = new Date();
   const deliveryDate = new Date(estimatedDate);
 
@@ -74,6 +75,7 @@ export function formatEstimatedDelivery(estimatedDate) {
   }
 
   const oneDay = 24 * 60 * 60 * 1000; // One day in milliseconds
+  // @ts-expect-error: this is fine
   const diffInDays = Math.ceil((deliveryDate - now) / oneDay);
 
   if (diffInDays === 0) return "Today";
@@ -116,8 +118,8 @@ export const formatShippingAddress = (addressStr: string) => {
   try {
     const address = JSON.parse(addressStr);
     return address.fullAddress || "No address provided";
-  } catch (e) {
-    return "Invalid address format";
+  } catch {
+    return "Into the moon!";
   }
 };
 

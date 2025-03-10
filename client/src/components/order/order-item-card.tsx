@@ -15,34 +15,10 @@ import {
   TableRow,
 } from "@/src/components/ui/table";
 import { Badge } from "@/src/components/ui/badge";
-import { Product } from "@/src/@types";
-
-// Define types based on your data structure
-interface SelectedOption {
-  _id: string;
-  productId: string;
-  [key: string]: any; // For dynamic option keys like storage, color, etc.
-  price: number;
-  stock: number;
-  __v: number;
-  createdAt: string;
-  updatedAt: string;
-}
-
-interface OrderItem {
-  _id: string;
-  orderId: string;
-  productId: Product;
-  quantity: number;
-  finalPrice: number;
-  selectedOptions: SelectedOption[];
-  createdAt: string;
-  updatedAt: string;
-  __v: number;
-}
+import { OrderItemWithProducts, SelectedOption } from "@/src/@types";
 
 interface OrderItemsCardProps {
-  items: OrderItem[];
+  items: OrderItemWithProducts[];
   calculatedTotal: number;
 }
 

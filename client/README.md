@@ -1,4 +1,3 @@
-- order page fetching and details
 - add seo metadata for all pages, and have dynamic env links
 
 - implement guest cart to user one syncing, conditionally load user/guest cart

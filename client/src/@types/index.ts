@@ -92,9 +92,9 @@ export interface Order {
   orderNotes: string;
   status: OrderStatus;
   paymentMethod: PaymentMethod;
-  estimatedDelivery: Date;
-  createdAt: Date;
-  updatedAt: Date;
+  estimatedDelivery: string;
+  createdAt: string;
+  updatedAt: string;
 }
 export interface OrderItem {
   _id: string;
@@ -156,4 +156,28 @@ export interface LocationSuggestion {
     postcode?: string;
     country?: string;
   };
+}
+
+// Define types based on your data structure
+export interface SelectedOption {
+  _id: string;
+  productId: string;
+  [key: string]: any; // For dynamic option keys like storage, color, etc.
+  price: number;
+  stock: number;
+  __v: number;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface OrderItemWithProducts {
+  _id: string;
+  orderId: string;
+  productId: Product;
+  quantity: number;
+  finalPrice: number;
+  selectedOptions: SelectedOption[];
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
 }
