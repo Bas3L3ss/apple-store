@@ -58,7 +58,7 @@ export default function ProductsSection({
                 </div>
                 <div className="flex gap-2">
                   <Button variant="ghost" size="icon" asChild>
-                    <Link to={`/dashboard/products/edit/${product.id}`}>
+                    <Link to={`/dashboard/products/edit/${product._id}`}>
                       <Edit className="h-4 w-4" />
                       <span className="sr-only">Edit</span>
                     </Link>
@@ -66,7 +66,7 @@ export default function ProductsSection({
                   <Button
                     variant="ghost"
                     size="icon"
-                    onClick={() => onDeleteClick(product.id)}
+                    onClick={() => onDeleteClick(product._id)}
                     className="text-destructive hover:text-destructive hover:bg-destructive/10"
                   >
                     <Trash2 className="h-4 w-4" />

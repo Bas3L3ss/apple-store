@@ -17,7 +17,7 @@ export default function ProductOptionsSection({
   onDeleteClick,
 }: {
   productOptions?: ProductOption[];
-  onDeleteClick: (id: string) => void;
+  onDeleteClick: (_id: string) => void;
 }) {
   return (
     <Card>
@@ -46,7 +46,7 @@ export default function ProductOptionsSection({
           <ul className="space-y-3">
             {productOptions?.map((option) => (
               <li
-                key={option.id}
+                key={option._id}
                 className="flex items-center justify-between p-3 bg-muted/40 rounded-md"
               >
                 <div className="flex gap-2">
@@ -97,7 +97,7 @@ export default function ProductOptionsSection({
                 </div>
                 <div className="flex gap-2">
                   <Button variant="ghost" size="icon" asChild>
-                    <Link to={`/dashboard/product-options/edit/${option.id} `}>
+                    <Link to={`/dashboard/product-options/edit/${option._id} `}>
                       <Edit className="h-4 w-4" />
                       <span className="sr-only">Edit</span>
                     </Link>
@@ -105,7 +105,7 @@ export default function ProductOptionsSection({
                   <Button
                     variant="ghost"
                     size="icon"
-                    onClick={() => onDeleteClick(option.id)}
+                    onClick={() => onDeleteClick(option._id)}
                     className="text-destructive hover:text-destructive hover:bg-destructive/10"
                   >
                     <Trash2 className="h-4 w-4" />

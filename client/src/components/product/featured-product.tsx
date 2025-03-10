@@ -13,7 +13,7 @@ export default function FeaturedProduct() {
   if (featuredProductLoading) {
     return <GlobalLoader />;
   }
-  const product = data[0] ?? {};
+  const product = data[0] ?? null;
 
   return (
     <div className="max-w-7xl mx-auto">

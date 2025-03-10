@@ -136,10 +136,7 @@ export interface ShippingAddress {
   state: string;
   postalCode: string;
   country: string;
-  coordinates: {
-    lat: number;
-    lng: number;
-  };
+  coordinates: AddressCoordinates;
 }
 
 export interface LocationSuggestion {
@@ -180,4 +177,8 @@ export interface OrderItemWithProducts {
   createdAt: string;
   updatedAt: string;
   __v: number;
+}
+export interface AddressCoordinates {
+  lat: number;
+  lng: number;
 }

@@ -57,11 +57,11 @@ export default function CMS() {
       await axios.delete(`/${deleteItem.type}/${deleteItem.id}`);
       if (deleteItem.type === "products") {
         setProducts((prev) =>
-          prev.filter((product) => product.id !== deleteItem.id)
+          prev.filter((product) => product._id !== deleteItem.id)
         );
       } else {
         setProductOptions((prev) =>
-          prev.filter((option) => option.id !== deleteItem.id)
+          prev.filter((option) => option._id !== deleteItem.id)
         );
       }
     } catch (error) {

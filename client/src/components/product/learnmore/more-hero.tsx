@@ -1,4 +1,3 @@
-import React from "react";
 import { Button } from "../../ui/button";
 import { ArrowRight, Play } from "lucide-react";
 import { Product } from "@/src/@types";

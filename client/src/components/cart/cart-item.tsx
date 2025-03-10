@@ -21,7 +21,6 @@ export const CartItem: React.FC<CartItemProps> = ({ cart }) => {
   if (isError || !data) {
     return <div className="py-6 text-red-500">Error loading product</div>;
   }
-  // @ts-expect-error: fine
   const product: Product = data;
   const selectedOptions = product.productOptions.filter((opt) =>
     cart.selectedOptions.includes(opt._id)

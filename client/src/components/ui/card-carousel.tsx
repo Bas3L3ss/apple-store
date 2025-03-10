@@ -8,7 +8,6 @@ import "swiper/css/effect-coverflow";
 import "swiper/css/pagination";
 //@ts-expect-error : it just work
 import "swiper/css/navigation";
-import { SparklesIcon } from "lucide-react";
 import {
   Autoplay,
   EffectCoverflow,

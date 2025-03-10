@@ -1,4 +1,3 @@
-import React from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../../ui/tabs";
 import { Check } from "lucide-react";
 import { Card, CardContent } from "../../ui/card";
@@ -178,7 +177,7 @@ const TechSpec = ({ product }: { product: Product }) => {
                   .filter((option) => option.storage)
                   .map((option) => (
                     <Card
-                      key={option.id}
+                      key={option._id}
                       className="border-2 hover:border-blue-500 transition-colors cursor-pointer"
                     >
                       <CardContent className="p-6">

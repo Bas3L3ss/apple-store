@@ -1,4 +1,4 @@
-import { Order, OrderItemWithProducts } from "@/src/@types";
+import { Order } from "@/src/@types";
 import { makeAxiosRequest } from "@/src/lib/utils";
 
 export const getOrdersOfUser = async (

@@ -1,5 +1,5 @@
 import { Product } from "@/src/@types";
-import React, { useState } from "react";
+import { useState } from "react";
 
 const ChooseColor = ({
   colors,

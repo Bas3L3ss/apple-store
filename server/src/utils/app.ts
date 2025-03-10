@@ -1,7 +1,6 @@
 import express from "express";
 import cors from "cors";
 import helmet from "helmet";
-import morgan from "morgan";
 import path from "path";
 import rateLimit from "express-rate-limit";
 import { ORIGIN } from "../constants/index";
@@ -9,6 +8,21 @@ import errorHandler from "../middlewares/error-handler";
 import { handleStripeWebhook } from "../middlewares/handle-stripe-webhooks";
 import mongoSanitize from "express-mongo-sanitize";
 import timeout from "connect-timeout";
+import pino from "pino";
+import pinoHttp from "pino-http";
+
+const logger = pino({
+  level: process.env.NODE_ENV === "production" ? "warn" : "info", // Restrict logs in production
+  transport: {
+    target: "pino-pretty",
+    options: {
+      colorize: true,
+      translateTime: "HH:MM:ss.l",
+      ignore: "pid,hostname",
+    },
+  },
+});
+
 const app = express();
 
 // Security Middleware
@@ -39,10 +53,41 @@ app.use(timeout("5s"));
 app.use((req, res, next) => {
   if (!req.timedout) next();
 });
-// Logging only in development
-if (process.env.NODE_ENV === "development") {
-  app.use(morgan("dev"));
-}
+
+// 🔹 Request Logging with `pino-http`
+app.use(
+  pinoHttp({
+    logger,
+    customLogLevel: (req, res) => {
+      if (res.statusCode >= 500) return "error";
+      if (
+        res.statusCode === 401 ||
+        res.statusCode === 403 ||
+        res.statusCode === 404
+      )
+        return "warn";
+      if (res.statusCode >= 400) return "warn";
+      if (res.statusCode === 304) return "debug";
+      if (res.statusCode >= 300 && res.statusCode < 400) return "info";
+
+      return "info";
+    },
+    serializers: {
+      req: (req) => ({
+        method: req.method,
+        url: req.url,
+        ip:
+          req.ip ||
+          req.headers["x-forwarded-for"] ||
+          (req.socket ? req.socket.remoteAddress : "unknown"),
+        userAgent: req.headers["user-agent"],
+      }),
+      res: (res) => ({
+        statusCode: res.statusCode,
+      }),
+    },
+  })
+);
 
 app.post(
   "/webhook",

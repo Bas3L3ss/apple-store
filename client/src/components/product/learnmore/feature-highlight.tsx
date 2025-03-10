@@ -1,5 +1,4 @@
 import { Badge } from "lucide-react";
-import React from "react";
 
 export const FeatureHighLight = () => {
   //TODO: make sure it's dynamic

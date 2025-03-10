@@ -41,7 +41,7 @@ export default function ProductShowcase({
                 {subtitle}
               </p>
               <div className="mt-8">
-                <Link to={`/shop/product/${product.id}`}>
+                <Link to={`/shop/product/${product._id}`}>
                   <Button
                     variant="ghost"
                     className="group text-blue-600 hover:text-blue-700 px-0"

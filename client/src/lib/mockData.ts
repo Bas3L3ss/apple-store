@@ -2,7 +2,7 @@ import { Product, ProductCategory, ProductSelectionTypes } from "@/src/@types";
 
 export const products = [
   {
-    id: "ipad-pro",
+    _id: "ipad-pro",
     name: "iPad Pro",
     description: "Mỏng không tưởng. Mạnh không ngờ.",
     status: "Theo dõi để biết khi có hàng",
@@ -10,7 +10,7 @@ export const products = [
     theme: "dark",
   },
   {
-    id: "ipad-air",
+    _id: "ipad-air",
     name: "iPad Air",
     description: "Hai kích cỡ. Chip nhanh hơn. Đa zi năng.",
     status: "Theo dõi để biết khi có hàng",
@@ -26,7 +26,7 @@ export const images = [
 
 export const searchProducts: Product[] = [
   {
-    id: "ipad-pro",
+    _id: "ipad-pro",
     name: "iPad Pro",
     description: "Mỏng không tưởng. Mạnh không ngờ.",
     productImages: ["/api/placeholder/1200/600"],
@@ -37,14 +37,14 @@ export const searchProducts: Product[] = [
     productSelectionStep: [ProductSelectionTypes.Color],
     productOptions: [
       {
-        id: "option1",
+        _id: "option1",
         productId: "ipad-pro",
         color: "Silver",
         price: 999,
         stock: 20,
       },
       {
-        id: "option2",
+        _id: "option2",
         productId: "ipad-pro",
         color: "Space Gray",
         price: 999,
@@ -55,7 +55,7 @@ export const searchProducts: Product[] = [
     updatedAt: new Date(),
   },
   {
-    id: "ipad-air",
+    _id: "ipad-air",
     name: "iPad Air",
     description: "Hai kích cỡ. Chip nhanh hơn. Đa zi năng.",
     productImages: ["/api/placeholder/1200/600"],
@@ -66,14 +66,14 @@ export const searchProducts: Product[] = [
     productSelectionStep: [ProductSelectionTypes.Color],
     productOptions: [
       {
-        id: "option1",
+        _id: "option1",
         productId: "ipad-air",
         color: "Rose Gold",
         price: 599,
         stock: 15,
       },
       {
-        id: "option2",
+        _id: "option2",
         productId: "ipad-air",
         color: "Sky Blue",
         price: 599,

@@ -108,7 +108,7 @@ export default function OrderDetailsPage() {
           <div className="space-y-6">
             <ShippingInfoCard
               estimatedDelivery={order.estimatedDelivery}
-              shippingAddress={order.shippingAddress ?? "{}"}
+              shippingAddress={order.shippingAddress ?? null}
               orderNotes={order.orderNotes || ""}
             />
 

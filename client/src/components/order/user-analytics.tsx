@@ -4,7 +4,7 @@ import { Calendar, CreditCard, ShoppingBag, TrendingUp } from "lucide-react";
 
 type Props = {
   analytics: {
-    data: any[];
+    data: any;
   };
 };
 

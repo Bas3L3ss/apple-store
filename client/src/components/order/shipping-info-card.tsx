@@ -8,27 +8,11 @@ import {
   CardTitle,
 } from "@/src/components/ui/card";
 import { MapPin, Clock, Info } from "lucide-react";
-import { Badge } from "@/src/components/ui/badge";
 import { formatEstimatedDelivery } from "@/src/lib/utils";
-
-interface AddressCoordinates {
-  lat: number;
-  lng: number;
-}
-
-interface ShippingAddress {
-  fullAddress: string;
-  line1: string;
-  line2?: string;
-  city: string;
-  state: string;
-  postalCode: string;
-  country: string;
-  coordinates: AddressCoordinates;
-}
+import { ShippingAddress } from "@/src/@types";
 
 interface ShippingInfoCardProps {
-  shippingAddress: string | ShippingAddress;
+  shippingAddress: string | ShippingAddress | null;
   orderNotes?: string;
   estimatedDelivery?: string;
 }

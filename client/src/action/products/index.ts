@@ -55,10 +55,10 @@ export const getProductById = async (id: string) => {
     const { data } = await axios.get<{ success: boolean; data: Product }>(
       `/products/${id}`
     );
-    return data.success ? data.data : {};
+    return data.success ? data.data : null;
   } catch (error) {
     console.error("Error fetching product:", error);
-    return {}; // Return empty object to prevent crashes
+    return null; // Return empty object to prevent crashes
   }
 };
 
