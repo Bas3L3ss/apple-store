@@ -33,6 +33,11 @@ const ItemDetails = () => {
   }, []);
   // Mock colors with actual color values
 
+  useEffect(() => {
+    // illusion, will find workaround
+    document.title = `${product?.name ?? "Loading..."} - Buy Now | Apple Store`;
+  }, [product]);
+
   if (isLoading) {
     return <GlobalLoader />;
   }

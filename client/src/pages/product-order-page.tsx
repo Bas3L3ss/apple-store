@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { Navigate, useNavigate, useParams } from "react-router-dom";
 import { ShoppingBag } from "lucide-react";
 
@@ -39,6 +39,10 @@ const BuyProduct = () => {
   } = useProductConfiguration(product);
 
   const configSectionRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    // illusion, will find workaround
+    document.title = `${product?.name ?? "Loading..."} - Buy Now | Apple Store`;
+  }, [product]);
 
   if (isLoading)
     return (

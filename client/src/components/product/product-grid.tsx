@@ -49,9 +49,6 @@ export default function ProductGrid({
     params.set("page", newPage.toString());
     setSearchParams(params);
   };
-  useEffect(() => {
-    setProductsFound(data?.pagination.total ?? 0);
-  }, [setProductsFound, data?.pagination.total]);
 
   if (isLoading) {
     return <LoadingState />;
@@ -59,6 +56,7 @@ export default function ProductGrid({
   const products = data?.data ?? [];
   const totalPages = data?.pagination.totalPages ?? 1;
   const totalAmount = data?.pagination.total ?? 0;
+  setProductsFound(totalAmount);
   if (isError) {
     return (
       <div className="max-w-7xl mx-auto py-12">

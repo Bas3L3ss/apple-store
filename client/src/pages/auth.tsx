@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ArrowRightIcon, EyeIcon, EyeOffIcon } from "lucide-react";
-import { useNavigate } from "react-router";
+import { Navigate, useNavigate } from "react-router";
 import { useAuth } from "../contexts/AuthContext";
+import SEO from "../components/SEO";
+import { toast } from "sonner";
 
 export default function AppleAuthPage() {
   const [isSignIn, setIsSignIn] = useState(true);
@@ -12,7 +14,7 @@ export default function AppleAuthPage() {
   const [rememberMe, setRememberMe] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
-  const { login, register } = useAuth();
+  const { login, register, token } = useAuth();
   const navigate = useNavigate();
 
   const toggleAuthMode = () => {
@@ -50,9 +52,22 @@ export default function AppleAuthPage() {
       login(formdata, rememberMe);
     }
   };
+  useEffect(() => {
+    // illusion, will find workaround
+    document.title = `${isSignIn ? "Sign In" : "Sign Up"} - Apple Store`;
+  }, [isSignIn]);
+
+  if (token) {
+    toast.info("You shouldnt be here, redirecting...");
+    return <Navigate to={"/"} />;
+  }
 
   return (
     <>
+      <SEO
+        title={`${isSignIn ? "Sign In" : "Sign Up"} - Apple Store`}
+        description="Authenticate yourself for full Apple experience"
+      />
       <div className="flex min-h-screen flex-col items-center justify-center bg-white px-4 py-12">
         <div className="w-full max-w-md space-y-16 text-center">
           <h1 className="text-3xl font-medium text-gray-900 sm:text-4xl">

@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
 
 interface AlternateLanguage {
@@ -34,8 +35,11 @@ const SEO = ({
   structuredData,
   alternateLanguages = [],
 }: SEOProps) => {
-  console.log(title);
-
+  const [count, setCount] = useState(0);
+  useEffect(() => {
+    setCount((prev) => prev + 1);
+    console.log(count);
+  }, [title]);
   const metaTags = [
     { name: "description", content: description },
     { property: "og:title", content: title },

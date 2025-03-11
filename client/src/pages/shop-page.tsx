@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CategoryNav from "../components/product/category-nav";
 import FeaturedProduct from "../components/product/featured-product";
 import ProductGrid from "../components/product/product-grid";
@@ -9,11 +9,19 @@ import { ProductCategory } from "../@types";
 
 const ShopPage = () => {
   const [productsFound, setProductsFound] = useState(0);
+  useEffect(() => {
+    // illusion, will find workaround
+    document.title = `Apple products (${productsFound}) - Shop`;
+  }, [productsFound]);
 
   return (
     <>
       <SEO
-        title={`Apple products (${productsFound}) - Shop`}
+        title={
+          productsFound === null
+            ? "Apple products - Shop"
+            : `Apple products (${productsFound}) - Shop`
+        }
         description="Welcome to the Apple Store Clone. Shop the latest Apple products."
         canonical="https://your-website.com/" //fix later
         image="https://your-website.com/banner.png"
