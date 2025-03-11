@@ -36,6 +36,7 @@ import { toast } from "sonner";
 import { ProductSelectionTypes } from "@/src/@types";
 // import { createProduct } from "@/src/action/products";
 import { createMockData } from "@/src/action/products/mock";
+import { createProduct } from "@/src/action/products";
 
 // Form schema validation
 const formSchema = z.object({
@@ -106,7 +107,7 @@ export default function CreateProductPage() {
 
     try {
       // Simulate API call
-      await createMockData(setIsSubmitting);
+      await createProduct(setIsSubmitting, data);
 
       // router("/dashboard");
     } catch (error) {

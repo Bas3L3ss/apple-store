@@ -1,5 +1,6 @@
 import { Product } from "@/src/@types";
 import { Check } from "lucide-react";
+import CloudinaryImage from "../../reusable/cloudinary-image";
 
 const ProductOverView = ({ product }: { product: Product }) => {
   // TODO: add real data
@@ -11,10 +12,10 @@ const ProductOverView = ({ product }: { product: Product }) => {
 
       <div className="grid md:grid-cols-2 gap-16 items-center">
         <div className="relative overflow-hidden rounded-2xl">
-          <img
-            src="/placeholder.svg?height=800&width=800"
-            alt="iPhone 15 Pro Titanium"
-            className="w-full h-auto rounded-2xl transition-transform duration-700 hover:scale-105"
+          <CloudinaryImage
+            publicId={product.productImages[1]}
+            alt={product.name}
+            className="  rounded-lg object-cover"
           />
           <div className="absolute bottom-6 left-6 bg-black/70 backdrop-blur-sm text-white px-4 py-2 rounded-full text-sm font-medium">
             Aerospace-grade titanium

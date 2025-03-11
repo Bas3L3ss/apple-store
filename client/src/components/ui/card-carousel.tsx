@@ -17,14 +17,17 @@ import {
 import CloudinaryImage from "../reusable/cloudinary-image";
 
 interface CarouselProps {
-  images: { src: string; alt: string }[];
+  images1: { src: string; alt: string }[];
+  images2: { src: string; alt: string }[];
   autoplayDelay?: number;
   showPagination?: boolean;
   showNavigation?: boolean;
 }
 
 export const CardCarousel = ({
-  images,
+  images1,
+  images2,
+  images3,
   autoplayDelay = 1500,
   showPagination = true,
   showNavigation = true,
@@ -102,23 +105,23 @@ export const CardCarousel = ({
                 }
                 modules={[EffectCoverflow, Autoplay, Pagination, Navigation]}
               >
-                {images.map((image, index) => (
+                {images1.map((image, index) => (
                   <SwiperSlide key={index}>
                     <div className="size-full rounded-3xl">
                       <CloudinaryImage
                         className="size-full rounded-xl select-none"
-                        publicId="hero__gb4d3fd8jnu6_large_vs7v6i"
+                        publicId={image.src}
                         alt={image.alt}
                       />
                     </div>
                   </SwiperSlide>
                 ))}
-                {images.map((image, index) => (
+                {images2.map((image, index) => (
                   <SwiperSlide key={index}>
                     <div className="size-full rounded-3xl">
                       <CloudinaryImage
                         className="size-full rounded-xl select-none"
-                        publicId="hero__gb4d3fd8jnu6_large_vs7v6i"
+                        publicId={image.src}
                         alt={image.alt}
                       />
                     </div>

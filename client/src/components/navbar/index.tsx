@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   NavigationMenu,
   NavigationMenuItem,
@@ -31,11 +31,16 @@ export default function Navbar() {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isShoppingBagOpen, setIsShoppingBagOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const { isLoggedIn: isAuthenticated, logout, account } = useAuth();
-  const { items } = useCartStore();
-  const subtotal = items.reduce((total, item) => total + item.totalPrice, 0);
+
+  const searchRef = useRef<HTMLDivElement | null>(null);
+  const shoppingBagRef = useRef<HTMLDivElement | null>(null);
 
   const navigate = useNavigate();
+  const { items } = useCartStore();
+
+  const { isLoggedIn: isAuthenticated, logout, account } = useAuth();
+  const subtotal = items.reduce((total, item) => total + item.totalPrice, 0);
+
   // Close other dropdown when one is opened
   useEffect(() => {
     if (isSearchOpen) setIsShoppingBagOpen(false);
@@ -52,10 +57,36 @@ export default function Navbar() {
         setIsShoppingBagOpen(false);
       }
     };
+    const handleClick = (event: MouseEvent) => {
+      if (!searchRef.current || !shoppingBagRef.current) return;
+
+      const clientX = event.clientX;
+      const clientY = event.clientY;
+
+      if (isSearchOpen) {
+        const { bottom, left, right } =
+          searchRef.current.getBoundingClientRect();
+        if (!(clientX > left && clientX < right && clientY < bottom)) {
+          setIsSearchOpen(false);
+        }
+      }
+
+      if (isShoppingBagOpen) {
+        const { bottom, left, right } =
+          shoppingBagRef.current.getBoundingClientRect();
+        if (!(clientX > left && clientX < right && clientY < bottom)) {
+          setIsShoppingBagOpen(false);
+        }
+      }
+    };
 
     document.addEventListener("keydown", handleKeyDown);
-    return () => document.removeEventListener("keydown", handleKeyDown);
-  }, []);
+    document.addEventListener("click", handleClick);
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+      document.removeEventListener("click", handleClick);
+    };
+  }, [isSearchOpen, isShoppingBagOpen]);
 
   // Track scroll for glass effect enhancement
   useEffect(() => {
@@ -137,7 +168,11 @@ export default function Navbar() {
         </nav>
 
         {/* Search Dropdown - Responsive */}
-        <SeachDropDown isSearchOpen={isSearchOpen} navigate={navigate} />
+        <SeachDropDown
+          isSearchOpen={isSearchOpen}
+          navigate={navigate}
+          searchRef={searchRef}
+        />
 
         {/* Shopping Bag Dropdown - Responsive */}
         <ShoppingBagDropDown
@@ -148,6 +183,7 @@ export default function Navbar() {
           subtotal={subtotal}
           logout={logout}
           navigate={navigate}
+          shoppingBagRef={shoppingBagRef}
         />
       </div>
     </header>

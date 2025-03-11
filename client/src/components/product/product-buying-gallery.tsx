@@ -3,6 +3,7 @@ import { ChevronDown, ArrowLeft, ArrowRight } from "lucide-react";
 import { Button } from "../ui/button";
 import { Product } from "@/src/@types";
 import { cn } from "@/src/lib/utils";
+import CloudinaryImage from "../reusable/cloudinary-image";
 
 const ProductBuyingGallery = ({
   configSectionRef,
@@ -14,7 +15,6 @@ const ProductBuyingGallery = ({
   const [activeImage, setActiveImage] = useState(0);
   const [isZoomed, setIsZoomed] = useState(false);
   // TODO: if this is unecessary get rid of it
-  const [isLoading, setIsLoading] = useState(true);
 
   // Handle keyboard navigation
   useEffect(() => {
@@ -37,7 +37,6 @@ const ProductBuyingGallery = ({
     const newIndex = activeImage + direction;
     if (newIndex >= 0 && newIndex < product.productImages.length) {
       setActiveImage(newIndex);
-      setIsLoading(true);
     }
   };
 
@@ -52,15 +51,10 @@ const ProductBuyingGallery = ({
   };
 
   return (
-    <section className="sticky h-[70vh] bg-white dark:bg-gray-900 transition-colors duration-300 overflow-hidden">
+    <section className="  h-[70vh] bg-white dark:bg-gray-900 transition-colors duration-300 overflow-hidden">
       {/* Main Image Container */}
       <div className="relative h-full flex items-center justify-center p-4">
         {/* Loading indicator */}
-        {isLoading && (
-          <div className="absolute inset-0 flex items-center justify-center bg-gray-50 dark:bg-gray-800 bg-opacity-75 z-10">
-            <div className="w-8 h-8 border-4 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
-          </div>
-        )}
 
         {/* Main product image */}
         <div
@@ -70,17 +64,15 @@ const ProductBuyingGallery = ({
           )}
           onClick={toggleZoom}
         >
-          <img
-            src={product.productImages[activeImage] || "/placeholder.svg"}
+          <CloudinaryImage
+            publicId={product.productImages[activeImage]}
             alt={`${product.name} - View ${activeImage + 1} of ${
               product.productImages.length
             }`}
             className={cn(
               "max-h-full max-w-full object-contain transition-all duration-300",
-              isZoomed ? "scale-150" : "scale-100",
-              isLoading ? "opacity-0" : "opacity-100"
+              isZoomed ? "scale-150" : "scale-100"
             )}
-            onLoad={() => setIsLoading(false)}
           />
         </div>
 
@@ -141,8 +133,8 @@ const ProductBuyingGallery = ({
               }`}
               aria-current={activeImage === index ? "true" : "false"}
             >
-              <img
-                src={product.productImages[index]}
+              <CloudinaryImage
+                publicId={product.productImages[index]}
                 alt=""
                 className="w-full h-full object-cover "
               />

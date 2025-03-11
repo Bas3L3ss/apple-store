@@ -3,6 +3,7 @@ import { CartItem as CartItemType, Product } from "@/src/@types";
 import { useCartStore } from "@/src/store/useCartStore";
 import { formatPrice, getColorHex } from "@/src/lib/utils";
 import { useGetProductById } from "@/src/react-query-hooks/use-get-product-by-id";
+import CloudinaryImage from "../reusable/cloudinary-image";
 
 interface CartItemProps {
   cart: CartItemType;
@@ -51,8 +52,8 @@ export const CartItem = ({ cart }: CartItemProps) => {
   return (
     <div className="flex items-center py-6 border-b border-gray-200">
       <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md">
-        <img
-          src={product.productImages[0]}
+        <CloudinaryImage
+          publicId={product.productImages[0]}
           alt={product.name}
           className="h-full w-full object-cover object-center"
         />

@@ -5,6 +5,7 @@ import {
   CardTitle,
 } from "@/src/components/ui/card";
 import { Separator } from "@/src/components/ui/separator";
+import { formatPrice } from "@/src/lib/utils";
 
 interface PaymentDetailsCardProps {
   paymentMethod: string;
@@ -39,22 +40,20 @@ const PaymentDetailsCard = ({
         <div className="space-y-2">
           <div className="flex justify-between">
             <span className="text-gray-600">Subtotal</span>
-            <span>${(subtotal / 100).toFixed(2)}</span>
+            <span>{formatPrice(subtotal)}</span>
           </div>
           <div className="flex justify-between">
             <span className="text-gray-600">Shipping</span>
-            <span>
-              {shipping === 0 ? "Free" : `$${(shipping / 100).toFixed(2)}`}
-            </span>
+            <span>{shipping === 0 ? "Free" : `${formatPrice(shipping)}`}</span>
           </div>
           <div className="flex justify-between">
             <span className="text-gray-600">Tax</span>
-            <span>${(tax / 100).toFixed(2)}</span>
+            <span>{formatPrice(tax)}</span>
           </div>
           <Separator className="my-2" />
           <div className="flex justify-between font-bold">
             <span>Total</span>
-            <span>${(total / 100).toFixed(2)}</span>
+            <span>{formatPrice(total)}</span>
           </div>
         </div>
       </CardContent>

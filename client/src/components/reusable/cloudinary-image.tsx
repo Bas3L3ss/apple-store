@@ -21,7 +21,7 @@ const CloudinaryImage = ({
   const img = cld
     .image(publicId)
     .format("auto")
-    .quality("auto")
+    .quality(2000)
     .resize(auto().gravity(autoGravity()).width(width).height(height));
 
   return (

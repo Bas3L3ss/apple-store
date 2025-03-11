@@ -49,6 +49,9 @@ export default function ProductGrid({
     params.set("page", newPage.toString());
     setSearchParams(params);
   };
+  useEffect(() => {
+    setProductsFound(data?.pagination.total ?? 0);
+  }, [setProductsFound, data?.pagination.total]);
 
   if (isLoading) {
     return <LoadingState />;
@@ -56,7 +59,6 @@ export default function ProductGrid({
   const products = data?.data ?? [];
   const totalPages = data?.pagination.totalPages ?? 1;
   const totalAmount = data?.pagination.total ?? 0;
-  setProductsFound(totalAmount);
   if (isError) {
     return (
       <div className="max-w-7xl mx-auto py-12">
@@ -68,7 +70,7 @@ export default function ProductGrid({
   }
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-8">
+    <section className="max-w-7xl mx-auto px-4 py-8 ">
       <div className="flex items-center justify-between">
         <div className="mb-6">
           <p className="text-sm text-gray-500">
@@ -85,34 +87,37 @@ export default function ProductGrid({
       </div>
 
       {/* Product Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-        {products.length > 0 ? (
-          <>
-            {products.map((product, index) => (
-              <motion.div
-                key={product._id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{
-                  duration: 0.4,
-                  delay: index * 0.1,
-                  ease: [0.25, 0.1, 0.25, 1.0], // Apple-style ease curve
-                }}
-                className="flex flex-col h-full"
-              >
-                <ProductCard product={product} />
-              </motion.div>
-            ))}
-          </>
-        ) : (
-          <div className="col-span-full py-12 text-center">
-            <p className="text-gray-500 mb-2">No products found</p>
-            <p className="text-sm text-gray-400">
-              Try adjusting your search or category filters
-            </p>
-          </div>
-        )}
+      <div className="min-h-[1250px]">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 ">
+          {products.length > 0 ? (
+            <>
+              {products.map((product, index) => (
+                <motion.div
+                  key={product._id}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{
+                    duration: 0.4,
+                    delay: index * 0.1,
+                    ease: [0.25, 0.1, 0.25, 1.0], // Apple-style ease curve
+                  }}
+                  className="flex flex-col h-full"
+                >
+                  <ProductCard product={product} />
+                </motion.div>
+              ))}
+            </>
+          ) : (
+            <div className="col-span-full py-12 text-center">
+              <p className="text-gray-500 mb-2">No products found</p>
+              <p className="text-sm text-gray-400">
+                Try adjusting your search or category filters
+              </p>
+            </div>
+          )}
+        </div>
       </div>
+
       {/* Pagination - Apple-style minimalist pagination */}
       {totalPages > 1 && (
         <div className="mt-12 flex justify-center">
@@ -128,7 +133,7 @@ export default function ProductGrid({
                     ? "text-gray-300 cursor-not-allowed"
                     : "text-gray-700 hover:bg-gray-100"
                 }
-              `}
+                `}
               aria-label="Previous page"
             >
               <svg
@@ -221,6 +226,6 @@ export default function ProductGrid({
           </nav>
         </div>
       )}
-    </div>
+    </section>
   );
 }

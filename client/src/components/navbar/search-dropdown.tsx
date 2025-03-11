@@ -2,18 +2,24 @@ import { ChevronRight, Search } from "lucide-react";
 import { Input } from "../ui/input";
 import { Link } from "react-router";
 import { cn } from "@/src/lib/utils";
-import { useState } from "react";
+import { RefObject, useState } from "react";
 
-type Props = { isSearchOpen: boolean; navigate: (nav: string) => void };
+type Props = {
+  isSearchOpen: boolean;
+  navigate: (nav: string) => void;
+  searchRef: RefObject<HTMLDivElement | null>;
+};
 
-const SeachDropDown = ({ isSearchOpen, navigate }: Props) => {
+const SeachDropDown = ({ isSearchOpen, navigate, searchRef }: Props) => {
   const [searchQuery, setSearchQuery] = useState("");
+
   return (
     <div
       className={cn(
-        " flex-1  absolute top-full left-0 right-0 z-50  backdrop-blur-xl transition-all duration-300 ease-in-out overflow-y-auto overflow-x-hidden   shadow-lg",
+        " flex-1  absolute top-full left-0 right-0 z-50  backdrop-blur-xl bg-white/90 transition-all duration-300 ease-in-out md:overflow-hidden overflow-y-auto     shadow-lg",
         isSearchOpen ? "max-h-[300px] opacity-100" : "max-h-0 opacity-0"
       )}
+      ref={searchRef}
     >
       <div className="mx-auto max-w-[800px] px-6 py-8 md:py-12">
         <div className="relative">

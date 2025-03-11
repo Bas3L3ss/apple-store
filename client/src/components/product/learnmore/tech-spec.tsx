@@ -2,6 +2,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "../../ui/tabs";
 import { Check } from "lucide-react";
 import { Card, CardContent } from "../../ui/card";
 import { Product } from "@/src/@types";
+import CloudinaryImage from "../../reusable/cloudinary-image";
 
 const TechSpec = ({ product }: { product: Product }) => {
   return (
@@ -59,9 +60,9 @@ const TechSpec = ({ product }: { product: Product }) => {
               </ul>
             </div>
             <div>
-              <img
-                src="/placeholder.svg?height=600&width=600&text=Display"
-                alt="iPhone Display"
+              <CloudinaryImage
+                publicId={product.productImages[0]}
+                alt="iPhone Storage Options"
                 className="w-full h-auto rounded-xl"
               />
             </div>
@@ -90,9 +91,9 @@ const TechSpec = ({ product }: { product: Product }) => {
               </ul>
             </div>
             <div>
-              <img
-                src="/placeholder.svg?height=600&width=600&text=A17 Pro"
-                alt="A17 Pro Chip"
+              <CloudinaryImage
+                publicId={product.productImages[3]}
+                alt="iPhone Storage Options"
                 className="w-full h-auto rounded-xl"
               />
             </div>
@@ -124,9 +125,9 @@ const TechSpec = ({ product }: { product: Product }) => {
               </ul>
             </div>
             <div>
-              <img
-                src="/placeholder.svg?height=600&width=600&text=Camera"
-                alt="iPhone Camera System"
+              <CloudinaryImage
+                publicId={product.productImages[0]}
+                alt="iPhone Storage Options"
                 className="w-full h-auto rounded-xl"
               />
             </div>
@@ -159,9 +160,9 @@ const TechSpec = ({ product }: { product: Product }) => {
               </ul>
             </div>
             <div>
-              <img
-                src="/placeholder.svg?height=600&width=600&text=Battery"
-                alt="iPhone Battery"
+              <CloudinaryImage
+                publicId={product.productImages[2]}
+                alt="iPhone Storage Options"
                 className="w-full h-auto rounded-xl"
               />
             </div>
@@ -197,8 +198,8 @@ const TechSpec = ({ product }: { product: Product }) => {
               </div>
             </div>
             <div>
-              <img
-                src="/placeholder.svg?height=600&width=600&text=Storage"
+              <CloudinaryImage
+                publicId={product.productImages[1]}
                 alt="iPhone Storage Options"
                 className="w-full h-auto rounded-xl"
               />

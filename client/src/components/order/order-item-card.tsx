@@ -15,6 +15,8 @@ import {
 } from "@/src/components/ui/table";
 import { Badge } from "@/src/components/ui/badge";
 import { OrderItemWithProducts, SelectedOption } from "@/src/@types";
+import CloudinaryImage from "../reusable/cloudinary-image";
+import { formatPrice } from "@/src/lib/utils";
 
 interface OrderItemsCardProps {
   items: OrderItemWithProducts[];
@@ -64,9 +66,9 @@ const OrderItemsCard = ({ items, calculatedTotal }: OrderItemsCardProps) => {
                 <TableCell>
                   <div className="flex items-center">
                     <div className="h-12 w-12 bg-gray-100 rounded flex items-center justify-center mr-3">
-                      <img
-                        src={item.productId.productImages[0]}
-                        alt="Product"
+                      <CloudinaryImage
+                        publicId={item.productId.productImages[0]}
+                        alt={`order of ${item.productId.name}`}
                         className="h-10 w-10 object-contain"
                       />
                     </div>
@@ -90,7 +92,7 @@ const OrderItemsCard = ({ items, calculatedTotal }: OrderItemsCardProps) => {
                 </TableCell>
                 <TableCell className="text-center">{item.quantity}</TableCell>
                 <TableCell className="text-right">
-                  ${(item.finalPrice / 100).toFixed(2)}
+                  {formatPrice(item.finalPrice)}
                 </TableCell>
               </TableRow>
             ))}
@@ -99,9 +101,7 @@ const OrderItemsCard = ({ items, calculatedTotal }: OrderItemsCardProps) => {
       </CardContent>
       <CardFooter className="flex justify-between border-t p-4">
         <div className="font-medium">Total</div>
-        <div className="font-bold text-lg">
-          ${(calculatedTotal / 100).toFixed(2)}
-        </div>
+        <div className="font-bold text-lg">{formatPrice(calculatedTotal)}</div>
       </CardFooter>
     </Card>
   );

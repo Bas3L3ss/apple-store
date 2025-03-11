@@ -9,6 +9,7 @@ import { ProductCategory } from "../@types";
 
 const ShopPage = () => {
   const [productsFound, setProductsFound] = useState(0);
+
   return (
     <>
       <SEO

@@ -131,7 +131,7 @@ export function SkiperCard({
       >
         <CloudinaryImage
           className="pointer-events-none top-1/2 w-[90%] absolute select-none max-w-[unset] overflow-hidden rounded-2xl border border-neutral-100/10 transition-all duration-500 dark:border-zinc-700 md:left-[35px] md:top-[30%] md:w-full"
-          publicId="hero__gb4d3fd8jnu6_large_vs7v6i"
+          publicId="Apple-iPhone-14-iPhone-14-Plus-hero-220907-geo.jpg.og_c4bjvb"
           alt={image.alt}
         />
       </div>
@@ -142,7 +142,7 @@ export function SkiperCard({
           className={cn("absolute select-none max-w-[unset]", step1img1Class, {
             "-translate-x-36 opacity-0 rounded-2xl": step > 0,
           })}
-          publicId="hero__gb4d3fd8jnu6_large_vs7v6i"
+          publicId="apple_ipad-pro-spring21_hero_04202021_big.jpg.large_uqt2ah"
           alt={image.alt}
         />
 
@@ -150,7 +150,7 @@ export function SkiperCard({
           className={cn("absolute select-none max-w-[unset]", step1img2Class, {
             "-translate-x-24 opacity-0 rounded-2xl": step > 0,
           })}
-          publicId="hero__gb4d3fd8jnu6_large_vs7v6i"
+          publicId="AirPods-max_x2sueu"
           alt={image.alt}
         />
 
@@ -164,7 +164,7 @@ export function SkiperCard({
             { "translate-x-36 opacity-0": step < 1 },
             { "-translate-x-36 opacity-0": step > 1 }
           )}
-          publicId="hero__gb4d3fd8jnu6_large_vs7v6i"
+          publicId="mac-pro-silver_2_d5f68s"
           alt={image.alt}
         />
 
@@ -176,7 +176,7 @@ export function SkiperCard({
             { "translate-x-24 opacity-0": step < 1 },
             { "-translate-x-24 opacity-0": step > 1 }
           )}
-          publicId="hero__gb4d3fd8jnu6_large_vs7v6i"
+          publicId="AirPods-pro_6_p4dg4z"
           alt={image.alt}
         />
 
@@ -190,7 +190,8 @@ export function SkiperCard({
             { "-translate-x-36 opacity-0": step > 2 },
             { "opacity-90": step === 2 }
           )}
-          publicId="hero__gb4d3fd8jnu6_large_vs7v6i"
+          publicId="Apple_watch-series7_lp_09142021.jpg.og_iqgxio"
+          width={900}
           alt={image.alt}
         />
         <div className="absolute left-48 top-5 z-50 size-full cursor-pointer md:left-0">

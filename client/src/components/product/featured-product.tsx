@@ -5,6 +5,7 @@ import { formatPrice } from "@/src/lib/utils";
 import { useGetFeaturedProductsWithAmount } from "@/src/react-query-hooks/use-get-featured-products-with-amount";
 import GlobalLoader from "../global-loader";
 import { Link } from "react-router";
+import CloudinaryImage from "../reusable/cloudinary-image";
 
 export default function FeaturedProduct() {
   const { data, isLoading: featuredProductLoading } =
@@ -14,7 +15,9 @@ export default function FeaturedProduct() {
     return <GlobalLoader />;
   }
   const product = data[0] ?? null;
-
+  if (!product) {
+    return "try again later";
+  }
   return (
     <div className="max-w-7xl mx-auto">
       <motion.div
@@ -50,17 +53,15 @@ export default function FeaturedProduct() {
             </Button>
           </div>
         </div>
-        <motion.div
-          whileHover={{ scale: 1.05 }}
-          transition={{ stiffness: 300 }}
-          className="relative aspect-square w-full max-w-lg mx-auto lg:mx-0"
-        >
-          <img
-            src={product.productImages[0] || "/placeholder.svg"}
+        <div className="relative aspect-square w-full max-w-lg mx-auto lg:mx-0">
+          <CloudinaryImage
+            publicId={product.productImages[0]}
+            width={4000}
+            height={4000}
             alt={product.name}
             className="object-cover rounded-2xl shadow-xl"
           />
-        </motion.div>
+        </div>
       </motion.div>
     </div>
   );

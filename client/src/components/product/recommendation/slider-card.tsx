@@ -1,6 +1,7 @@
 import { Product } from "@/src/@types";
 import { checkIsNew, formatPrice, getColorHex } from "@/src/lib/utils";
 import { motion } from "framer-motion";
+import CloudinaryImage from "../../reusable/cloudinary-image";
 
 const SliderCard = ({ product }: { product: Product }) => {
   const isNewProduct = checkIsNew(product.createdAt);
@@ -20,8 +21,8 @@ const SliderCard = ({ product }: { product: Product }) => {
     >
       {/* Product Image */}
       <div className="w-full h-[250px] flex justify-center items-center bg-gray-50 rounded-xl mb-4 overflow-hidden">
-        <img
-          src={product.productImages[0]}
+        <CloudinaryImage
+          publicId={product.productImages[0]}
           alt={product.name}
           className="object-contain w-full h-full"
         />
@@ -32,6 +33,7 @@ const SliderCard = ({ product }: { product: Product }) => {
         <div className="flex items-center gap-1 justify-center mt-2 mb-3">
           {product.productOptions
             .filter((opt) => opt.color)
+            .slice(0, 5)
             .map((color, index) => (
               <div
                 key={index}

@@ -8,6 +8,7 @@ import checkAdminRole from "../controllers/auth/check-admin-role";
 import { GetFeaturedProducts } from "../controllers/product/get-featured-products";
 import { GetProductBySlug } from "../controllers/product/get-product-by-slug";
 import { GetProductRecommendations } from "../controllers/product/get-product-recommendations";
+// import { CreateMockProduct } from "../controllers/product/create-random-mockdata";
 
 const router = express.Router();
 

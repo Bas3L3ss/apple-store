@@ -19,6 +19,7 @@ type Props = {
   navigate: (s: string) => void;
   items: CartItem[];
   subtotal: number;
+  shoppingBagRef: React.RefObject<HTMLDivElement | null>;
 };
 
 const ShoppingBagDropDown = ({
@@ -28,14 +29,16 @@ const ShoppingBagDropDown = ({
   logout,
   navigate,
   items,
+  shoppingBagRef,
   subtotal,
 }: Props) => {
   return (
     <div
       className={cn(
-        "absolute top-full left-0 right-0 z-50   backdrop-blur-xl transition-all duration-300 ease-in-out overflow-hidden shadow-lg",
+        "absolute top-full left-0 right-0 z-50 bg-white/90   backdrop-blur-xl transition-all duration-300 ease-in-out overflow-hidden shadow-lg",
         isShoppingBagOpen ? "max-h-[400px] opacity-100" : "max-h-0 opacity-0"
       )}
+      ref={shoppingBagRef}
     >
       <div className="mx-auto max-w-[800px] px-6 py-8 md:py-12">
         {isAuthenticated && account ? (

@@ -1,6 +1,15 @@
 import { NextFunction, Request, Response } from "express";
 import { ProductModel } from "../../models/Product";
 
+async function trimExcessImages() {
+  await ProductModel.updateMany(
+    { productImages: { $size: { $gt: 5 } } }, // Find products with > 5 images
+    [{ $set: { productImages: { $slice: ["$productImages", 5] } } }] // Trim to 5 images
+  );
+
+  console.log("✅ Updated all products, trimmed images to max 5.");
+}
+
 export const GetProducts = async (
   req: Request,
   res: Response,

@@ -129,38 +129,80 @@ const productNames = {
 // Product images by category
 const imageUrls = {
   iphone: [
-    "https://res.cloudinary.com/dz1d1qgk2/image/upload/v1741417274/Apple-iPhone-14-iPhone-14-Plus-hero-220907-geo.jpg.og_c4bjvb.jpg",
-    "https://res.cloudinary.com/dz1d1qgk2/image/upload/v1741417273/refurb-iphone-13-pro-max-graphite-2023_w6s8yf.jpg",
-    "https://res.cloudinary.com/dz1d1qgk2/image/upload/v1741417273/iphone-card-40-iphone15hero-202309_FMT_WHH_m35rp3.jpg",
-    "https://res.cloudinary.com/dz1d1qgk2/image/upload/v1741417273/iphone-16-finish-select-202409-6-1inch_GEO_US_FMT_WHH_obkpjz.jpg",
+    "Apple-iPhone-14-iPhone-14-Plus-hero-220907-geo.jpg.og_c4bjvb,",
+    "refurb-iphone-13-pro-max-graphite-2023_w6s8yf",
+    "apple_intelligence_endframe__ksa4clua0duu_xlarge_alnt3a",
+    "iphone-card-40-iphone15hero-202309_FMT_WHH_m35rp3",
+    "iphone-16-finish-select-202409-6-1inch_GEO_US_FMT_WHH_obkpjz",
+    "Apple-iPhone-16-Pro-hero-geo-240909_inline.jpg.large_n4isey",
+    "apple_intelligence_endframe__ewm1810mnb0i_xlarge_kauxpb",
+    "121030-iphone-16-plus_mr3wwu",
+    "61BGE6iu4AL_glipzg",
+    "iphone-card-40-iphone16prohero-202409_FMT_WHH_rbxxlb",
+    "refurb-iphone-14-pro-spaceblack-202404_kijnkx",
+    "iPhone-16-black_2_lagdnw",
+    "iPhone-16-blue_1_pngy6p",
+    "iPhone-16-pro-titan-gold_2_pp5gij",
+    "iPhone-16-pro-titan-white_1_g6ds4h",
+    "iPhone-16-pro-titan-nature_1_xqurot",
+    "iPhone-16-pro-titan-black_1_pvmhdw",
+    "iPhone-16-white_1_ngmka6",
+    "iPhone-16-pink_1_rjpaet",
+    "iPhone-16-green_1_g5llp3",
   ],
   macbook: [
-    "https://res.cloudinary.com/dz1d1qgk2/image/upload/v1741418313/mba13-midnight-select-202402_zt5xln.jpg",
-    "https://res.cloudinary.com/dz1d1qgk2/image/upload/v1741418313/71N_DK0pEaL_opf2ot.jpg",
-    "https://res.cloudinary.com/dz1d1qgk2/image/upload/v1741418313/Apple_MacBook-Pro_14-16-inch_10182021_big.jpg.slideshow-xlarge_2x_b5vna3.jpg",
-    "https://res.cloudinary.com/dz1d1qgk2/image/upload/v1741418314/Apple-MacBook-Air-13-3-inch-Laptop-Space-Gray-M1-Chip-Built-for-Apple-Intelligence-8GB-RAM-256GB-storage_af1d4133-6de9-4bdc-b1c6-1ca8bd0af7a0.c0eb74c31b2cb05df4ed11124d0e255b_ofzhlo.jpg",
+    "Apple-MacBook-Air-13-3-inch-Laptop-Space-Gray-M1-Chip-Built-for-Apple-Intelligence-8GB-RAM-256GB-storage_af1d4133-6de9-4bdc-b1c6-1ca8bd0af7a0.c0eb74c31b2cb05df4ed11124d0e255b_ofzhlo",
+    "mba13-midnight-select-202402_zt5xln",
+    "Apple_MacBook-Pro_14-16-inch_10182021_big.jpg.slideshow-xlarge_2x_b5vna3",
+    "71N_DK0pEaL_opf2ot",
+    "mac-pro-silver_1_pxh2ye",
+    "mac-air-deep-blue_1_rz07ye",
+    "mac-air-silver_1_npmb5k",
+    "mac-pro-space-black_1_vm7zjj",
+    "mac-pro-space-black_2_wq8mrx",
+    "mac-air-starlight_1_ybkmhb",
   ],
   apple_watch: [
-    "https://res.cloudinary.com/dz1d1qgk2/image/upload/v1741418327/Apple_watch-series7_lp_09142021.jpg.og_iqgxio.jpg",
-    "https://res.cloudinary.com/dz1d1qgk2/image/upload/v1741418327/s10-case-unselect-gallery-1-202503_GEO_IN_FMT_WHH_ualk7i.jpg",
-    "https://res.cloudinary.com/dz1d1qgk2/image/upload/v1741418326/ultra-case-unselect-gallery-1-202409_FMT_WHH_mges6n.jpg",
+    "42d0c7a0eb8ae808b85c49e441ad08a0_vxbum1",
+    "Apple_watch-series7_lp_09142021.jpg.og_iqgxio",
+    "s10-case-unselect-gallery-1-202503_GEO_IN_FMT_WHH_ualk7i",
+    "ultra-case-unselect-gallery-1-202409_FMT_WHH_mges6n",
+    "Watch-series-10-black_1_ai9stu",
+    "Watch-series-10_nlpvnd",
+    "Watch-series-10-silver_1_hrcbfx",
+    "Watch-series-10-rose-gold_1_dv5p3y",
   ],
   ipad: [
-    "https://res.cloudinary.com/dz1d1qgk2/image/upload/v1741418294/refurb-ipad-pro-12-wificell-spacegray-2021_x0d67m.jpg",
-    "https://res.cloudinary.com/dz1d1qgk2/image/upload/v1741418293/61a6eELaq_L_yayjro.jpg",
-    "https://res.cloudinary.com/dz1d1qgk2/image/upload/v1741418293/ipad-air-storage-select-202405-13inch-space-gray-wifi_FMT_WHH_eta5dr.jpg",
-    "https://res.cloudinary.com/dz1d1qgk2/image/upload/v1741418293/apple_ipad-pro-spring21_hero_04202021_big.jpg.large_uqt2ah.jpg",
+    "refurb-ipad-pro-12-wificell-spacegray-2021_x0d67m",
+    "61a6eELaq_L_yayjro",
+    "apple_ipad-pro-spring21_hero_04202021_big.jpg.large_uqt2ah",
+    "ipad-air-storage-select-202405-13inch-space-gray-wifi_FMT_WHH_eta5dr",
+    "iPad-pro_silver_1_lxnv73",
+    "iPad-yellow_1_obn8gg",
+    "ipad-air-starlight_2_fp03es",
+    "iPad-blue_1_iyin9h",
+    "iPad-pro-space-black_2_tbjeie",
+    "iPad-air-sapce-gray_1_exty46",
+    "iPad-yellow_2_jilwnl",
+    "iPad-mini-starlight_2_xgjdyp",
+    "iPad-air-purple_1_ejuvea",
+    "iPad-pink_2_hghlmk",
   ],
   airpods: [
-    "https://res.cloudinary.com/dz1d1qgk2/image/upload/v1741418360/airpods-4-select-202409_FMT_WHH_tv6yyh.jpg",
-    "https://res.cloudinary.com/dz1d1qgk2/image/upload/v1741418361/og-airpods-4-202409_dabzzl.jpg",
-    "https://res.cloudinary.com/dz1d1qgk2/image/upload/v1741418355/airpods-pro-2-hero-select-202409_FMT_WHH_e6gh34.jpg",
+    "og-airpods-4-202409_dabzzl",
+    "Apple_AirPods-Pro_New-Design_102819_big.jpg.large_eibrvy",
+    "airpods-4-select-202409_FMT_WHH_tv6yyh",
+    "Apple-AirPods-hero-240909_big.jpg.large_n39ofu",
+    "Apple-AirPods-Pro-2nd-gen-hero-220907.jpg.landing-big_2x_l9dwkh",
+    "hq720_qxqexw",
+    "airpods-pro-2-hero-select-202409_FMT_WHH_e6gh34",
+    "AirPods-4_1_oqpx3l",
+    "AirPods-4_5_vmeswd",
+    "AirPods-4_6_bwpywd",
+    "AirPods-pro_2_qpg6qy",
+    "AirPods-4_4_z3esnb",
   ],
-  phonecase: [
-    "https://res.cloudinary.com/dz1d1qgk2/image/upload/v1741418374/MT0Y3_AV3_b36vku.jpg",
-    "https://res.cloudinary.com/dz1d1qgk2/image/upload/v1741418373/MT233_yljrgu.jpg",
-    "https://res.cloudinary.com/dz1d1qgk2/image/upload/v1741418372/MHLM3_mkfsqf.jpg",
-  ],
+  phonecase: ["MT0Y3_AV3_b36vku", "MHLM3_mkfsqf", "MT233_yljrgu"],
 };
 
 // Random product descriptions
@@ -461,7 +503,7 @@ const generateProduct = () => {
   const categoryImages = imageUrls[category];
   const productImages = getRandomElements(
     categoryImages,
-    1,
+    2,
     categoryImages.length
   );
 
@@ -478,34 +520,102 @@ const generateProduct = () => {
   // Create productId for options
   const productId = new Types.ObjectId();
 
-  // Generate product options
-  const optionsCount = 20;
+  // Generate unique product options
   const productOptions = [];
+  const usedOptionCombinations = new Set();
 
-  for (let i = 0; i < optionsCount; i++) {
-    // Randomly select an option type
-    const optionType = getRandomElement(productSelectionStep);
+  // Create a map to track used values for each option type
+  const optionTypeValues = {};
+  productSelectionStep.forEach((optionType) => {
+    optionTypeValues[optionType] = new Set();
+  });
+  // Try to generate up to 20 unique options
+  let attempts = 0;
+  const maxAttempts = 100; // Safety limit to prevent infinite loops
 
-    // Get the available values for this option type and category
-    const values =
-      optionValues[optionType][category] ||
-      optionValues[optionType][Object.keys(optionValues[optionType])[0]];
+  while (productOptions.length < 20 && attempts < maxAttempts) {
+    attempts++;
 
-    // Randomly select a value
-    const value = getRandomElement(values);
+    // Create a unique combination by using one value from each option type
+    const optionCombination = {};
+    let isValidCombination = true;
 
-    // Create a new option object
+    // For each option type in this product's selection steps
+    for (const optionType of productSelectionStep) {
+      // Get available values for this option type and category
+      const values =
+        optionValues[optionType][category] ||
+        optionValues[optionType][Object.keys(optionValues[optionType])[0]];
+
+      // Find values not yet used for this option type
+      const availableValues = values.filter(
+        (value) => !optionTypeValues[optionType].has(value)
+      );
+
+      // If we've used all values for this option type, break and try a different approach
+      if (availableValues.length === 0) {
+        isValidCombination = false;
+        break;
+      }
+
+      // Select a random unused value
+      const value = getRandomElement(availableValues);
+      optionCombination[optionType] = value;
+      optionTypeValues[optionType].add(value);
+    }
+
+    // If we couldn't find a valid combination, try again with a different approach
+    if (!isValidCombination) {
+      // If we've used all individual values, start creating unique combinations
+      // by varying multiple aspects at once
+      const combinationKey = JSON.stringify(
+        Object.entries(optionCombination).sort()
+      );
+
+      if (usedOptionCombinations.has(combinationKey)) {
+        continue; // Skip if we've already used this exact combination
+      }
+
+      usedOptionCombinations.add(combinationKey);
+    }
+
+    // Create a new option object with the unique combination
     const option = {
       _id: new Types.ObjectId(),
       productId: productId,
-      price: adjustPrice(basePrice, optionType, value, category),
       stock: getRandomInt(0, 100),
+      ...optionCombination,
     };
 
-    // Set the option value
-    option[optionType] = value;
+    // Calculate price based on all options
+    let finalPrice = basePrice;
+    for (const [optionType, value] of Object.entries(optionCombination)) {
+      finalPrice = adjustPrice(finalPrice, optionType, value, category);
+    }
+    option.price = finalPrice;
 
     productOptions.push(option);
+  }
+
+  // If we couldn't generate enough unique options after all attempts,
+  // generate some additional options with small variations
+  if (productOptions.length < 5) {
+    // Generate at least 5 options by creating variations with different stock/price
+    while (productOptions.length < 5) {
+      // Clone a random existing option
+      const baseOption = {
+        ...productOptions[Math.floor(Math.random() * productOptions.length)],
+      };
+      baseOption._id = new Types.ObjectId();
+
+      // Vary the stock and price slightly
+      baseOption.stock = getRandomInt(0, 100);
+      baseOption.price = Math.round(
+        baseOption.price * (0.9 + Math.random() * 0.2)
+      ); // ±10%
+
+      productOptions.push(baseOption);
+    }
   }
 
   // Create the product

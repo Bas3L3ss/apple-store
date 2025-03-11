@@ -40,7 +40,12 @@ const BuyProduct = () => {
 
   const configSectionRef = useRef<HTMLDivElement>(null);
 
-  if (isLoading) return <GlobalLoader />;
+  if (isLoading)
+    return (
+      <>
+        <GlobalLoader />;
+      </>
+    );
   if (error || !product) return <Navigate to="/not-found" />;
 
   const isNew = checkIsNew(product.createdAt);
@@ -71,38 +76,40 @@ const BuyProduct = () => {
   return (
     <>
       {/* TODO: more dynamic SEO */}
-      <SEO
-        title={`${product.name} - Buy Now | Apple Store`}
-        description={product.description}
-        canonical={`https://yourstore.com/shop/${product.slug}`}
-        image={
-          product.productImages?.[0] ||
-          "https://yourstore.com/default-image.jpg"
-        }
-        language="en"
-        type="product"
-        twitterCard="summary_large_image"
-        twitterSite="@yourstore"
-        twitterCreator="@yourstore"
-        structuredData={{
-          "@context": "https://schema.org/",
-          "@type": "Product",
-          name: product.name,
-          description: product.description,
-          image: product.productImages,
-          brand: {
-            "@type": "Brand",
-            name: "Apple",
-          },
-          offers: {
-            "@type": "Offer",
-            price: product.basePrice,
-            priceCurrency: "USD",
-            availability: product.stock > 0 ? "InStock" : "OutOfStock",
-            url: `https://yourstore.com/shop/${product.slug}`,
-          },
-        }}
-      />
+      {product && (
+        <SEO
+          title={`${product.name} - Buy Now | Apple Store`}
+          description={product.description}
+          canonical={`https://yourstore.com/shop/${product.slug}`}
+          image={
+            product.productImages?.[0] ||
+            "https://yourstore.com/default-image.jpg"
+          }
+          language="en"
+          type="product"
+          twitterCard="summary_large_image"
+          twitterSite="@yourstore"
+          twitterCreator="@yourstore"
+          structuredData={{
+            "@context": "https://schema.org/",
+            "@type": "Product",
+            name: product.name,
+            description: product.description,
+            image: product.productImages,
+            brand: {
+              "@type": "Brand",
+              name: "Apple",
+            },
+            offers: {
+              "@type": "Offer",
+              price: product.basePrice,
+              priceCurrency: "USD",
+              availability: product.stock > 0 ? "InStock" : "OutOfStock",
+              url: `https://yourstore.com/shop/${product.slug}`,
+            },
+          }}
+        />
+      )}
 
       <div className="min-h-screen bg-white">
         <ProductBuyingHeader

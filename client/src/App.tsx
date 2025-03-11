@@ -7,6 +7,7 @@ import GuestOnlyWrapper from "./provider/GuestOnlyWrapper";
 import AdminWrapper from "./provider/AdminWrapper";
 import { Support } from "./pages/support";
 import GlobalLoader from "./components/global-loader";
+import ResetPassword from "./pages/reset-password-page";
 
 // Lazy load pages
 const Home = lazy(() => import("./pages/home"));
@@ -62,6 +63,7 @@ function App() {
                   </GuestOnlyWrapper>
                 }
               />
+              <Route path="/auth/reset-password" element={<ResetPassword />} />
               <Route path="/support" element={<Support />} />
               <Route path="/cart" element={<Cart />} />
               <Route
@@ -88,7 +90,6 @@ function App() {
                   </AppleAuthWrapper>
                 }
               />
-
               <Route
                 path="/dashboard"
                 element={
@@ -113,7 +114,6 @@ function App() {
                   element={<CreateProductOptionPage />}
                 />
               </Route>
-
               <Route path="/checkout-success" element={<CheckoutSuccess />} />
               <Route
                 path="/checkout-cancelled"

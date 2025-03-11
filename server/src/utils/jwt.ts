@@ -28,6 +28,7 @@ class JWT {
       };
 
       const user = await Account.findById(decoded?.uid).select("-password"); // Exclude sensitive fields
+
       return user;
     } catch (error) {
       console.error("Invalid Token:", error);

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Button } from "../../ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import CloudinaryImage from "../../reusable/cloudinary-image";
 
 const MoreImage = ({
   galleryRef,
@@ -46,6 +47,7 @@ const MoreImage = ({
             size="icon"
             className="rounded-full bg-white/80 backdrop-blur-sm hover:bg-white"
             onClick={() => scrollGallery("left")}
+            disabled={activeImageIndex == 0}
           >
             <ChevronLeft className="h-5 w-5" />
             <span className="sr-only">Scroll left</span>
@@ -62,8 +64,8 @@ const MoreImage = ({
               key={index}
               className="flex-shrink-0 w-[350px] md:w-[500px] snap-center"
             >
-              <img
-                src={image || "/placeholder.svg"}
+              <CloudinaryImage
+                publicId={image}
                 alt={`${productName} - View ${index + 1}`}
                 className="w-full h-auto rounded-2xl object-cover aspect-square"
               />
@@ -77,6 +79,7 @@ const MoreImage = ({
             size="icon"
             className="rounded-full bg-white/80 backdrop-blur-sm hover:bg-white"
             onClick={() => scrollGallery("right")}
+            disabled={activeImageIndex == totalImages - 1}
           >
             <ChevronRight className="h-5 w-5" />
             <span className="sr-only">Scroll right</span>

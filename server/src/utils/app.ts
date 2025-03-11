@@ -8,20 +8,8 @@ import errorHandler from "../middlewares/error-handler";
 import { handleStripeWebhook } from "../middlewares/handle-stripe-webhooks";
 import mongoSanitize from "express-mongo-sanitize";
 import timeout from "connect-timeout";
-import pino from "pino";
 import pinoHttp from "pino-http";
-
-const logger = pino({
-  level: process.env.NODE_ENV === "production" ? "warn" : "info", // Restrict logs in production
-  transport: {
-    target: "pino-pretty",
-    options: {
-      colorize: true,
-      translateTime: "HH:MM:ss.l",
-      ignore: "pid,hostname",
-    },
-  },
-});
+import { logger } from "./pino-logger";
 
 const app = express();
 
@@ -54,7 +42,6 @@ app.use((req, res, next) => {
   if (!req.timedout) next();
 });
 
-// 🔹 Request Logging with `pino-http`
 app.use(
   pinoHttp({
     logger,

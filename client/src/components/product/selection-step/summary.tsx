@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Check } from "lucide-react";
 import type { Product } from "@/src/@types";
+import CloudinaryImage from "../../reusable/cloudinary-image";
 
 interface SummaryProps {
   selectionOption: Record<string, string>;
@@ -23,8 +24,8 @@ const Summary = ({
     <div className="space-y-4">
       <div className="flex items-center gap-4 mb-6">
         <div className="w-16 h-16 bg-gray-100 rounded-xl flex items-center justify-center">
-          <img
-            src={product.productImages[0]}
+          <CloudinaryImage
+            publicId={product.productImages[0]}
             alt={product.name}
             className="w-12 h-12 object-contain"
           />

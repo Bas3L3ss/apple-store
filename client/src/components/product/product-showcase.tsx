@@ -3,6 +3,7 @@ import { Product } from "@/src/@types";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { Link } from "react-router";
+import CloudinaryImage from "../reusable/cloudinary-image";
 
 interface ProductShowcaseProps {
   title: string;
@@ -61,8 +62,8 @@ export default function ProductShowcase({
             viewport={{ once: true }}
             className="relative aspect-square w-full max-w-lg mx-auto"
           >
-            <img
-              src={product.productImages[0] || "/placeholder.svg"}
+            <CloudinaryImage
+              publicId={product.productImages[0]}
               alt={product.name}
               className="object-cover rounded-2xl"
             />

@@ -8,6 +8,8 @@ import editAccount from "../controllers/auth/edit-account";
 import sendVerificationEmail from "../controllers/auth/send-verfication-email";
 import verifyEmail from "../controllers/auth/verify-email";
 import errorHandlerWithHtml from "../middlewares/error-handler";
+import sendResetPasswordEmail from "../controllers/auth/send-reset-password-email";
+import resetPassword from "../controllers/auth/reset-password";
 
 // initialize router
 const router = express.Router();
@@ -30,4 +32,9 @@ router.post("/verify", [checkBearerToken, sendVerificationEmail], errorHandler);
 // GET at route: http://localhost:8080/auth/verify?token=xyz
 router.get("/verify", verifyEmail, errorHandlerWithHtml);
 
+// POST: send account verification reset url link with jwt
+router.post("/send-reset-link", sendResetPasswordEmail, errorHandler);
+
+// POST: reset password with jwt
+router.post("/reset-password", [checkBearerToken, resetPassword], errorHandler);
 export default router;

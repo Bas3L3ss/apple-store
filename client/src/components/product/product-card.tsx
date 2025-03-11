@@ -4,6 +4,7 @@ import { formatPrice, getColorHex } from "@/src/lib/utils";
 import { motion } from "framer-motion";
 import { ShoppingCart } from "lucide-react";
 import { Link } from "react-router";
+import CloudinaryImage from "../reusable/cloudinary-image";
 
 interface ProductCardProps {
   product: Product;
@@ -16,18 +17,20 @@ export default function ProductCard({ product }: ProductCardProps) {
         <div className="relative aspect-square overflow-hidden bg-gray-100">
           <motion.div
             whileHover={{ scale: 1.05 }}
-            transition={{ type: "spring", stiffness: 300 }}
+            transition={{ stiffness: 300 }}
           >
-            <img
-              src={product.productImages[0] || "/placeholder.svg"}
+            <CloudinaryImage
+              publicId={product.productImages[0]}
+              width={300}
+              height={300}
               alt={product.name}
-              className="object-cover"
+              className="object-cover rounded-2xl shadow-xl"
             />
           </motion.div>
         </div>
       </Link>
       <CardContent className="p-4">
-        <h3 className="text-lg font-medium text-gray-900 mb-1">
+        <h3 className="text-lg font-medium text-gray-900 mb-1 line-clamp-1">
           {product.name}
         </h3>
         <p className="text-sm text-gray-500 line-clamp-2 mb-2">

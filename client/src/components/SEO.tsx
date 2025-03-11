@@ -34,6 +34,8 @@ const SEO = ({
   structuredData,
   alternateLanguages = [],
 }: SEOProps) => {
+  console.log(title);
+
   const metaTags = [
     { name: "description", content: description },
     { property: "og:title", content: title },
