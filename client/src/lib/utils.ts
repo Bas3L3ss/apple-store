@@ -16,7 +16,8 @@ export const makeAxiosRequest = async <T>(
   url: string,
   data?: unknown
 ): Promise<T> => {
-  const token = sessionStorage.getItem("token");
+  const token =
+    sessionStorage.getItem("token") || localStorage.getItem("remember");
 
   try {
     const response = await axios({

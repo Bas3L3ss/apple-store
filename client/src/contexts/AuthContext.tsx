@@ -11,6 +11,7 @@ import { axios } from "@/src/lib/utils";
 import { User } from "@/src/@types";
 
 import { isAxiosError } from "axios";
+import { toast } from "sonner";
 interface Context {
   token: string | null;
   account: User | null;
@@ -20,7 +21,13 @@ interface Context {
     email: string;
     password: string;
   }) => Promise<unknown>;
-  login: (payload: { email: string; password: string }) => Promise<unknown>;
+  login: (
+    payload: {
+      email: string;
+      password: string;
+    },
+    rememberMe: boolean
+  ) => Promise<unknown>;
   logout: () => void;
   isLoading: boolean;
 }
@@ -45,19 +52,31 @@ export const useAuth = () => useContext(AuthContext);
 // export the provider
 export const AuthProvider = ({ children }: PropsWithChildren) => {
   const [token, setToken] = useState(
-    sessionStorage.getItem("token") || initContext.token
+    sessionStorage.getItem("token") ||
+      localStorage.getItem("remember") ||
+      initContext.token
   );
 
   useEffect(() => {
-    const storedToken = sessionStorage.getItem("token");
-    if (token !== storedToken) {
-      if (token) {
-        sessionStorage.setItem("token", token);
-      } else {
-        sessionStorage.removeItem("token");
-      }
+    if (!token) {
+      sessionStorage.removeItem("token");
+      localStorage.removeItem("remember");
+      return;
     }
+
+    setToken((prevToken) => {
+      if (localStorage.getItem("remember")) {
+        localStorage.setItem("remember", token);
+      } else {
+        sessionStorage.setItem("token", token);
+      }
+      return prevToken;
+    });
   }, [token]);
+
+  useEffect(() => {
+    if (token) loginWithToken();
+  }, []);
 
   const [account, setAccount] = useState(initContext.account);
   const [isLoggedIn, setIsLoggedIn] = useState(initContext.isLoggedIn);
@@ -85,15 +104,26 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
   );
 
   const login = useCallback(
-    async (formData: { email: string; password: string }) => {
+    async (
+      formData: { email: string; password: string },
+      rememberMe: boolean
+    ) => {
       setIsLoading(true);
       try {
         const {
-          data: { data: accountData, token: accessToken },
+          data: { data: accountData, token: JWTToken },
         } = await axios.post("/auth/login", formData);
         setAccount(accountData);
-        setToken(accessToken);
+        setToken(JWTToken);
         setIsLoggedIn(true);
+
+        sessionStorage.setItem("token", JWTToken);
+        localStorage.removeItem("remember");
+
+        if (rememberMe) {
+          localStorage.setItem("remember", JWTToken);
+          sessionStorage.removeItem("token");
+        }
         return true;
       } catch (error) {
         // @ts-expect-error: no problem
@@ -106,6 +136,7 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
   );
 
   const logout = useCallback(() => {
+    localStorage.removeItem("remember");
     sessionStorage.removeItem("token");
     setIsLoggedIn(false);
     setAccount(null);
@@ -113,7 +144,7 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
   }, []);
 
   const loginWithToken = useCallback(async () => {
-    if (!token) return; // Fix: Use token from state instead of passing it as an argument
+    if (!token) return;
 
     setIsLoading(true);
     try {
@@ -130,17 +161,26 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
       setIsLoggedIn(true);
     } catch (error: unknown) {
       console.error(error);
-      if (isAxiosError(error) && error.response?.status === 401) {
-        setToken(null);
+      if (isAxiosError(error)) {
+        if ([400, 401, 404].includes(error.response?.status ?? 0)) {
+          toast.warning("Session expired, logging out...");
+          logout(); // ✅ Logout directly here instead of in useEffect
+        }
       }
     } finally {
       setIsLoading(false);
     }
-  }, [token]); // Fix: Memoized with correct dependency
+  }, [token, logout]); // Fix: Memoized with correct dependency
 
   useEffect(() => {
-    if (!isLoggedIn && !account && token) loginWithToken();
-  }, [isLoggedIn, account, token, loginWithToken]); // No redundant dependencies
+    if (!isLoggedIn) return;
+
+    const interval = setInterval(() => {
+      loginWithToken();
+    }, 10 * 60 * 1000);
+
+    return () => clearInterval(interval);
+  }, [isLoggedIn, loginWithToken]);
 
   const value = useMemo(
     () => ({ token, account, isLoggedIn, register, login, logout, isLoading }),

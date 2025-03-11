@@ -47,7 +47,7 @@ export default function AppleAuthPage() {
         email: email,
         password: password,
       };
-      login(formdata);
+      login(formdata, rememberMe);
     }
   };
 
