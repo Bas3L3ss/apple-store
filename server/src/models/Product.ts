@@ -39,6 +39,7 @@ ProductSchema.pre(
       await ProductOptionModel.deleteMany({ productId: this._id });
       next();
     } catch (err) {
+      // @ts-expect-error: no problem
       next(err);
     }
   }

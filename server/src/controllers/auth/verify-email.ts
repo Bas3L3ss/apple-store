@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import jwt from "../../utils/jwt";
 import Account from "../../models/Account";
+import { APP_URL } from "../../constants";
 
 const verifyEmail = async (req: Request, res: Response, next: NextFunction) => {
   try {
@@ -31,7 +32,9 @@ const verifyEmail = async (req: Request, res: Response, next: NextFunction) => {
     account.verified = true;
     await account.save();
 
-    return res.render("email-verification");
+    return res.render("email-verification", {
+      frontendURL: APP_URL,
+    });
   } catch (error) {
     next(error);
   }

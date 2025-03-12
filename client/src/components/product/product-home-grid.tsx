@@ -23,16 +23,12 @@ const ProductGrid = () => {
             />
             <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-4 sm:p-6">
               <h2
-                className={`text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight ${
-                  product.theme === "dark" ? "text-black" : "text-white"
-                }`}
+                className={`text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight ${"text-white"}`}
               >
                 {product.name}
               </h2>
               <p
-                className={`text-base sm:text-lg md:text-xl lg:text-2xl mt-2 md:mt-3 max-w-lg mx-auto ${
-                  product.theme === "dark" ? "text-black/80" : "text-white/90"
-                }`}
+                className={`text-base sm:text-lg md:text-xl lg:text-2xl mt-2 md:mt-3 max-w-lg mx-auto ${"text-white/90"}`}
               >
                 {product.description}
               </p>

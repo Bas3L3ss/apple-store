@@ -3,6 +3,7 @@ import jwt from "../../utils/jwt";
 import { AuthenticatedRequest } from "../../middlewares/check-bearer-token";
 import { sendEmail } from "../../utils/nodemailer";
 import Account from "../../models/Account";
+import { APP_URL } from "../../constants";
 
 const sendResetPasswordEmail: RequestHandler = async (
   req: AuthenticatedRequest,
@@ -28,7 +29,7 @@ const sendResetPasswordEmail: RequestHandler = async (
     const token = jwt.signToken({ uid: user._id, email }, "5m");
 
     // ✅ Use an environment variable for frontend URL
-    const resetLink = `http://localhost:5173/auth/reset-password?token=${token}`;
+    const resetLink = `${APP_URL}/api/auth/reset-password?token=${token}`;
 
     // ✅ Send email
     await sendEmail(

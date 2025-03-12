@@ -4,7 +4,6 @@ export default function Footer() {
   return (
     <footer className="w-full bg-[#f5f5f7] text-[#1d1d1f]">
       <div className="mx-auto max-w-[980px] px-4 py-12">
-        {/* Disclaimer */}
         <div className="border-b border-[#d2d2d7] pb-4">
           <p className="text-xs leading-[1.33337] text-[#6e6e73]">
             Apple TV+ yêu cầu đăng ký thuê bao.

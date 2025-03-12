@@ -1,5 +1,4 @@
-// // api url (where your server is hosted at)
-// const BACKEND_URL =
-//   process.env.REACT_APP_BACKEND_URL || "http://localhost:8080";
+// api url (where your server is hosted at)
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
-// export { BACKEND_URL };
+export { BACKEND_URL };

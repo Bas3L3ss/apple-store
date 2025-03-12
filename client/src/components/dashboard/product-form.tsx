@@ -35,7 +35,7 @@ import { useNavigate } from "react-router";
 import { toast } from "sonner";
 import { ProductSelectionTypes } from "@/src/@types";
 // import { createProduct } from "@/src/action/products";
-import { createMockData } from "@/src/action/products/mock";
+// import { createMockData } from "@/src/action/products/mock";
 import { createProduct } from "@/src/action/products";
 
 // Form schema validation

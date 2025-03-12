@@ -27,7 +27,6 @@ interface CarouselProps {
 export const CardCarousel = ({
   images1,
   images2,
-  images3,
   autoplayDelay = 1500,
   showPagination = true,
   showNavigation = true,

@@ -1,5 +1,5 @@
 import { type NextFunction, type Request, type Response } from "express";
-import { ISDEVELOPMENT } from "../constants";
+import { APP_URL, ISDEVELOPMENT } from "../constants";
 
 const errorHandlerWithHtml = (
   error: any,
@@ -11,7 +11,9 @@ const errorHandlerWithHtml = (
 
   if (ISDEVELOPMENT) console.log("Error:", message);
 
-  res.status(statusCode).render("error", { message });
+  res.status(statusCode).render("error", {
+    frontendURL: APP_URL,
+  });
 };
 
 export default errorHandlerWithHtml;

@@ -28,6 +28,7 @@ OrderSchema.pre(
       await OrderItemModel.deleteMany({ orderId: this._id });
       next();
     } catch (err) {
+      // @ts-expect-error: no problem
       next(err);
     }
   }

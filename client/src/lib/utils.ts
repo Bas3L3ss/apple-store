@@ -3,12 +3,11 @@ import { twMerge } from "tailwind-merge";
 import Axios from "axios";
 import { OrderStatus, ShippingAddress } from "../@types";
 import { colorHexMap } from "../constants/color";
-
-// axios
+import { BACKEND_URL } from "../constants";
 
 export const axios = Axios.create({
   // TODO: replace with env domain
-  baseURL: "http://localhost:8080",
+  baseURL: BACKEND_URL ?? "http://localhost:8080",
 });
 
 export const makeAxiosRequest = async <T>(
@@ -39,6 +38,7 @@ export const makeAxiosRequest = async <T>(
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
+
 export const formatPrice = (
   amount: number,
   currency: string = "USD",

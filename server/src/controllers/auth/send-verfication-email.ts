@@ -2,6 +2,7 @@ import { type RequestHandler } from "express";
 import jwt from "../../utils/jwt";
 import { AuthenticatedRequest } from "../../middlewares/check-bearer-token";
 import { sendEmail } from "../../utils/nodemailer";
+import { BACKEND_URL } from "../../constants";
 
 const sendVerificationEmail: RequestHandler = async (
   req: AuthenticatedRequest,
@@ -22,7 +23,7 @@ const sendVerificationEmail: RequestHandler = async (
       `<p>Hi! There,</p>
              <p>You have recently visited our website and we need to verify your email.</p>
              <p>Please click the link below to verify your email:</p>
-             <a href="http://localhost:8080/auth/verify?token=${token}">Verify Email</a>
+             <a href="${BACKEND_URL}/auth/verify?token=${token}">Verify Email</a>
              <p>Thanks</p>`,
       email,
       "Email verfication"
