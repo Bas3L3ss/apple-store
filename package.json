@@ -2,7 +2,12 @@
   "name": "apple-store-clone",
   "version": "1.0.0",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
+    "test:e2e:debug": "playwright test --debug",
+    "test:e2e:report": "playwright show-report"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Bas3L3ss/apple-store.git"
@@ -20,6 +25,7 @@
     "@types/node": "^22.13.10"
   },
   "dependencies": {
-    "dotenv": "^16.4.7"
+    "dotenv": "^16.4.7",
+    "uuid": "^11.1.0"
   }
 }

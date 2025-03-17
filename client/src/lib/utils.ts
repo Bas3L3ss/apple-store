@@ -7,7 +7,7 @@ import { BACKEND_URL } from "../constants";
 
 export const axios = Axios.create({
   // TODO: replace with env domain
-  baseURL: BACKEND_URL ?? "http://localhost:8080",
+  baseURL: BACKEND_URL ?? "http://localhost:5000",
 });
 
 export const makeAxiosRequest = async <T>(
