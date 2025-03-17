@@ -12,7 +12,7 @@ import ResetPassword from "./pages/reset-password-page";
 // Lazy load pages
 const Home = lazy(() => import("./pages/home"));
 const ItemDetails = lazy(() => import("./pages/product-details-page"));
-const ItemsOrder = lazy(() => import("./pages/product-order-page"));
+const ProductOrderPage = lazy(() => import("./pages/product-order-page"));
 const ShopPage = lazy(() => import("@/src/pages/shop-page"));
 const NotFound = lazy(() => import("./pages/not-found"));
 const AppleAuthPage = lazy(() => import("./pages/auth"));
@@ -45,7 +45,7 @@ function App() {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/shop" element={<ShopPage />} />
-              <Route path="/shop/:slug" element={<ItemsOrder />} />
+              <Route path="/shop/:slug" element={<ProductOrderPage />} />
               <Route path="/more/:slug" element={<ItemDetails />} />
               <Route
                 path="/auth"

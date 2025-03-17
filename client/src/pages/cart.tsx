@@ -101,7 +101,7 @@ const Cart = () => {
           </Link>
         </div>
 
-        {isAuthenticated && <GuestCartAlert />}
+        {isAuthenticated && <GuestCartAlert userId={account!._id} />}
 
         <div className="lg:grid lg:grid-cols-12 lg:gap-8">
           <div className="lg:col-span-8">

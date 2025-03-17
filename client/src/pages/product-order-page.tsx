@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { memo, useEffect, useRef } from "react";
 import { Navigate, useNavigate, useParams } from "react-router-dom";
 import { ShoppingBag } from "lucide-react";
 
@@ -20,7 +20,12 @@ import { useProductGetBySlug } from "../react-query-hooks/use-get-product-by-slu
 import GlobalLoader from "../components/global-loader";
 import SEO from "../components/SEO";
 
-const BuyProduct = () => {
+const MemoizedProductBuyingHeader = memo(ProductBuyingHeader);
+const MemoizedProductBuyingGallery = memo(ProductBuyingGallery);
+const MemoizedProductBuyingLeftSection = memo(ProductBuyingLeftSection);
+const MemoizedRecommendationCarousel = memo(RecommendationCarousel);
+
+const ProductOrderPage = () => {
   const { slug } = useParams();
   const { data: product, isLoading, error } = useProductGetBySlug(slug);
 
@@ -114,13 +119,13 @@ const BuyProduct = () => {
       />
 
       <div className="min-h-screen bg-white">
-        <ProductBuyingHeader
+        <MemoizedProductBuyingHeader
           handleAddCart={handleAddCart}
           isDone={isDone}
           productName={product.name}
           totalPrice={totalPrice}
         />
-        <ProductBuyingGallery
+        <MemoizedProductBuyingGallery
           product={product}
           configSectionRef={configSectionRef}
         />
@@ -130,7 +135,7 @@ const BuyProduct = () => {
         >
           <div className="flex flex-col lg:flex-row gap-8 py-12 relative">
             {/* Left Section (Sticky Product Info) */}
-            <ProductBuyingLeftSection isNew={isNew} product={product} />
+            <MemoizedProductBuyingLeftSection isNew={isNew} product={product} />
 
             {/* Right Section (Scrollable Configuration) */}
             <div className="lg:w-1/2">
@@ -181,7 +186,10 @@ const BuyProduct = () => {
             <Title className="text-3xl font-semibold text-gray-900 mb-8">
               You May Also Like
             </Title>
-            <RecommendationCarousel amount={10} category={product.category} />
+            <MemoizedRecommendationCarousel
+              amount={10}
+              category={product.category}
+            />
           </section>
         </section>
       </div>
@@ -189,4 +197,4 @@ const BuyProduct = () => {
   );
 };
 
-export default BuyProduct;
+export default ProductOrderPage;

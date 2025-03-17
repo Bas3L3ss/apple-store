@@ -2,7 +2,7 @@ import { ChevronRight, Search } from "lucide-react";
 import { Input } from "../ui/input";
 import { Link } from "react-router";
 import { cn } from "@/src/lib/utils";
-import { RefObject, useState } from "react";
+import { RefObject, useState, memo } from "react";
 
 type Props = {
   isSearchOpen: boolean;
@@ -10,18 +10,19 @@ type Props = {
   searchRef: RefObject<HTMLDivElement | null>;
 };
 
-const SeachDropDown = ({ isSearchOpen, navigate, searchRef }: Props) => {
+const SearchDropDown = memo(({ isSearchOpen, navigate, searchRef }: Props) => {
   const [searchQuery, setSearchQuery] = useState("");
 
   return (
     <div
       className={cn(
-        " flex-1  absolute top-full left-0 right-0 z-50  backdrop-blur-xl bg-white/90 transition-all duration-300 ease-in-out md:overflow-hidden overflow-y-auto     shadow-lg",
+        "flex-1 absolute top-full left-0 right-0 z-50 backdrop-blur-xl bg-white/90 transition-all duration-300 ease-in-out md:overflow-hidden overflow-y-auto shadow-lg",
         isSearchOpen ? "max-h-[300px] opacity-100" : "max-h-0 opacity-0"
       )}
       ref={searchRef}
     >
       <div className="mx-auto max-w-[800px] px-6 py-8 md:py-12">
+        {/* Search Input */}
         <div className="relative">
           <Search className="absolute left-0 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" />
           <form
@@ -39,6 +40,8 @@ const SeachDropDown = ({ isSearchOpen, navigate, searchRef }: Props) => {
             />
           </form>
         </div>
+
+        {/* Quick Links */}
         <div className="mt-8">
           <h3 className="text-sm font-semibold text-gray-500">Quick Links</h3>
           <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
@@ -67,6 +70,6 @@ const SeachDropDown = ({ isSearchOpen, navigate, searchRef }: Props) => {
       </div>
     </div>
   );
-};
+});
 
-export default SeachDropDown;
+export default SearchDropDown;

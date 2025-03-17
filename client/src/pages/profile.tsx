@@ -55,6 +55,7 @@ import { passwordFormSchema, profileFormSchema } from "../schemas";
 import { formatDate } from "../lib/utils";
 import { useAuth } from "../contexts/AuthContext";
 import { sendVerificationEmail } from "../action/auth";
+import { Navigate } from "react-router";
 
 // Mock user data for demonstration
 
@@ -70,8 +71,8 @@ export default function ProfilePage() {
   const profileForm = useForm({
     resolver: zodResolver(profileFormSchema),
     defaultValues: {
-      name: "",
-      email: "",
+      name: user?.username ?? "",
+      email: user?.email ?? "",
     },
   });
 
@@ -83,28 +84,11 @@ export default function ProfilePage() {
       confirmPassword: "",
     },
   });
-
+  if (!user) {
+    return <Navigate to={"/"} />;
+  }
   const onProfileSubmit = async (data: { name: string; email: string }) => {
-    // try {
-    //   // Simulate API call to update profile
-    //   setLoading(true);
     console.log(data);
-
-    //   // In a real app, this would be an API call
-    //   setTimeout(() => {
-    //     setUser({
-    //       ...user,
-    //       name: data.name,
-    //       email: data.email,
-    //       updatedAt: new Date(),
-    //     });
-    //     setLoading(false);
-    //     setIsEditMode(false);
-    //   }, 1000);
-    // } catch (error) {
-    //   console.error("Error updating profile:", error);
-    //   setLoading(false);
-    // }
   };
 
   const onPasswordSubmit = async (data: {
@@ -112,27 +96,6 @@ export default function ProfilePage() {
     confirmPassword: string;
   }) => {
     console.log(data);
-
-    // try {
-    //   setLoading(true);
-    //   console.log(data);
-    //   setTimeout(() => {
-    //     setUser({
-    //       ...user,
-    //       password: "newhashpassword123",
-    //       updatedAt: new Date(),
-    //     });
-    //     setLoading(false);
-    //     passwordForm.reset({
-    //       currentPassword: "",
-    //       newPassword: "",
-    //       confirmPassword: "",
-    //     });
-    //   }, 1000);
-    // } catch (error) {
-    //   console.error("Error updating password:", error);
-    //   setLoading(false);
-    // }
   };
 
   const handleSendVerificationEmail = async () => {
