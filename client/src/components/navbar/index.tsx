@@ -9,7 +9,7 @@ import { Button } from "@/src/components/ui/button";
 import { Apple, Search, ShoppingBag, X } from "lucide-react";
 
 import { cn } from "@/src/lib/utils";
-import { Link, useNavigate, useLocation, useSearchParams } from "react-router";
+import { Link, useNavigate, useLocation } from "react-router";
 import { useAuth } from "../../contexts/AuthContext";
 import { useCartStore } from "../../store/useCartStore";
 import MobileNav from "./mobile-nav";
@@ -30,7 +30,6 @@ const navigationItems = [
 export default function Navbar() {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isShoppingBagOpen, setIsShoppingBagOpen] = useState(false);
-  const [params] = useSearchParams();
   const [isScrolled, setIsScrolled] = useState(false);
 
   const searchRef = useRef<HTMLDivElement | null>(null);

@@ -23,7 +23,6 @@ export const getOrdersOfUser = async (
         totalOrders: number;
       };
     }>("get", `/orders?page=${page}&limit=${limit}`);
-    console.log(response, "any thing?");
 
     return response;
   } catch (error) {

@@ -103,7 +103,6 @@ export default function CreateProductPage() {
   // Handle form submission
   async function onSubmit(data: FormValues) {
     setIsSubmitting(true);
-    console.log(data);
 
     try {
       // Simulate API call

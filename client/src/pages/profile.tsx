@@ -54,12 +54,9 @@ import { useForm } from "react-hook-form";
 import { passwordFormSchema, profileFormSchema } from "../schemas";
 import { formatDate } from "../lib/utils";
 import { useAuth } from "../contexts/AuthContext";
-import { sendVerificationEmail } from "../action/auth";
+import { editUserProfile, sendVerificationEmail } from "../action/auth";
 import { Navigate } from "react-router";
-
-// Mock user data for demonstration
-
-// Form validation schemas
+import { toast } from "sonner";
 
 export default function ProfilePage() {
   const { account: user } = useAuth();
@@ -71,7 +68,7 @@ export default function ProfilePage() {
   const profileForm = useForm({
     resolver: zodResolver(profileFormSchema),
     defaultValues: {
-      name: user?.username ?? "",
+      username: user?.username ?? "",
       email: user?.email ?? "",
     },
   });
@@ -87,8 +84,15 @@ export default function ProfilePage() {
   if (!user) {
     return <Navigate to={"/"} />;
   }
-  const onProfileSubmit = async (data: { name: string; email: string }) => {
-    console.log(data);
+  const onProfileSubmit = async (data: { username: string; email: string }) => {
+    try {
+      await editUserProfile(data);
+
+      toast.success("Edit profile successfully!");
+    } catch (error) {
+      console.log(error);
+      toast.error("Please try again");
+    }
   };
 
   const onPasswordSubmit = async (data: {
@@ -277,7 +281,7 @@ export default function ProfilePage() {
                   >
                     <FormField
                       control={profileForm.control}
-                      name="name"
+                      name="username"
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel>Name</FormLabel>

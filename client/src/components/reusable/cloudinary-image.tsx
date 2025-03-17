@@ -2,6 +2,7 @@ import { Cloudinary } from "@cloudinary/url-gen";
 import { auto } from "@cloudinary/url-gen/actions/resize";
 import { autoGravity } from "@cloudinary/url-gen/qualifiers/gravity";
 import { AdvancedImage } from "@cloudinary/react";
+import { cn } from "@/src/lib/utils";
 
 const cld = new Cloudinary({ cloud: { cloudName: "dz1d1qgk2" } });
 
@@ -25,7 +26,11 @@ const CloudinaryImage = ({
     .resize(auto().gravity(autoGravity()).width(width).height(height));
 
   return (
-    <AdvancedImage className={className ?? ""} alt={alt ?? ""} cldImg={img} />
+    <AdvancedImage
+      className={cn(className, "select-none")}
+      alt={alt ?? ""}
+      cldImg={img}
+    />
   );
 };
 

@@ -41,8 +41,6 @@ export async function resetPassword(password: string, token?: string | null) {
     throw new Error("No token is found");
   }
   try {
-    console.log(token);
-
     await axios.post(
       "/auth/reset-password",
       {
@@ -60,3 +58,18 @@ export async function resetPassword(password: string, token?: string | null) {
     throw error;
   }
 }
+
+export const editUserProfile = async (data: {
+  avatar?: string;
+  username: string;
+  email: string;
+}) => {
+  try {
+    const response = await makeAxiosRequest("put", `/auth/account`, data);
+
+    return response;
+  } catch (error) {
+    console.error("Failed to fetch orders:", error);
+    throw error;
+  }
+};
