@@ -24,14 +24,14 @@ import { toast } from "sonner";
 import SEO from "../components/SEO";
 
 const Cart = () => {
-  const { items, clearCart } = useCartStore();
+  const { userItems, guestItems, clearCart } = useCartStore();
   const { isLoggedIn: isAuthenticated, account } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
   const [addressData, setAddressData] = useState<ShippingAddress | null>(null);
   const [orderNotes, setOrderNotes] = useState<string>("");
   const navigate = useNavigate();
   const [formErrors, setFormErrors] = useState<string[]>([]);
-
+  const items = isAuthenticated ? userItems : guestItems;
   useEffect(() => {
     // illusion, will find workaround
     document.title = `Your cart (${items.length}) - Buy Now | Apple Store`;
@@ -40,6 +40,8 @@ const Cart = () => {
   if (items.length === 0) {
     return (
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        {isAuthenticated && <GuestCartAlert userId={account!._id} />}
+
         <EmptyCart />
       </div>
     );
@@ -107,7 +109,7 @@ const Cart = () => {
               <div className="flow-root">
                 <div className="divide-y divide-gray-200">
                   {items.map((item) => (
-                    <CartItem key={item.id} cart={item} />
+                    <CartItem key={item._id} cart={item} />
                   ))}
                 </div>
               </div>
@@ -124,7 +126,7 @@ const Cart = () => {
           </div>
 
           <div className="lg:col-span-4 mt-6 lg:mt-0">
-            <CartSummary />
+            <CartSummary items={items} />
 
             <div className="mt-6 bg-white rounded-lg shadow-sm p-6">
               <div className="flex items-center justify-between mb-4">

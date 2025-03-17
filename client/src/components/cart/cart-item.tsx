@@ -13,6 +13,7 @@ export const CartItem = ({ cart }: CartItemProps) => {
   const { updateQuantity, removeItem } = useCartStore();
 
   const { data: data, isLoading, isError } = useGetProductById(cart.productId);
+
   if (isLoading) {
     return (
       <div className="py-6 animate-pulse bg-gray-100 h-24 rounded-md"></div>
@@ -92,7 +93,7 @@ export const CartItem = ({ cart }: CartItemProps) => {
         <div className="flex items-center justify-between text-sm mt-2">
           <div className="flex items-center border rounded-md">
             <button
-              onClick={() => updateQuantity(cart.id, -1)}
+              onClick={() => updateQuantity(cart._id, -1)}
               className="p-1 hover:bg-gray-100 rounded-l-md"
               aria-label="Decrease quantity"
               disabled={cart.quantity <= 1}
@@ -107,7 +108,7 @@ export const CartItem = ({ cart }: CartItemProps) => {
               {cart.quantity}
             </span>
             <button
-              onClick={() => updateQuantity(cart.id, +1)}
+              onClick={() => updateQuantity(cart._id, +1)}
               className="p-1 hover:bg-gray-100 rounded-r-md"
               aria-label="Increase quantity"
             >
@@ -117,7 +118,7 @@ export const CartItem = ({ cart }: CartItemProps) => {
 
           <button
             type="button"
-            onClick={() => removeItem(cart.id)}
+            onClick={() => removeItem(cart._id)}
             className="text-red-500 hover:text-red-600 flex items-center"
           >
             <Trash2 className="h-4 w-4 mr-1" />

@@ -1,6 +1,6 @@
 import { useCartStore } from "@/src/store/useCartStore";
 
-export const GuestCartAlert = () => {
+export const GuestCartAlert = ({ userId }: { userId: string }) => {
   const { syncGuestCart, rejectGuestCart, hasGuestCart } = useCartStore();
 
   if (!hasGuestCart) return null;
@@ -16,7 +16,7 @@ export const GuestCartAlert = () => {
         </div>
         <div className="flex space-x-2">
           <button
-            onClick={syncGuestCart}
+            onClick={() => syncGuestCart(userId)}
             className="text-xs font-medium text-blue-700 hover:text-blue-600"
           >
             Keep Items

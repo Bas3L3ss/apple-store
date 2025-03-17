@@ -13,7 +13,7 @@ const ProductHero = ({
   };
 }) => {
   return (
-    <div className="relative h-screen w-full overflow-hidden mt-4">
+    <div className="relative h-screen w-full overflow-hidden mb-4">
       {/* Hero Image taking full section */}
       <div className="absolute inset-0">
         <CloudinaryImage

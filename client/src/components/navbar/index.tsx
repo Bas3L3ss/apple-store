@@ -9,7 +9,7 @@ import { Button } from "@/src/components/ui/button";
 import { Apple, Search, ShoppingBag, X } from "lucide-react";
 
 import { cn } from "@/src/lib/utils";
-import { Link, useNavigate } from "react-router";
+import { Link, useNavigate, useLocation } from "react-router";
 import { useAuth } from "../../contexts/AuthContext";
 import { useCartStore } from "../../store/useCartStore";
 import MobileNav from "./mobile-nav";
@@ -36,9 +36,10 @@ export default function Navbar() {
   const shoppingBagRef = useRef<HTMLDivElement | null>(null);
 
   const navigate = useNavigate();
-  const { items } = useCartStore();
-
+  const location = useLocation();
+  const { guestItems, userItems } = useCartStore();
   const { isLoggedIn: isAuthenticated, logout, account } = useAuth();
+  const items = isAuthenticated ? userItems : guestItems ?? [];
   const subtotal = items.reduce((total, item) => total + item.totalPrice, 0);
 
   // Close other dropdown when one is opened
@@ -87,6 +88,12 @@ export default function Navbar() {
       document.removeEventListener("click", handleClick);
     };
   }, [isSearchOpen, isShoppingBagOpen]);
+
+  useEffect(() => {
+    setIsSearchOpen(false);
+    setIsShoppingBagOpen(false);
+    window.scrollTo(0, 0);
+  }, [location]);
 
   // Track scroll for glass effect enhancement
   useEffect(() => {

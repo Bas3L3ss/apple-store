@@ -1,9 +1,7 @@
+import { CartItem } from "@/src/@types";
 import { formatPrice } from "@/src/lib/utils";
-import { useCartStore } from "@/src/store/useCartStore";
 
-export const CartSummary = () => {
-  const { items } = useCartStore();
-
+export const CartSummary = ({ items }: { items: CartItem[] }) => {
   const subtotal = items.reduce((total, item) => total + item.totalPrice, 0);
   const tax = subtotal * 0.0825; // 8.25% tax rate
   const shipping = subtotal > 0 ? 9.99 : 0;
