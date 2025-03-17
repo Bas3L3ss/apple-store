@@ -18,13 +18,14 @@ export default function ProductCard({ product }: ProductCardProps) {
           <motion.div
             whileHover={{ scale: 1.05 }}
             transition={{ stiffness: 300 }}
+            className="flex items-center justify-center h-full"
           >
             <CloudinaryImage
               publicId={product.productImages[0]}
               width={300}
               height={300}
               alt={product.name}
-              className="object-cover rounded-2xl shadow-xl"
+              className="object-cover rounded-2xl   "
             />
           </motion.div>
         </div>

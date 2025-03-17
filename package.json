@@ -1,0 +1,25 @@
+{
+  "name": "apple-store-clone",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Bas3L3ss/apple-store.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Bas3L3ss/apple-store/issues"
+  },
+  "homepage": "https://github.com/Bas3L3ss/apple-store#readme",
+  "description": "",
+  "devDependencies": {
+    "@playwright/test": "^1.51.0",
+    "@types/node": "^22.13.10"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.7"
+  }
+}
