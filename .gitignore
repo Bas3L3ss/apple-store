@@ -8,4 +8,5 @@ node_modules/
 /playwright/.cache/
 node_modules
 .env
-.env.local
+.env.localSecret.yml
+infrastructure/**/Secret.yml

@@ -29,3 +29,4 @@ stats.html
 /playwright-report/
 /blob-report/
 /playwright/.cache/
+Secret.yml
