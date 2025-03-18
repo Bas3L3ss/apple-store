@@ -7,10 +7,10 @@ import { toast } from "sonner";
 
 export default function AppleAuthPage() {
   const [isSignIn, setIsSignIn] = useState(true);
-  const [email, setEmail] = useState("phamthen.hun060907@gmail.com");
-  const [password, setPassword] = useState("phamthen.hun060907@gmail.com");
-  const [firstName, setFirstName] = useState("thien");
-  const [lastName, setLastName] = useState("hung");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
