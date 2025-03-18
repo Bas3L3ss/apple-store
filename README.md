@@ -10,7 +10,7 @@
 
 <div align="center">
 <a href="https://github.com/yourusername/apple-store" target="blank">
-<img src="client/public/favicon.ico" width="90" alt="Apple Store Logo" />
+<img src="assets/favicon.ico" width="90" alt="Apple Store Logo" />
 </a>
 
 <h2>Modern Apple Products E-commerce Platform</h2>
@@ -27,7 +27,10 @@
 ![](https://img.shields.io/badge/Helm-0F1689?style=for-the-badge&logo=helm&logoColor=white)
 ![](https://img.shields.io/badge/Terraform-7B42BC?style=for-the-badge&logo=terraform&logoColor=white)
 
-<img src="https://via.placeholder.com/800x400?text=Apple+Store+Screenshot" width="80%">
+<video width="80%" controls>
+  <source src="assets/landing-page-demo.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
 
 </div>
 

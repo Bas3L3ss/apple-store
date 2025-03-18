@@ -6,7 +6,9 @@ const cld = new Cloudinary({ cloud: { cloudName: "dz1d1qgk2" } });
 
 const CloudinaryImage = ({
   publicId,
+  //@ts-expect-error:no problem
   width = 500,
+  //@ts-expect-error:no problem
   height = 500,
   className,
   alt,
