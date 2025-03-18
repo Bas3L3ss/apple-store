@@ -28,7 +28,7 @@
 ![](https://img.shields.io/badge/Terraform-7B42BC?style=for-the-badge&logo=terraform&logoColor=white)
 
 <video width="80%" controls>
-  <source src="assets/landing-page-demo.mp4" type="video/mp4">
+  <source src="assets/apple-landingpage.mp4" type="video/mp4">
   Your browser does not support the video tag.
 </video>
 
