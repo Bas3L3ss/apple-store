@@ -37,11 +37,26 @@ A comprehensive e-commerce platform for Apple products built with the MERN stack
 
 ## 🎬 Demo
 
-Intuitive user authentication workflow
+**🔐 Seamless User Authentication**
 
-Interactive product order placing
+- **Register and verify users effortlessly**
 
-Real-time cart managing and syncing
+  ![Authentication Demo](assets/register-user-ezgif.com-video-to-gif-converter.gif)
+
+- **Verify email flow (user must be verified for payment checkout)**
+
+  ![Verify Email Demo](assets/user-verification-ezgif.com-video-to-gif-converter.gif)
+
+- **Secure password reset flow**
+
+  ![Reset password Demo](assets/reset-password-ezgif.com-speed.gif)
+
+**🛒 Smooth Shopping Experience**
+
+- **Interactive product ordering**
+  ![Interactive product ordering](assets/product-ordering.mp4)
+
+- **Real-time cart management and syncing**
 
 ## ✨ Features
 
