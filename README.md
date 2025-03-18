@@ -33,7 +33,7 @@
 
 ## 💡 Overview
 
-A comprehensive e-commerce platform for Apple products built with the MERN stack (MongoDB, Express, React, Node.js). This application offers a seamless shopping experience with real-time cart updates via WebSockets, secure payment processing, and a responsive design optimized for all devices.
+A comprehensive e-commerce platform for Apple products built with the MERN stack (MongoDB, Express, React, Node.js). It offers a seamless shopping experience with real-time cart updates via WebSockets, secure payment processing with Stripe (including asynchronous order management via webhooks), and a responsive, optimized design for all devices.
 
 ## 🎬 Demo
 
@@ -54,9 +54,16 @@ A comprehensive e-commerce platform for Apple products built with the MERN stack
 **🛒 Smooth Shopping Experience**
 
 - **Interactive product ordering**
-  ![Interactive product ordering](assets/product-ordering.mp4)
 
-- **Real-time cart management and syncing**
+  ![Interactive product ordering](assets/product-ordering-ezgif.com-video-to-gif-converter.gif)
+
+- **Real-time cart management**
+
+  ![Realtime cart management](assets/realtime-cart-mangement-ezgif.com-video-to-gif-converter.gif)
+
+- **Real-time cart syncing**
+
+  ![Realtime cart syncing](assets/ezgif.com-video-to-gif-converter.gif)
 
 ## ✨ Features
 
@@ -96,7 +103,7 @@ A comprehensive e-commerce platform for Apple products built with the MERN stack
 - **Docker:** Containerization
 - **Kubernetes (Helm):** Container orchestration
 - **GitHub Actions:** CI/CD pipeline
-- **IAC:** Terraform
+- **Terraform:** Infra as Code (IAC)
 
 ## 📦 Getting Started
 
