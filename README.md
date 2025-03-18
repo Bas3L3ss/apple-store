@@ -24,6 +24,8 @@
 ![](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
 ![](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)
 ![](https://img.shields.io/badge/Kubernetes-326CE5?style=for-the-badge&logo=kubernetes&logoColor=white)
+![](https://img.shields.io/badge/Helm-0F1689?style=for-the-badge&logo=helm&logoColor=white)
+![](https://img.shields.io/badge/Terraform-7B42BC?style=for-the-badge&logo=terraform&logoColor=white)
 
 <img src="https://via.placeholder.com/800x400?text=Apple+Store+Screenshot" width="80%">
 
@@ -40,10 +42,8 @@ A comprehensive e-commerce platform for Apple products built with the MERN stack
 - **👤 User Authentication:** JWT-based secure authentication system
 - **📱 Responsive Design:** Optimized for all device sizes
 - **🔍 Product Search & Filtering:** Advanced search capabilities
-- **⭐ Product Reviews:** User ratings and review system
 - **🚚 Order Tracking:** Real-time order status updates
 - **👨‍💼 Admin Dashboard:** Comprehensive product and order management
-- **🌙 Dark/Light Mode:** Theme customization options
 - **🔒 Secure API:** Protected endpoints with proper authorization
 
 ## 👩‍💻 Tech Stack
@@ -71,8 +71,9 @@ A comprehensive e-commerce platform for Apple products built with the MERN stack
 ### DevOps
 
 - **Docker:** Containerization
-- **Kubernetes:** Container orchestration
+- **Kubernetes (Helm):** Container orchestration
 - **GitHub Actions:** CI/CD pipeline
+- **IAC:** Terraform
 
 ## 📦 Getting Started
 
@@ -87,13 +88,13 @@ A comprehensive e-commerce platform for Apple products built with the MERN stack
 1. **Clone the repository:**
 
    ```bash
-   git clone https://github.com/yourusername/apple-store.git
+   git clone git@github.com:Bas3L3ss/apple-store.git
    cd apple-store
    ```
 
 2. **Set up environment variables:**
 
-   Create `.env` files in the server directory:
+   Create `.env` files in the server directory: or Secret.yml
 
    ```env
    # server/.env
@@ -146,9 +147,9 @@ A comprehensive e-commerce platform for Apple products built with the MERN stack
 1. **Apply Kubernetes manifests:**
 
    ```bash
-   kubectl apply -f client/manifest/
-   kubectl apply -f server/manifest/
-   kubectl apply -f websocket/manifest/
+   kubectl apply -f infrastructure/client
+   kubectl apply -f infrastructure/server
+   kubectl apply -f infrastructure/websocket
    ```
 
 2. **Access the application:**
