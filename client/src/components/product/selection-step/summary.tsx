@@ -41,22 +41,20 @@ const Summary = ({
       <div className="space-y-3">
         {product.productSelectionStep.map((type) => {
           const optionKey = type.toLowerCase();
-          const selectedId = selectionOption[optionKey];
-          const selectedOption = product.productOptions.find(
-            (opt) => opt._id == selectedId
-          );
-          //@ts-expect-error: no problem
-          const selectedValue = selectedOption?.[optionKey] ?? "Not selected";
+          const selectedValue = selectionOption[optionKey] || "Not selected"; // Ensure a default value
 
           return (
             <motion.div
               key={type}
               initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: selectedValue ? 1 : 0.5, y: 0 }}
+              animate={{
+                opacity: selectedValue !== "Not selected" ? 1 : 0.5,
+                y: 0,
+              }}
               className="flex items-center justify-between py-2"
             >
               <div className="flex items-center gap-2">
-                {selectedValue != "Not selected" && (
+                {selectedValue !== "Not selected" && (
                   <span className="w-5 h-5 bg-green-500 rounded-full flex items-center justify-center">
                     <Check className="w-3 h-3 text-white" />
                   </span>

@@ -64,8 +64,13 @@ const ProductOrderPage = () => {
   const handleAddCart = () => {
     const cartOption: string[] = [];
 
-    for (const element of Object.entries(selectedOptions)) {
-      cartOption.push(element[1]);
+    for (const opt of product.productOptions) {
+      for (const [key, val] of Object.entries(selectedOptions)) {
+        //@ts-expect-error: no prob
+        if (opt[key] == val) {
+          cartOption.push(opt._id);
+        }
+      }
     }
     const cartItem: CartInput = {
       selectedOptions: cartOption,

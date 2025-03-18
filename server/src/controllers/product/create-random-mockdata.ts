@@ -504,7 +504,7 @@
 //   const productImages = getRandomElements(
 //     categoryImages,
 //     2,
-//     categoryImages.length
+//     Math.min(5, categoryImages.length)
 //   );
 
 //   // Generate base price
@@ -522,99 +522,45 @@
 
 //   // Generate unique product options
 //   const productOptions = [];
-//   const usedOptionCombinations = new Set();
 
-//   // Create a map to track used values for each option type
-//   const optionTypeValues = {};
-//   productSelectionStep.forEach((optionType) => {
-//     optionTypeValues[optionType] = new Set();
-//   });
-//   // Try to generate up to 20 unique options
-//   let attempts = 0;
-//   const maxAttempts = 100; // Safety limit to prevent infinite loops
+//   // For each option type in this product's selection steps
+//   for (const optionType of productSelectionStep) {
+//     // Get available values for this option type and category
+//     const values =
+//       optionValues[optionType][category] ||
+//       optionValues[optionType][Object.keys(optionValues[optionType])[0]];
 
-//   while (productOptions.length < 20 && attempts < maxAttempts) {
-//     attempts++;
+//     // Determine how many values to use for this option type (more variety)
+//     // Use at least 3 values or all available values if less than 3
+//     const numValuesToUse = Math.min(
+//       values.length,
+//       Math.max(3, Math.floor(Math.random() * values.length) + 2)
+//     );
 
-//     // Create a unique combination by using one value from each option type
-//     const optionCombination = {};
-//     let isValidCombination = true;
+//     // Randomly select values to use
+//     const selectedValues = getRandomElements(
+//       values,
+//       numValuesToUse,
+//       numValuesToUse
+//     );
 
-//     // For each option type in this product's selection steps
-//     for (const optionType of productSelectionStep) {
-//       // Get available values for this option type and category
-//       const values =
-//         optionValues[optionType][category] ||
-//         optionValues[optionType][Object.keys(optionValues[optionType])[0]];
-
-//       // Find values not yet used for this option type
-//       const availableValues = values.filter(
-//         (value) => !optionTypeValues[optionType].has(value)
-//       );
-
-//       // If we've used all values for this option type, break and try a different approach
-//       if (availableValues.length === 0) {
-//         isValidCombination = false;
-//         break;
-//       }
-
-//       // Select a random unused value
-//       const value = getRandomElement(availableValues);
-//       optionCombination[optionType] = value;
-//       optionTypeValues[optionType].add(value);
-//     }
-
-//     // If we couldn't find a valid combination, try again with a different approach
-//     if (!isValidCombination) {
-//       // If we've used all individual values, start creating unique combinations
-//       // by varying multiple aspects at once
-//       const combinationKey = JSON.stringify(
-//         Object.entries(optionCombination).sort()
-//       );
-
-//       if (usedOptionCombinations.has(combinationKey)) {
-//         continue; // Skip if we've already used this exact combination
-//       }
-
-//       usedOptionCombinations.add(combinationKey);
-//     }
-
-//     // Create a new option object with the unique combination
-//     const option = {
-//       _id: new Types.ObjectId(),
-//       productId: productId,
-//       stock: getRandomInt(0, 100),
-//       ...optionCombination,
-//     };
-
-//     // Calculate price based on all options
-//     let finalPrice = basePrice;
-//     for (const [optionType, value] of Object.entries(optionCombination)) {
-//       finalPrice = adjustPrice(finalPrice, optionType, value, category);
-//     }
-//     option.price = finalPrice;
-
-//     productOptions.push(option);
-//   }
-
-//   // If we couldn't generate enough unique options after all attempts,
-//   // generate some additional options with small variations
-//   if (productOptions.length < 5) {
-//     // Generate at least 5 options by creating variations with different stock/price
-//     while (productOptions.length < 5) {
-//       // Clone a random existing option
-//       const baseOption = {
-//         ...productOptions[Math.floor(Math.random() * productOptions.length)],
+//     // Create an option for each selected value
+//     for (const value of selectedValues) {
+//       // Create a new option with ONLY this option type
+//       const option: any = {
+//         _id: new Types.ObjectId(),
+//         productId: productId,
+//         stock: getRandomInt(5, 100),
+//         price: basePrice, // Will be adjusted based on the option
 //       };
-//       baseOption._id = new Types.ObjectId();
 
-//       // Vary the stock and price slightly
-//       baseOption.stock = getRandomInt(0, 100);
-//       baseOption.price = Math.round(
-//         baseOption.price * (0.9 + Math.random() * 0.2)
-//       ); // ±10%
+//       // Set only the current option type
+//       option[optionType] = value;
 
-//       productOptions.push(baseOption);
+//       // Adjust price based on this option
+//       option.price = adjustPrice(basePrice, optionType, value, category);
+
+//       productOptions.push(option);
 //     }
 //   }
 
@@ -630,13 +576,14 @@
 //     stock,
 //     productSelectionStep,
 //     productOptions: productOptions.map((opt) => opt._id),
+//     isFeatured: Math.random() < 0.2, // 20% chance to be featured
 //   };
 
 //   return { product, productOptions };
 // };
 
 // // Generate multiple products with their options
-// const generateProductsWithOptions = (count = 10) => {
+// const generateProductsWithOptions = (count) => {
 //   const products = [];
 //   const allProductOptions = [];
 //   const usedNames = new Set(); // To track names we've already used

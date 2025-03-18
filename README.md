@@ -35,6 +35,14 @@
 
 A comprehensive e-commerce platform for Apple products built with the MERN stack (MongoDB, Express, React, Node.js). This application offers a seamless shopping experience with real-time cart updates via WebSockets, secure payment processing, and a responsive design optimized for all devices.
 
+## 🎬 Demo
+
+Intuitive user authentication workflow
+
+Interactive product order placing
+
+Real-time cart managing and syncing
+
 ## ✨ Features
 
 - **🛒 Real-time Shopping Cart:** Instant updates using WebSockets

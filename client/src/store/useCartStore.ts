@@ -94,8 +94,6 @@ export const useCartStore = create<CartState>()(
       },
 
       addItem: (cart: CartInput) => {
-        console.log(cart);
-
         if (cart.userId) {
           // User is logged in - add to user items
           const { userItems } = get();

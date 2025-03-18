@@ -20,9 +20,9 @@ const AccessoriesSelection = ({
             key={option._id}
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
-            onClick={() => setSelectedAccessories(option._id!)}
+            onClick={() => setSelectedAccessories(option.accessories!)}
             className={`relative flex flex-col items-start p-4 rounded-xl border-2 transition-all text-left ${
-              selectedAccessories === option._id
+              selectedAccessories === option.accessories
                 ? "border-blue-500 bg-blue-50"
                 : "border-gray-200 hover:border-gray-300"
             }`}
@@ -33,7 +33,7 @@ const AccessoriesSelection = ({
             <span className="text-sm text-gray-500">
               {option.price === 0 ? "Included" : `+$${option.price}`}
             </span>
-            {selectedAccessories === option._id && (
+            {selectedAccessories === option.accessories && (
               <div className="absolute top-2 right-2 w-5 h-5 bg-blue-500 rounded-full flex items-center justify-center">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"

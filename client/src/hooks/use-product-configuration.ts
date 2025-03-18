@@ -38,11 +38,14 @@ export function useProductConfiguration(product?: Product) {
     Object.entries(selectedOptions).forEach(([_, value]) => {
       if (!value) return;
 
-      const option = productOptions.find((opt) => {
-        return opt._id === value;
-      });
-
-      if (option) newPrice += option.price;
+      for (const opt of productOptions) {
+        for (const [key, val] of Object.entries(selectedOptions)) {
+          //@ts-expect-error: no prob
+          if (opt[key] == val) {
+            newPrice += opt.price;
+          }
+        }
+      }
     });
 
     setTotalPrice(newPrice);

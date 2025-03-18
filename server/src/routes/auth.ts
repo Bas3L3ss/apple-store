@@ -14,22 +14,22 @@ import resetPassword from "../controllers/auth/reset-password";
 // initialize router
 const router = express.Router();
 
-// POST at route: http://localhost:8080/auth/register
+// POST at route: http://localhost:5000/auth/register
 router.post("/register", [], register, errorHandler);
 
-// POST at path: http://localhost:8080/auth/login
+// POST at path: http://localhost:5000/auth/login
 router.post("/login", [], login, errorHandler);
 
-// GET at path: http://localhost:8080/auth/login
+// GET at path: http://localhost:5000/auth/login
 router.get("/login", [checkBearerToken], loginWithToken, errorHandler);
 
 // PUT: update account
 router.put("/account", [checkBearerToken, editAccount], errorHandler);
 
-// POST at route: http://localhost:8080/auth/verify
+// POST at route: http://localhost:5000/auth/verify
 router.post("/verify", [checkBearerToken, sendVerificationEmail], errorHandler);
 
-// GET at route: http://localhost:8080/auth/verify?token=xyz
+// GET at route: http://localhost:5000/auth/verify?token=xyz
 router.get("/verify", verifyEmail, errorHandlerWithHtml);
 
 // POST: send account verification reset url link with jwt

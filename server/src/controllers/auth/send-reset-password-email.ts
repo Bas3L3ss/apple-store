@@ -29,7 +29,7 @@ const sendResetPasswordEmail: RequestHandler = async (
     const token = jwt.signToken({ uid: user._id, email }, "5m");
 
     // ✅ Use an environment variable for frontend URL
-    const resetLink = `${APP_URL}/api/auth/reset-password?token=${token}`;
+    const resetLink = `${APP_URL}/auth/reset-password?token=${token}`;
 
     // ✅ Send email
     await sendEmail(
@@ -38,7 +38,7 @@ const sendResetPasswordEmail: RequestHandler = async (
        <p><strong>Do not share this link with anyone.</strong></p>
        <p><a href="${resetLink}">Click here to reset your password</a></p>
        <p>Thanks,</p>
-       <p>Your Company Team</p>`,
+       <p>Apple</p>`,
       email,
       "Reset Your Password"
     );

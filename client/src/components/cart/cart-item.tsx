@@ -9,10 +9,21 @@ interface CartItemProps {
   cart: CartItemType;
 }
 
+// Define a constant array of keys to exclude
+const EXCLUDED_KEYS = [
+  "_id",
+  "productId",
+  "price",
+  "stock",
+  "__v",
+  "createdAt",
+  "updatedAt",
+];
+
 export const CartItem = ({ cart }: CartItemProps) => {
   const { updateQuantity, removeItem } = useCartStore();
 
-  const { data: data, isLoading, isError } = useGetProductById(cart.productId);
+  const { data, isLoading, isError } = useGetProductById(cart.productId);
 
   if (isLoading) {
     return (
@@ -22,33 +33,27 @@ export const CartItem = ({ cart }: CartItemProps) => {
   if (isError || !data) {
     return <div className="py-6 text-red-500">Error loading product</div>;
   }
+
   const product: Product = data;
-  const selectedOptions = product.productOptions.filter((opt) =>
-    cart.selectedOptions.includes(opt._id)
-  );
 
-  // Group options by type for better display
-  const optionsByType = selectedOptions.reduce((acc, option) => {
-    // Find the first key that isn't _id, productId, price, stock, __v, createdAt, or updatedAt
-    const optionType = Object.keys(option).find(
-      (key) =>
-        ![
-          "_id",
-          "productId",
-          "price",
-          "stock",
-          "__v",
-          "createdAt",
-          "updatedAt",
-        ].includes(key)
-    );
+  // Create a Set for O(1) lookups instead of includes() which is O(n)
+  const selectedOptionIds = new Set(cart.selectedOptions);
 
-    if (optionType) {
-      // @ts-expect-error: fine
-      acc[optionType] = option[optionType];
+  // Process selected options in a single pass
+  const selectedOptionsValue = {};
+  const selectedOptions = product.productOptions.filter((opt) => {
+    if (selectedOptionIds.has(opt._id)) {
+      // Find the first key that isn't in excluded keys
+      for (const key in opt) {
+        if (!EXCLUDED_KEYS.includes(key)) {
+          selectedOptionsValue[key] = opt[key];
+          break; // Only need to find the first valid key
+        }
+      }
+      return true;
     }
-    return acc;
-  }, {} as Record<string, string>);
+    return false;
+  });
 
   return (
     <div className="flex items-center py-6 border-b border-gray-200">
@@ -68,7 +73,7 @@ export const CartItem = ({ cart }: CartItemProps) => {
 
         {/* Rich description of selected options */}
         <div className="mt-1 text-sm text-gray-700">
-          {Object.entries(optionsByType).map(([type, value], index) => (
+          {Object.entries(selectedOptionsValue).map(([type, value], index) => (
             <div key={index} className="flex items-center gap-2">
               <span className="font-medium capitalize">{type}:</span>
               {type.toLowerCase() === "color" ? (

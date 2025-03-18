@@ -32,7 +32,7 @@ COPY --from=builder /app/.env.example ./
 RUN npm install --production
 
 # Expose the application port
-EXPOSE 8080
+EXPOSE 5000
 
 # Command to run the application
 CMD ["node", "dist/index.js"]

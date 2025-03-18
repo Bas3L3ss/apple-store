@@ -24,20 +24,23 @@ const login: RequestHandler = async (req, res, next) => {
     const account = await Account.findOne({ email });
 
     if (!account) {
-      return next({
+      next({
         statusCode: 400,
         message: "Bad credentials",
       });
+      return;
     }
 
     // Verify password hash
-    const passOk = crypt.validate(password, account.password);
+    const passOk = await crypt.validate(password, account.password);
+    console.log(password, account.password, passOk);
 
     if (!passOk) {
-      return next({
+      next({
         statusCode: 400,
         message: "Bad credentials",
       });
+      return;
     }
 
     // Generate access token

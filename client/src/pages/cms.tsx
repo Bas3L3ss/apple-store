@@ -39,6 +39,7 @@ export default function CMS() {
         ]);
         setProductOptions(optionsRes.data.data);
         setProducts(productsRes.data.data);
+        console.log(productOptions);
       } catch (error) {
         console.error("Error fetching data:", error);
       } finally {

@@ -20,9 +20,9 @@ const ProcessorSelection = ({
             key={option._id}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            onClick={() => setSelectedProcessor(option._id!)}
+            onClick={() => setSelectedProcessor(option.processor!)}
             className={`relative flex flex-col items-center p-4 rounded-xl border-2 transition-all ${
-              selectedProcessor === option._id
+              selectedProcessor === option.processor
                 ? "border-blue-500 bg-blue-50"
                 : "border-gray-200 hover:border-gray-300"
             }`}
@@ -33,7 +33,7 @@ const ProcessorSelection = ({
             <span className="text-sm text-gray-500">
               {option.price === 0 ? "Included" : `+$${option.price}`}
             </span>
-            {selectedProcessor === option._id && (
+            {selectedProcessor === option.processor && (
               <div className="absolute top-2 right-2 w-5 h-5 bg-blue-500 rounded-full flex items-center justify-center">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
