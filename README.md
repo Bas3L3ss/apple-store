@@ -81,7 +81,8 @@ A comprehensive e-commerce platform for Apple products built with the MERN stack
 
 ### Frontend
 
-- **React 18:** Modern UI library with hooks and suspense
+- **React 19:** Modern UI library with hooks and suspense
+- **Zustand** Efficient global context management
 - **TypeScript:** Type-safe development
 - **Vite:** Next-generation frontend tooling
 - **TanStack Query:** Data fetching and state management
