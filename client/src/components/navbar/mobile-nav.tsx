@@ -2,7 +2,6 @@ import { Sheet, SheetContent, SheetTrigger } from "@/src/components/ui/sheet";
 import { NavigationMenuItem } from "../ui/navigation-menu";
 import { Link } from "react-router";
 import {
-  Apple,
   ChevronRight,
   LogOut,
   Menu,
@@ -15,6 +14,7 @@ import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { User } from "@/src/@types";
+import AppleLogo from "@/src/icon/Apple";
 
 const MobileNav = ({
   navigate,
@@ -51,7 +51,7 @@ const MobileNav = ({
         >
           <div className="h-full flex flex-col">
             <div className="py-6 px-6 flex items-center justify-center border-b">
-              <Apple className="h-7 w-7 text-black-200" />
+              <AppleLogo className="size-20 text-black-200" />
             </div>
 
             {/* Scrollable content area */}
@@ -174,7 +174,7 @@ const MobileNav = ({
           to="/"
           className="flex items-center transition-transform duration-300 ease-in-out hover:scale-110"
         >
-          <Apple className="h-5 w-5 text-black-200" />
+          <AppleLogo className="size-10 text-black-200" />
         </Link>
       </NavigationMenuItem>
     </div>

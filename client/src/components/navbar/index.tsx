@@ -16,6 +16,7 @@ import MobileNav from "./mobile-nav";
 import DesktopNav from "./desktop-nav";
 import SeachDropDown from "./search-dropdown";
 import ShoppingBagDropDown from "./shopping-bag-dropdown";
+import AppleLogo from "@/src/icon/Apple";
 
 const navigationItems = [
   { name: "Store", href: "" },
@@ -133,7 +134,7 @@ export default function Navbar() {
                 to="/"
                 className="flex items-center transition-transform duration-300 ease-in-out hover:scale-110"
               >
-                <Apple className="h-5 w-5 text-black-200" />
+                <AppleLogo size={40} className=" text-black-200" />
               </Link>
             </NavigationMenuItem>
             {/* Desktop Navigation - Hidden on mobile */}
