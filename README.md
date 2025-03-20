@@ -24,6 +24,7 @@
 ![](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
 ![](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)
 ![](https://img.shields.io/badge/Kubernetes-326CE5?style=for-the-badge&logo=kubernetes&logoColor=white)
+![](https://img.shields.io/badge/Zustand-000000?style=for-the-badge&logo=react&logoColor=white)
 ![](https://img.shields.io/badge/Helm-0F1689?style=for-the-badge&logo=helm&logoColor=white)
 ![](https://img.shields.io/badge/Terraform-7B42BC?style=for-the-badge&logo=terraform&logoColor=white)
 
@@ -80,7 +81,8 @@ A comprehensive e-commerce platform for Apple products built with the MERN stack
 
 ### Frontend
 
-- **React 18:** Modern UI library with hooks and suspense
+- **React 19:** Modern UI library with hooks and suspense
+- **Zustand** Efficient global context management
 - **TypeScript:** Type-safe development
 - **Vite:** Next-generation frontend tooling
 - **TanStack Query:** Data fetching and state management
