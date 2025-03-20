@@ -126,6 +126,7 @@ A comprehensive e-commerce platform for Apple products built with the MERN stack
 - Capable of handling **production-scale loads with Kubernetes(Helm) and Terraform**
 - **Real-time** inventory **updates** and cart **synchronization**
 - **Geolocation services** for precise address selection
+- Application robustness with **E2E testing**
 
 ## 📦 Getting Started
 

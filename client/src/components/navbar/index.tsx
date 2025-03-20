@@ -6,7 +6,7 @@ import {
   NavigationMenuItem,
 } from "@/src/components/ui/navigation-menu";
 import { Button } from "@/src/components/ui/button";
-import { Apple, Search, ShoppingBag, X } from "lucide-react";
+import { Search, ShoppingBag, X } from "lucide-react";
 
 import { cn } from "@/src/lib/utils";
 import { Link, useNavigate, useLocation } from "react-router";
