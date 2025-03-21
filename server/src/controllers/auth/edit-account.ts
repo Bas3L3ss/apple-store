@@ -1,6 +1,7 @@
 import { type RequestHandler } from "express";
 import Account from "../../models/Account";
 import { AuthenticatedRequest } from "../../middlewares/check-bearer-token";
+import redis from "../../utils/redis";
 
 const editAccount: RequestHandler = async (
   req: AuthenticatedRequest,
@@ -30,7 +31,7 @@ const editAccount: RequestHandler = async (
     if (!updatedAccount) {
       return next({ statusCode: 404, message: "Account not found" });
     }
-
+    redis.publish("user-modified", { userId: updatedAccount._id });
     res.status(200).json({
       success: true,
       message: "Account updated successfully",

@@ -6,6 +6,7 @@ import { OrderModel } from "../models/Order";
 import { OrderItemModel } from "../models/OrderItem";
 import mongoose from "mongoose";
 import { OrderStatus, PaymentMethod } from "../@types";
+import redis from "../utils/redis";
 
 export const handleStripeWebhook = async (req: Request, res: Response) => {
   let event;
@@ -16,7 +17,7 @@ export const handleStripeWebhook = async (req: Request, res: Response) => {
     event = stripe.webhooks.constructEvent(req.body, sig, WEBHOOKSECRET);
   } catch (err) {
     console.error("Webhook signature verification failed:", err);
-      // @ts-expect-error: no problem
+    // @ts-expect-error: no problem
     res.status(400).send(`Webhook Error: ${err.message}`);
     return;
   }
@@ -92,7 +93,7 @@ export const handleStripeWebhook = async (req: Request, res: Response) => {
         await session.commitTransaction();
         session.endSession();
 
-        console.log("✅ Order & OrderItems saved to MongoDB:", newOrder);
+        redis.publish("user-order-modified", { userId });
         res.json({ received: true });
       } catch (error) {
         await session.abortTransaction();
