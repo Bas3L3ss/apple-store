@@ -9,7 +9,6 @@ interface CartItemProps {
   cart: CartItemType;
 }
 
-// Define a constant array of keys to exclude
 const EXCLUDED_KEYS = [
   "_id",
   "productId",
@@ -36,16 +35,16 @@ export const CartItem = ({ cart }: CartItemProps) => {
 
   const product: Product = data;
 
-  // Create a Set for O(1) lookups instead of includes() which is O(n)
   const selectedOptionIds = new Set(cart.selectedOptions);
 
   // Process selected options in a single pass
   const selectedOptionsValue = {};
-  const selectedOptions = product.productOptions.filter((opt) => {
+  product.productOptions.filter((opt) => {
     if (selectedOptionIds.has(opt._id)) {
       // Find the first key that isn't in excluded keys
       for (const key in opt) {
         if (!EXCLUDED_KEYS.includes(key)) {
+          // @ts-expect-error: no prob
           selectedOptionsValue[key] = opt[key];
           break; // Only need to find the first valid key
         }
