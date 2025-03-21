@@ -25,6 +25,7 @@
 ![](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)
 ![](https://img.shields.io/badge/Kubernetes-326CE5?style=for-the-badge&logo=kubernetes&logoColor=white)
 ![](https://img.shields.io/badge/Zustand-000000?style=for-the-badge&logo=react&logoColor=white)
+![](https://img.shields.io/badge/Redis-DC382D?style=for-the-badge&logo=redis&logoColor=white)
 ![](https://img.shields.io/badge/Helm-0F1689?style=for-the-badge&logo=helm&logoColor=white)
 ![](https://img.shields.io/badge/Terraform-7B42BC?style=for-the-badge&logo=terraform&logoColor=white)
 
@@ -98,6 +99,7 @@ A comprehensive e-commerce platform for Apple products built with the MERN stack
 - **Socket.io:** Real-time bidirectional event-based communication
 - **JWT:** Secure authentication
 - **Stripe:** Payment processing
+- **Redis:** Caching and Pub/Sub Message queue
 - **Nodemailer:** Email notifications
 
 ### DevOps
@@ -121,6 +123,8 @@ A comprehensive e-commerce platform for Apple products built with the MERN stack
 ## 🚀 Technical Summary
 
 - Implements **OWASP-recommended security practices** for secure user data and transactions
+- **Front-end Caching** with **react-query**, **Back-end caching** with **Redis**
+- **Secured Async Invalidation** with Redis **Pub/Sub**  
 - Optimized frontend performance with **caching** strategies (Redis, browser and API caching, Cloudinary CDN for Images)
 - **Scalable backend architecture** with microservices and load balancing
 - Capable of handling **production-scale loads with Kubernetes(Helm) and Terraform**
