@@ -150,7 +150,9 @@ export default function Navbar() {
                 {isSearchOpen ? (
                   <X className="h-4 w-4 text-black-200" />
                 ) : (
-                  <Search className="h-4 w-4 text-black-200" />
+                  <div about="search">
+                    <Search className="h-4 w-4 text-black-200" />
+                  </div>
                 )}
               </Button>
 
@@ -166,7 +168,7 @@ export default function Navbar() {
                 {isShoppingBagOpen ? (
                   <X className="h-4 w-4 text-black-200" />
                 ) : (
-                  <div className="relative">
+                  <div className="relative" about="shopping-cart">
                     <ShoppingBag className="h-4 w-4 text-black-200" />
                     {items.length > 0 && (
                       <span className="absolute -top-1 -right-1 flex h-3 w-3 items-center justify-center rounded-full bg-blue-600 text-[8px] text-white" />

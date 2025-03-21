@@ -6,6 +6,7 @@ import {
   type PropsWithChildren,
   useMemo,
   useCallback,
+  Dispatch,
 } from "react";
 import { axios } from "@/src/lib/utils";
 import { User } from "@/src/@types";
@@ -16,17 +17,21 @@ interface Context {
   token: string | null;
   account: User | null;
   isLoggedIn: boolean;
-  register: (payload: {
-    username: string;
-    email: string;
-    password: string;
-  }) => Promise<unknown>;
+  register: (
+    payload: {
+      username: string;
+      email: string;
+      password: string;
+    },
+    setIsAuthPageLoading: Dispatch<React.SetStateAction<boolean>>
+  ) => Promise<unknown>;
   login: (
     payload: {
       email: string;
       password: string;
     },
-    rememberMe: boolean
+    rememberMe: boolean,
+    setIsAuthPageLoading: Dispatch<React.SetStateAction<boolean>>
   ) => Promise<unknown>;
   logout: () => void;
   isLoading: boolean;
@@ -83,8 +88,11 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const register = useCallback(
-    async (formData: { username: string; email: string; password: string }) => {
-      setIsLoading(true);
+    async (
+      formData: { username: string; email: string; password: string },
+      setIsAuthPageLoading: Dispatch<React.SetStateAction<boolean>>
+    ) => {
+      setIsAuthPageLoading(true);
       try {
         const {
           data: { data: accountData, token: accessToken },
@@ -97,7 +105,7 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
         // @ts-expect-error: no problem
         throw error?.response?.data?.message || error.message;
       } finally {
-        setIsLoading(false);
+        setIsAuthPageLoading(false);
       }
     },
     []
@@ -106,9 +114,10 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
   const login = useCallback(
     async (
       formData: { email: string; password: string },
-      rememberMe: boolean
+      rememberMe: boolean,
+      setIsAuthPageLoading: Dispatch<React.SetStateAction<boolean>>
     ) => {
-      setIsLoading(true);
+      setIsAuthPageLoading(true);
       try {
         const {
           data: { data: accountData, token: JWTToken },
@@ -129,7 +138,7 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
         // @ts-expect-error: no problem
         throw error?.response?.data?.message || error.message;
       } finally {
-        setIsLoading(false);
+        setIsAuthPageLoading(false);
       }
     },
     []
