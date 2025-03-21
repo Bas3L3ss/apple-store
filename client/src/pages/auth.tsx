@@ -27,12 +27,10 @@ export default function AppleAuthPage() {
 
   const { login, register, token } = useAuth();
 
-  // Update URL when auth mode changes
   useEffect(() => {
     const newParams = new URLSearchParams(location.search);
     newParams.set("mode", isSignIn ? "signin" : "signup");
     navigate(`${location.pathname}?${newParams.toString()}`, { replace: true });
-    // Clear any previous errors when switching modes
     setError("");
   }, [isSignIn, location.pathname, navigate, location.search]);
 
@@ -63,8 +61,7 @@ export default function AppleAuthPage() {
         };
 
         await register(formdata, setIsLoading);
-        toast.success("Account created successfully!");
-        navigate(redirectUrl);
+        toast.success("Account created successfully!, redirecting...");
       } else {
         const formdata = {
           email: email,
@@ -72,8 +69,8 @@ export default function AppleAuthPage() {
         };
 
         await login(formdata, rememberMe, setIsLoading);
-        toast.success("Logged in successfully!");
-        navigate(redirectUrl);
+
+        toast.success("Logged in successfully!, redirecting...");
       }
     } catch (error) {
       console.error("Auth error:", error);

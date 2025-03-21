@@ -143,13 +143,25 @@ const ShoppingBagDropDown = ({
               <div className="flex flex-col sm:flex-row gap-4">
                 <Button
                   className="flex-1 bg-blue-600 hover:bg-blue-700 text-white rounded-full py-5 font-medium"
-                  onClick={() => navigate("/auth")}
+                  onClick={() => {
+                    const currentPath = window.location.pathname;
+                    navigate(
+                      `/auth?redirect=${encodeURIComponent(currentPath)}`
+                    );
+                  }}
                 >
                   Sign In
                 </Button>
                 <Button
                   className="flex-1 bg-gray-100 text-black hover:bg-gray-200 rounded-full py-5 font-medium"
-                  onClick={() => navigate("/auth?mode=register")}
+                  onClick={() => {
+                    const currentPath = window.location.pathname;
+                    navigate(
+                      `/auth?mode=signup&redirect=${encodeURIComponent(
+                        currentPath
+                      )}`
+                    );
+                  }}
                 >
                   Create Account
                 </Button>
