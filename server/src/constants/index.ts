@@ -7,8 +7,10 @@ const APP_URL = process.env.APP_URL ?? "http://localhost:5173";
 
 const MONGO_URI =
   process.env.MONGO_URI ||
-  "mongodb+srv://base1234:base1234@cluster0.x7g93.mongodb.net/apple-store"; //fake
+  "mongodb+srv://userpass:userpass@cluster0.x7g93.mongodb.net/apple-store";
 const MONGO_OPTIONS = {};
+
+const REDIS_URL = process.env.REDIS_URL || "redis";
 
 const BACKEND_URL = process.env.BACKEND_URL ?? "http://localhost:5000";
 
@@ -31,4 +33,5 @@ export {
   PASSWORD,
   APP_URL,
   BACKEND_URL,
+  REDIS_URL,
 };
