@@ -21,13 +21,13 @@ test.describe("Login Page", () => {
   }) => {
     await page.goto("/auth");
 
-    await page.fill('input[name="username"]', "wronguser");
+    await page.fill('input[name="email"]', "wronguserhung060907@yahoo.com");
     await page.fill('input[name="password"]', "wrongpassword");
 
     await page.click('button[type="submit"]');
 
     const errorMessage = await page.locator(
-      "text=Invalid username or password"
+      "text=Failed to sign in. Please check your credentials."
     );
     await expect(errorMessage).toBeVisible();
   });
