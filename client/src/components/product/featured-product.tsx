@@ -37,10 +37,14 @@ export default function FeaturedProduct() {
             From {formatPrice(product.basePrice)}
           </p>
           <div className="flex flex-col sm:flex-row gap-4">
-            <Button className="bg-blue-600 hover:bg-blue-700 text-white rounded-full px-8 py-6 text-lg">
+            <Button
+              name="featured-product-button"
+              className="bg-blue-600 hover:bg-blue-700 text-white rounded-full px-8 py-6 text-lg"
+            >
               <Link to={`/shop/${product.slug ?? product.name}`}>Buy Now</Link>
             </Button>
             <Button
+              name="featured-product-more"
               variant="outline"
               className="rounded-full px-8 py-6 text-lg border-gray-300 text-gray-900"
             >

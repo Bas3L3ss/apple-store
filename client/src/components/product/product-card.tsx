@@ -12,7 +12,10 @@ interface ProductCardProps {
 
 export default function ProductCard({ product }: ProductCardProps) {
   return (
-    <Card className="overflow-hidden border-none shadow-sm hover:shadow-md transition-shadow duration-300">
+    <Card
+      className="overflow-hidden border-none shadow-sm hover:shadow-md transition-shadow duration-300"
+      about="product-information"
+    >
       <Link to={`/shop/${product.slug}`}>
         <div className="relative aspect-square overflow-hidden bg-gray-100">
           <motion.div
@@ -60,6 +63,7 @@ export default function ProductCard({ product }: ProductCardProps) {
       </CardContent>
       <CardFooter className="p-4 pt-0">
         <Link
+          about="product-order"
           to={`/shop/${product.slug ?? product.name}`}
           className="flex w-full rounded-full bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 items-center justify-center"
         >

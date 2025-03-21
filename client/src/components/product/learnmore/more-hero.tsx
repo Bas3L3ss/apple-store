@@ -2,6 +2,7 @@ import { Button } from "../../ui/button";
 import { ArrowRight, Play } from "lucide-react";
 import { Product } from "@/src/@types";
 import CloudinaryImage from "../../reusable/cloudinary-image";
+import { Link } from "react-router";
 
 const MoreHero = ({ product }: { product: Product }) => {
   return (
@@ -24,13 +25,15 @@ const MoreHero = ({ product }: { product: Product }) => {
           {product.description}
         </p>
         <div className="mt-8 flex flex-col sm:flex-row gap-4">
-          <Button
-            size="lg"
-            className="bg-white text-black hover:bg-white/90 px-8"
-          >
-            Buy
-            <ArrowRight className="ml-2 h-4 w-4" />
-          </Button>
+          <Link to={`/shop/${product.slug}`}>
+            <Button
+              size="lg"
+              className="bg-white text-black hover:bg-white/90 px-8"
+            >
+              Buy
+              <ArrowRight className="ml-2 h-4 w-4" />
+            </Button>
+          </Link>
           <Button size="lg" variant="outline" className=" text-black px-8">
             <Play className="mr-2 h-4 w-4 fill-white" />
             Watch the film

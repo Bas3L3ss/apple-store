@@ -122,7 +122,9 @@ const ProductOrderPage = () => {
           },
         }}
       />
-
+      {product.isFeatured && <h1 className="sr-only">featured product</h1>}
+      <h2 className="sr-only">{product.name}</h2>
+      <h3 className="sr-only">product ordering page</h3>
       <div className="min-h-screen bg-white">
         <MemoizedProductBuyingHeader
           handleAddCart={handleAddCart}

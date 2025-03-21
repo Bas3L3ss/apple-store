@@ -31,7 +31,6 @@ const ItemDetails = () => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-  // Mock colors with actual color values
 
   useEffect(() => {
     // illusion, will find workaround
@@ -78,6 +77,8 @@ const ItemDetails = () => {
           },
         }}
       />
+      {product.isFeatured && <h1 className="sr-only">featured product</h1>}
+      <h2 className="sr-only">{product.name}</h2>
       <div className="bg-white">
         <StickyBuyButton product={product} showBuyButton={showBuyButton} />
         <MoreHero product={product} />

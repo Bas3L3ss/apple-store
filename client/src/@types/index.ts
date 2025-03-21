@@ -47,6 +47,7 @@ export interface Product {
   productImages: string[];
   slug?: string;
   basePrice: number;
+  isFeatured: boolean;
   category: ProductCategory;
   stock: number;
   productSelectionStep: ProductSelectionTypes[];
