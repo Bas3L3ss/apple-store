@@ -1,17 +1,11 @@
-import React, { useState, useEffect } from "react";
-import { ChevronDown, ArrowLeft, ArrowRight } from "lucide-react";
+import { useState, useEffect } from "react";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 import { Button } from "../ui/button";
 import { Product } from "@/src/@types";
 import { cn } from "@/src/lib/utils";
 import CloudinaryImage from "../reusable/cloudinary-image";
 
-const ProductBuyingGallery = ({
-  configSectionRef,
-  product,
-}: {
-  configSectionRef: React.RefObject<null | HTMLDivElement>;
-  product: Product;
-}) => {
+const ProductBuyingGallery = ({ product }: { product: Product }) => {
   const [activeImage, setActiveImage] = useState(0);
   const [isZoomed, setIsZoomed] = useState(false);
   // TODO: if this is unecessary get rid of it
@@ -38,11 +32,6 @@ const ProductBuyingGallery = ({
     if (newIndex >= 0 && newIndex < product.productImages.length) {
       setActiveImage(newIndex);
     }
-  };
-
-  // Handle scroll to configuration section
-  const scrollToConfig = () => {
-    configSectionRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
   // Toggle zoom functionality
@@ -115,7 +104,7 @@ const ProductBuyingGallery = ({
       </div>
 
       {/* Gallery controls and pagination */}
-      <div className="absolute bottom-8 left-0 right-0 flex flex-col items-center gap-4">
+      <div className="absolute bottom-8 left-0 right-0 flex flex-col items-center gap-4 z-20">
         {/* Thumbnail navigation */}
         <div className="flex justify-center gap-3 px-4 pb-2">
           {product.productImages.map((id, index) => (
@@ -143,14 +132,6 @@ const ProductBuyingGallery = ({
         </div>
 
         {/* Scroll to configuration button */}
-        <Button
-          variant="secondary"
-          size="sm"
-          className="rounded-full shadow-md bg-white/90 dark:bg-gray-800/90 px-4 py-2"
-          onClick={scrollToConfig}
-        >
-          Buy Product <ChevronDown className="h-4 w-4 ml-1" />
-        </Button>
       </div>
     </section>
   );

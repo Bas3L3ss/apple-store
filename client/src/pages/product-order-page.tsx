@@ -132,10 +132,7 @@ const ProductOrderPage = () => {
           productName={product.name}
           totalPrice={totalPrice}
         />
-        <MemoizedProductBuyingGallery
-          product={product}
-          configSectionRef={configSectionRef}
-        />
+        <MemoizedProductBuyingGallery product={product} />
         <div
           ref={configSectionRef}
           className="container mx-auto px-4 md:px-8  "
@@ -153,7 +150,6 @@ const ProductOrderPage = () => {
                 <h2 className="text-2xl font-semibold mb-6">
                   Customize your {product.name}
                 </h2>
-
                 <ProductBuyingRightSection
                   product={product}
                   selectedOptions={selectedOptions}
