@@ -35,7 +35,10 @@ export default function OrdersPage() {
   const handleViewDetails = (orderId: string) => {
     navigate(`/order/${orderId}`);
   };
-
+  if (!account) {
+    navigate("/");
+    return;
+  }
   return (
     <>
       {/* TODO: real dynamic SEO */}

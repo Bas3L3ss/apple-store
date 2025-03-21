@@ -21,7 +21,7 @@ export const GetOrders = async (
     const limit = Math.max(parseInt(req.query.limit as string) || 10, 1);
 
     // Create a cache key based on user ID and pagination
-    const cacheKey = `orders:user:${user.id}:page:${page}:limit:${limit}`;
+    const cacheKey = `orders:user:${user._id}:page:${page}:limit:${limit}`;
 
     // Try to get orders from cache first
     const cachedResult = await redis.get(cacheKey);
@@ -38,10 +38,10 @@ export const GetOrders = async (
     const skip = (page - 1) * limit;
 
     // Fetch orders with pagination
-    const orders = await OrderModel.find({ userId: user.id })
+    const orders = await OrderModel.find({ userId: user._id })
       .skip(skip)
       .limit(limit);
-    const totalOrders = await OrderModel.countDocuments({ userId: user.id });
+    const totalOrders = await OrderModel.countDocuments({ userId: user._id });
 
     const result = {
       success: true,
