@@ -17,9 +17,10 @@ const MaterialSelection = ({
   return (
     <div className="space-y-4">
       <div className="grid grid-cols-2 gap-4">
-        {materialOptions.map((option) => (
+        {materialOptions.map((option, index) => (
           <motion.button
             key={option._id}
+            name={`select-material-${index}`}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             onClick={() => setSelectedMaterial(option.material!)}

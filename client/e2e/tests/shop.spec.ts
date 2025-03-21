@@ -1,27 +1,38 @@
-import { test, expect } from "@playwright/test";
+import { test } from "@playwright/test";
+import { ShopPage } from "../class";
 
 test.describe("Shop Page", () => {
-  test("Should go to the featured product order page", async ({ page }) => {
-    await page.goto("/shop");
-
-    await page.click('button[name="featured-product-button"]');
-
-    const titleSROnly = await page.locator("text=featured product");
-    await expect(titleSROnly).toBeVisible();
+  // Define test fixtures
+  const testWithPages = test.extend({
+    // @ts-expect-error: no prob
+    shopPage: async ({ page }, to) => {
+      await to(new ShopPage(page));
+    },
   });
-  test("Should go to the featured product detail page", async ({ page }) => {
-    await page.goto("/shop");
 
-    await page.click('button[name="featured-product-more"]');
+  testWithPages(
+    "Should go to the featured product order page",
+    // @ts-expect-error: no prob
+    async ({ shopPage }) => {
+      await shopPage.navigateTo();
+      await shopPage.clickFeaturedProductOrderButton();
+      await shopPage.verifyFeaturedProductVisible();
+    }
+  );
 
-    const titleSROnly = await page.locator("text=featured product");
-    await expect(titleSROnly).toBeVisible();
-  });
-  test("Should go to the product buy page", async ({ page }) => {
-    await page.goto("/shop");
-
-    await page.click('a[about="product-order"]:first-of-type');
-    const titleSROnly = await page.locator("text=product ordering page");
-    await expect(titleSROnly).toBeVisible();
+  testWithPages(
+    "Should go to the featured product detail page",
+    // @ts-expect-error: no prob
+    async ({ shopPage }) => {
+      await shopPage.navigateTo();
+      await shopPage.clickFeaturedProductMoreButton();
+      await shopPage.verifyFeaturedProductVisible();
+    }
+  );
+  // @ts-expect-error: no prob
+  testWithPages("Should go to the product buy page", async ({ shopPage }) => {
+    await shopPage.navigateTo();
+    await shopPage.clickFirstProductOrderLink();
+    await shopPage.verifyProductOrderingPageVisible();
   });
 });

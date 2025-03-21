@@ -18,8 +18,9 @@ const ColorSelection = ({
   return (
     <div className="space-y-4">
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        {colorOptions.map((option) => (
+        {colorOptions.map((option, index) => (
           <motion.button
+            name={`select-color-${index}`}
             key={option._id}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}

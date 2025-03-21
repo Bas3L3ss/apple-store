@@ -1,34 +1,34 @@
-import { test, expect } from "@playwright/test";
+import { test } from "@playwright/test";
+import { LoginPage } from "../class";
 
 test.describe("Login Page", () => {
-  test("should log in successfully with valid credentials", async ({
-    page,
-  }) => {
-    await page.goto("/auth");
-
-    await page.fill('input[name="email"]', "phamthien.hung060907@yahoo.com");
-    await page.fill('input[name="password"]', "phamthien.hung060907@yahoo.com");
-
-    await page.click('button[type="submit"]');
-
-    await page.click('div[about="shopping-cart"]');
-    const accountSettings = await page.locator("text=Account Settings");
-    await expect(accountSettings).toBeVisible();
+  const testWithPages = test.extend({
+    // @ts-expect-error: no prob
+    loginPage: async ({ page }, to) => {
+      await to(new LoginPage(page));
+    },
   });
 
-  test("should show error message with invalid credentials", async ({
-    page,
-  }) => {
-    await page.goto("/auth");
+  testWithPages(
+    "Should log in successfully with valid credentials",
+    // @ts-expect-error: no prob
+    async ({ loginPage }) => {
+      await loginPage.navigateTo();
+      await loginPage.login(
+        "phamthien.hung060907@yahoo.com",
+        "phamthien.hung060907@yahoo.com"
+      );
+      await loginPage.verifySuccessfulLogin();
+    }
+  );
 
-    await page.fill('input[name="email"]', "wronguserhung060907@yahoo.com");
-    await page.fill('input[name="password"]', "wrongpassword");
-
-    await page.click('button[type="submit"]');
-
-    const errorMessage = await page.locator(
-      "text=Failed to sign in. Please check your credentials."
-    );
-    await expect(errorMessage).toBeVisible();
-  });
+  testWithPages(
+    "Should show error message with invalid credentials",
+    // @ts-expect-error: no prob
+    async ({ loginPage }) => {
+      await loginPage.navigateTo();
+      await loginPage.login("wronguserhung060907@yahoo.com", "wrongpassword");
+      await loginPage.verifyLoginError();
+    }
+  );
 });

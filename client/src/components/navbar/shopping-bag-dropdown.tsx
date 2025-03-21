@@ -127,6 +127,7 @@ const ShoppingBagDropDown = ({
                 )}
               </div>
               <Link
+                about="view-cart"
                 to="/cart"
                 className="text-xl text-blue-600 hover:underline inline-flex items-center space-x-1"
               >

@@ -176,6 +176,7 @@ const ProductOrderPage = () => {
               />
               <div className="mt-6 flex justify-end">
                 <Button
+                  name="add-to-bag"
                   className="bg-blue-600 hover:bg-blue-700 rounded-full px-8"
                   disabled={!isDone}
                   onClick={handleAddCart}
