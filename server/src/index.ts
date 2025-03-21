@@ -10,8 +10,11 @@ import orderRoutes from "./routes/order";
 import productRoutes from "./routes/product";
 import stripeRoutes from "./routes/checkout";
 import productOptionRoutes from "./routes/product-options";
+import redis from "./utils/redis";
+
 const bootstrap = async () => {
   await mongo.connect();
+  await redis.connect();
 
   app.get("/", (req, res) => {
     res.status(200).send("Hello, world!");

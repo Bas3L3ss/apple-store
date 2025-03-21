@@ -2,7 +2,7 @@ import { Redis } from "ioredis";
 import { REDIS_URL } from "../constants/index";
 
 class RedisClient {
-  private client: Redis;
+  public client: Redis;
   private subscriber: Redis | null = null;
   private publishers: Map<string, Redis> = new Map();
   private isConnected: boolean = false;

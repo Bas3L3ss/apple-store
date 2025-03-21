@@ -1,14 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { ProductModel } from "../../models/Product";
-
-async function trimExcessImages() {
-  await ProductModel.updateMany(
-    { productImages: { $size: { $gt: 5 } } }, // Find products with > 5 images
-    [{ $set: { productImages: { $slice: ["$productImages", 5] } } }] // Trim to 5 images
-  );
-
-  console.log("✅ Updated all products, trimmed images to max 5.");
-}
+import redis from "../../utils/redis";
 
 export const GetProducts = async (
   req: Request,
@@ -27,6 +19,22 @@ export const GetProducts = async (
       page?: string;
       limit?: string;
     };
+
+    // Create a cache key based on all query parameters
+    const cacheKey = `products:${search || ""}:${
+      category || ""
+    }:${page}:${limit}`;
+
+    // Try to get products from cache first
+    const cachedResult = await redis.get(cacheKey);
+
+    if (cachedResult) {
+      console.log(`✅ Cache hit for ${cacheKey}`);
+      res.status(200).json(cachedResult);
+      return;
+    }
+
+    console.log(`❌ Cache miss for ${cacheKey}, fetching from database`);
 
     const filter: Record<string, any> = {};
 
@@ -54,7 +62,7 @@ export const GetProducts = async (
     const total = await ProductModel.countDocuments(filter);
     const totalPages = Math.ceil(total / limitNumber);
 
-    res.status(200).json({
+    const result = {
       success: true,
       data: products,
       pagination: {
@@ -63,8 +71,16 @@ export const GetProducts = async (
         currentPage: pageNumber,
         limit: limitNumber,
       },
-    });
+    };
+
+    // Store in cache for future requests (cache for 15 minutes)
+    // Using a moderate TTL since product listings change more frequently than individual products
+    await redis.set(cacheKey, result, 900);
+    console.log(`✅ Cached ${cacheKey} for 15 minutes`);
+
+    res.status(200).json(result);
   } catch (error) {
+    console.error("Error in GetProducts:", error);
     next(error);
   }
 };
