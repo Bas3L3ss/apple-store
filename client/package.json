@@ -4,7 +4,8 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite & npx react-scan@latest localhost:5173 ",
+    "dev": "vite",
+    "scan": "vite & npx react-scan@latest localhost:5173 ",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
