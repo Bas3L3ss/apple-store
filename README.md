@@ -26,7 +26,6 @@
 ![](https://img.shields.io/badge/Kubernetes-326CE5?style=for-the-badge&logo=kubernetes&logoColor=white)
 ![](https://img.shields.io/badge/Zustand-000000?style=for-the-badge&logo=react&logoColor=white)
 ![](https://img.shields.io/badge/Redis-DC382D?style=for-the-badge&logo=redis&logoColor=white)
-![](https://img.shields.io/badge/Helm-0F1689?style=for-the-badge&logo=helm&logoColor=white)
 ![](https://img.shields.io/badge/Terraform-7B42BC?style=for-the-badge&logo=terraform&logoColor=white)
 
 ![Landing-Page](assets/apple-landingpage-ezgif.com-speed.gif)
@@ -105,9 +104,9 @@ A comprehensive e-commerce platform for Apple products built with the MERN stack
 ### DevOps
 
 - **Docker:** Containerization
-- **Kubernetes (Helm):** Container orchestration
+- **Kubernetes:** Container orchestration
 - **GitHub Actions:** CI/CD pipeline
-- **Terraform:** Infra as Code (IAC)
+- **Terraform:** Infrastructure as Code (IAC)
 
 ## 📊 Performance Metrics
 
