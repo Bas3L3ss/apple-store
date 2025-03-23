@@ -95,11 +95,12 @@ A comprehensive e-commerce platform for Apple products built with the MERN stack
 
 - **Express.js:** Fast, unopinionated web framework
 - **MongoDB:** NoSQL database with Mongoose ODM
-- **Socket.io:** Real-time bidirectional event-based communication
+- **Websocket(socket.io):** Real-time bidirectional event-based communication
 - **JWT:** Secure authentication
 - **Stripe:** Payment processing
 - **Redis:** Caching and Pub/Sub Message queue
 - **Nodemailer:** Email notifications
+- **EJS**: Templating engine
 
 ### DevOps
 
